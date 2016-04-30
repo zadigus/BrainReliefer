@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+
+<xsd:schema targetNamespace="http://www.brainreliefer.ch/Data"
+			xmlns:data="http://www.brainreliefer.ch/Data"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			elementFormDefault="qualified">
+	
+	<xsd:element name="DataPath">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="xsd:string">
+					<xsd:attribute name="name" type="xsd:string" use="required"/>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:complexType name="Data">
+		<xsd:sequence>
+			<xsd:element ref="data:DataPath" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="Data" type="data:Data"> 
+		<xsd:annotation>
+      <xsd:documentation>
+        TODO: Write documentation
+      </xsd:documentation>
+    </xsd:annotation>
+	</xsd:element>
+	
+</xsd:schema>

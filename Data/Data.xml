@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<d:Data	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:schemaLocation="http://www.brainrelief.ch/Data ../Data/Data.xsd" 
+        xmlns:d="http://www.brainreliefer.ch/Data"
+		xmlns:dp="http://www.brainreliefer.ch/DataPath"> 
+						
+	<dp:DataPath name="Incubation">..\Data\Incubation.xml</dp:DataPath>
+	
+</d:Data>
