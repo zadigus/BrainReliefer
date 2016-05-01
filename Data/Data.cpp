@@ -141,7 +141,7 @@ namespace N_Data
 
       // DataPath
       //
-      if (n.name () == "DataPath" && n.namespace_ () == "http://www.brainreliefer.ch/Data")
+      if (n.name () == "DataPath" && n.namespace_ ().empty ())
       {
         ::std::unique_ptr< DataPath_type > r (
           DataPath_traits::create (i, f, this));
@@ -504,7 +504,7 @@ namespace N_Data
       ::xsd::cxx::xml::dom::name< char > (e));
 
     if (n.name () == "Data" &&
-        n.namespace_ () == "http://www.brainreliefer.ch/Data")
+        n.namespace_ () == "")
     {
       ::std::unique_ptr< ::N_Data::Data > r (
         ::xsd::cxx::tree::traits< ::N_Data::Data, char >::create (
@@ -516,7 +516,7 @@ namespace N_Data
       n.name (),
       n.namespace_ (),
       "Data",
-      "http://www.brainreliefer.ch/Data");
+      "");
   }
 
   ::std::unique_ptr< ::N_Data::Data >
@@ -542,7 +542,7 @@ namespace N_Data
                        0);
 
     if (n.name () == "Data" &&
-        n.namespace_ () == "http://www.brainreliefer.ch/Data")
+        n.namespace_ () == "")
     {
       ::std::unique_ptr< ::N_Data::Data > r (
         ::xsd::cxx::tree::traits< ::N_Data::Data, char >::create (
@@ -554,7 +554,7 @@ namespace N_Data
       n.name (),
       n.namespace_ (),
       "Data",
-      "http://www.brainreliefer.ch/Data");
+      "");
   }
 }
 
@@ -578,7 +578,6 @@ namespace N_Data
       ::xercesc::DOMElement& s (
         ::xsd::cxx::xml::dom::create_element (
           "DataPath",
-          "http://www.brainreliefer.ch/Data",
           e));
 
       s << *b;
@@ -704,7 +703,7 @@ namespace N_Data
       ::xsd::cxx::xml::dom::name< char > (e));
 
     if (n.name () == "Data" &&
-        n.namespace_ () == "http://www.brainreliefer.ch/Data")
+        n.namespace_ () == "")
     {
       e << s;
     }
@@ -714,7 +713,7 @@ namespace N_Data
         n.name (),
         n.namespace_ (),
         "Data",
-        "http://www.brainreliefer.ch/Data");
+        "");
     }
   }
 
@@ -726,7 +725,7 @@ namespace N_Data
     ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
       ::xsd::cxx::xml::dom::serialize< char > (
         "Data",
-        "http://www.brainreliefer.ch/Data",
+        "",
         m, f));
 
     ::N_Data::Data_ (*d, s, f);
