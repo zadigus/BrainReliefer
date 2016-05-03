@@ -17,9 +17,10 @@ HEADERS += $${DATA_FOLDER}/Data.hpp \
     $${DATA_FOLDER}/IntrantList.hpp \
     $${DATA_FOLDER}/DataValidator.hpp
 
-RESOURCES += qml.qrc
+RESOURCES += gui/qml.qrc
 
-INCLUDEPATH += $${XSD_BASE_DIR}/include
+INCLUDEPATH += $${XSD_BASE_DIR}/include \
+		gui
 
 win32-msvc2013 {
     ## Windows common build here

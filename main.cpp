@@ -32,24 +32,3 @@ int main(int argc, char *argv[])
 
   return app.exec();
 }
-
-
-// Example code with resource files
-/*QXmlSchema schema;
-schema.load(QUrl(QStringLiteral("qrc:/schema/Data.xsd")));
-
-if (schema.isValid()) {
-  QFile file("G:\\workspace\\BrainReliefer\\Data\\Data.xml");
-  file.open(QIODevice::ReadOnly);
-
-  QXmlSchemaValidator validator(schema);
-//    if (validator.validate(&file, QUrl::fromLocalFile(file.fileName())))
-  if(validator.validate(QUrl(QStringLiteral("qrc:/schema/Data.xml"))))
-    qDebug() << "instance document is valid";
-  else
-    qDebug() << "instance document is invalid";
-}
-else
-{
-  qDebug() << "invalid scheme";
-}*/
