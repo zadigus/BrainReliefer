@@ -10,8 +10,8 @@ using namespace N_Data;
 
 int main(int argc, char *argv[])
 {
-  QFile xsdFile("Data/Data.xsd");
-  QFile xmlFile("Data/Data.xml");
+  QFile xsdFile("config/Data.xsd");
+  QFile xmlFile("config/Data.xml");
 
   if(!N_DataValidator::isXMLDataValid(xsdFile, xmlFile))
   {

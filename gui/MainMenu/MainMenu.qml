@@ -1,9 +1,12 @@
 import QtQuick 2.5
 
+import "../MainMenu/MainMenu"
+
 Item
 {
     id: mainMenu
     anchors.fill: parent
+    objectName: "mainMenu"
 
     property var menus:
     [
@@ -19,7 +22,7 @@ Item
 
     Component.onCompleted:
     {
-        setOptimalFontSize()
+        menuFontMetrics.setOptimalFontSize()
 
         for(var i = 0; i < mainMenu.menus.length; ++i)
         {
@@ -30,10 +33,10 @@ Item
         }
     }
 
-    FontMetrics
+    MenuFontMetrics
     {
         id: menuFontMetrics
-        font.family: "Arial"
+        myMenu: mainMenu
     }
 
     function switchTo(name)
@@ -54,38 +57,6 @@ Item
             }
         }
         return idx
-    }
-
-    function setOptimalFontSize()
-    {
-        var pixelSize = fixedPoint(mainMenu.menus[getBiggestStringId()])
-        menuFontMetrics.font.pixelSize = pixelSize
-    }
-
-    function textWidth(pixelSize, text)
-    {
-        menuFontMetrics.font.pixelSize = pixelSize
-        return menuFontMetrics.tightBoundingRect(text).width
-    }
-
-    function fixedPointFunction(pixelSize, text)
-    {
-//        console.log("pixel size = " + pixelSize + " text width = " + textWidth(pixelSize, text) + " rect width = " + getMediator().getWidth())
-        return pixelSize - 0.001 * (textWidth(pixelSize, text) - (getMediator().getOffsetWidth()))
-    }
-
-    function fixedPoint(text)
-    {
-        var pixelSize = 0
-        var newPixelSize = getMediator().getOffsetWidth()
-        do
-        {
-//            console.log(Math.abs(pixelSize - newPixelSize))
-            pixelSize = newPixelSize
-            newPixelSize = fixedPointFunction(pixelSize, text)
-        } while(textWidth(newPixelSize, text) > getMediator().getOffsetWidth())
-
-        return newPixelSize
     }
 
     function itemIndex(item)

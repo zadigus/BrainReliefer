@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			elementFormDefault="qualified">
+	
+	<xsd:element name="DataPath">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="xsd:string">
+					<xsd:attribute name="name" type="xsd:string" use="required"/>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:complexType name="Data">
+		<xsd:sequence>
+			<xsd:element ref="DataPath" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="Data" type="Data"> 
+		<xsd:annotation>
+		  <xsd:documentation>
+			This schema defines the principal input file to the BrainReliefer application: it provides it with the paths to the 
+			various types of intrants (new, incubation, reference, pending, next actions, agenda, projects).
+		  </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	
+</xsd:schema>

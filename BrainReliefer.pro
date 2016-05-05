@@ -6,7 +6,7 @@ CONFIG += c++11
 
 XSD_BASE_DIR = "G:/CodeSynthesis XSD 4.0/"
 
-DATA_FOLDER = Data
+DATA_FOLDER = logic\Data
 
 SOURCES += main.cpp \
     $${DATA_FOLDER}/Data.cpp \
@@ -20,7 +20,8 @@ HEADERS += $${DATA_FOLDER}/Data.hpp \
 RESOURCES += gui/qml.qrc
 
 INCLUDEPATH += $${XSD_BASE_DIR}/include \
-		gui
+		gui \
+		logic
 
 win32-msvc2013 {
     ## Windows common build here

@@ -25,7 +25,7 @@ Window
 
         property var pages:
         {
-            "mainMenu"          : "MainMenu.qml",
+            "mainMenu"          : "MainMenu/MainMenu.qml",
             "newIntrants"       : "NewIntrants.qml",
             "incubatedIntrants" : "IncubatedIntrants.qml",
             "references"        : "References.qml",
