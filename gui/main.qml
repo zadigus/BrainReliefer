@@ -16,17 +16,22 @@ Window
         id: mediator
         anchors.fill: parent
 
+        // TODO: the mediator should have functionality to
+        // * go back
+        // * go forward
+        // * go home
+
         property var verticalOffset: 20
 
         property var pages:
         {
             "mainMenu"          : "MainMenu.qml",
-                    "newIntrants"       : "NewIntrants.qml",
-                    "incubatedIntrants" : "IncubatedIntrants.qml",
-                    "references"        : "References.qml",
-                    "projects"          : "Projects.qml",
-                    "nextActions"       : "NextActions.qml",
-                    "agenda"            : "Agenda.qml"
+            "newIntrants"       : "NewIntrants.qml",
+            "incubatedIntrants" : "IncubatedIntrants.qml",
+            "references"        : "References.qml",
+            "projects"          : "Projects.qml",
+            "nextActions"       : "NextActions.qml",
+            "agenda"            : "Agenda.qml"
         }
 
         Loader

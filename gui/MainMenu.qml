@@ -21,17 +21,12 @@ Item
     {
         setOptimalFontSize()
 
-        var y = 0
         for(var i = 0; i < mainMenu.menus.length; ++i)
         {
             var component = Qt.createComponent("MenuItem.qml")
             var rect = component.createObject(mainMenu, {"width": getMediator().getWidth(), "height": getMediator().getHeight() / mainMenu.menus.length})
             rect.menuText = menus[i]
             rect.menuFont = menuFontMetrics.font
-            rect.menuX = (rect.width - menuFontMetrics.boundingRect(rect.menuText).width) / 2
-            rect.menuY = (rect.height - menuFontMetrics.boundingRect(rect.menuText).height) / 2
-            rect.y = y
-            y += rect.height
         }
     }
 
@@ -91,6 +86,36 @@ Item
         } while(textWidth(newPixelSize, text) > getMediator().getOffsetWidth())
 
         return newPixelSize
+    }
+
+    function itemIndex(item)
+    {
+        if (item.parent == null)
+            return -1
+        var siblings = item.parent.children
+        for (var i = 0; i < siblings.length; ++i)
+            if (siblings[i] == item)
+                return i
+        return -1 //will never happen
+    }
+
+    function previousItem(item)
+    {
+        if (item.parent == null)
+            return null
+        var index = itemIndex(item)
+        return (index > 0) ? item.parent.children[itemIndex(item) - 1] : null
+    }
+
+    function nextItem(item)
+    {
+        if (item.parent == null)
+            return null
+
+        var index = itemIndex(item)
+        var siblings = item.parent.children
+
+        return (index < siblings.length - 1) ? siblings[index + 1] : null
     }
 
     function getMediator()

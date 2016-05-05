@@ -8,14 +8,16 @@ Rectangle
     border.color: "white"
     border.width: 1
 
+    property Item previous: previousItem(menuItem)
+    anchors.top: (previous != null)? previous.bottom: undefined
+
     property alias menuText: textItem.text
-    property alias menuX: textItem.x
-    property alias menuY: textItem.y
     property alias menuFont: textItem.font
 
     Text
     {
         id: textItem
+        anchors.centerIn: parent
         color: "white"
     }
 
