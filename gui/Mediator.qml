@@ -1,16 +1,9 @@
 import QtQuick 2.5
 
+import "/js/Global.js" as Global
+
 Item
 {
-    anchors.fill: parent
-
-    // TODO: the mediator should have functionality to
-    // * go back
-    // * go forward
-    // * go home
-
-    property var verticalOffset: 20
-
     property var pages:
     {
         "mainMenu"          : "MainMenu/MainMenu.qml",
@@ -25,30 +18,41 @@ Item
     Loader
     {
         id: mainLoader
-
-        function getWidth()
-        {
-            return mainWindow.width
-        }
-
-        function getOffsetWidth()
-        {
-            return getWidth() - mediator.verticalOffset
-        }
-
-        function getHeight()
-        {
-            return mainWindow.height
-        }
     }
 
-    Component.onCompleted: mainLoader.source = pages["mainMenu"]
+    Component.onCompleted:
+    {
+        Global.history.push("mainMenu")
+        mainLoader.source = pages["mainMenu"]
+    }
+
+    Connections
+    {
+        target: windowFooter
+        onGoHome:
+        {
+            Global.history.push("mainMenu")
+            mainLoader.source = pages["mainMenu"]
+        }
+        onGoBack:
+        {
+            Global.history.pop()
+            var prev = Global.history.pop()
+
+            if(prev)
+            {
+                Global.history.push(prev)
+                mainLoader.source = pages[prev]
+            }
+        }
+    }
 
     Connections
     {
         target: mainLoader.item
         onHandle:
         {
+            Global.history.push(name)
             mainLoader.source = mediator.pages[name];
             target.width  = mainWindow.width
             target.height = mainWindow.height

@@ -1,5 +1,8 @@
 import QtQuick 2.0
 
+import "/js/Global.js" as Global
+import ".."
+
 Item {
 
     signal handle(string name)
@@ -43,7 +46,9 @@ Item {
 
     ListView
     {
-        anchors.fill: parent
+//        anchors.fill: parent
+        width: mediator.width
+        height: mediator.height
 
         signal handle(string name)
 
@@ -56,11 +61,16 @@ Item {
             width: parent.width; height: 30;
             gradient: clubcolors
         }
-        highlight: Rectangle {
-            width: parent.width
-            color: "lightgray"
+//        highlight: Rectangle {
+//            width: parent.width
+//            color: "lightgray"
+//        }
+        Component.onCompleted:
+        {
+            windowFooter.activateHome(true)
+            windowFooter.activateBackArrow(Global.history.length >= 2)
+            newIntrantsModel.reload()
         }
-        Component.onCompleted: newIntrantsModel.reload()
 
     }
 }

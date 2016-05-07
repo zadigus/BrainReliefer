@@ -1,11 +1,12 @@
 import QtQuick 2.5
 
+import "/js/Global.js" as Global
 import "MainMenu"
+import ".."
 
 Item
 {
     id: mainMenu
-    objectName: "mainMenu"
 
     property var menus:
     [
@@ -21,12 +22,15 @@ Item
 
     Component.onCompleted:
     {
+        windowFooter.activateBackArrow(Global.history.length >= 2)
+        windowFooter.activateHome(false)
+
         menuFontMetrics.setOptimalFontSize()
 
         for(var i = 0; i < mainMenu.menus.length; ++i)
         {
             var component = Qt.createComponent("MenuItem.qml")
-            var rect = component.createObject(mainMenu, {"width": getMediator().getWidth(), "height": getMediator().getHeight() / mainMenu.menus.length})
+            var rect = component.createObject(mainMenu, {"width": mediator.width, "height": mediator.height / mainMenu.menus.length})
             rect.menuText = menus[i]
             rect.menuFont = menuFontMetrics.font
         }
@@ -86,10 +90,5 @@ Item
         var siblings = item.parent.children
 
         return (index < siblings.length - 1) ? siblings[index + 1] : null
-    }
-
-    function getMediator()
-    {
-        return mainMenu.parent
     }
 }
