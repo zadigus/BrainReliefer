@@ -1,11 +1,10 @@
 import QtQuick 2.5
 
-import "../MainMenu/MainMenu"
+import "MainMenu"
 
 Item
 {
     id: mainMenu
-    anchors.fill: parent
     objectName: "mainMenu"
 
     property var menus:

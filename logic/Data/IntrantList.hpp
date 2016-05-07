@@ -252,7 +252,7 @@ namespace xml_schema
 
 // Forward declarations.
 //
-namespace N_Intrants
+namespace N_Data
 {
   class IntrantList;
   class Intrant;
@@ -273,14 +273,14 @@ namespace N_Intrants
 
 #include <xsd/cxx/xml/dom/parsing-header.hxx>
 
-namespace N_Intrants
+namespace N_Data
 {
   class IntrantList: public ::xml_schema::type
   {
     public:
     // Intrant
     //
-    typedef ::N_Intrants::Intrant Intrant_type;
+    typedef ::N_Data::Intrant Intrant_type;
     typedef ::xsd::cxx::tree::sequence< Intrant_type > Intrant_sequence;
     typedef Intrant_sequence::iterator Intrant_iterator;
     typedef Intrant_sequence::const_iterator Intrant_const_iterator;
@@ -451,23 +451,23 @@ namespace N_Intrants
 #include <xercesc/dom/DOMDocument.hpp>
 #include <xercesc/dom/DOMErrorHandler.hpp>
 
-namespace N_Intrants
+namespace N_Data
 {
   // Parse a URI or a local file.
   //
 
-  ::std::unique_ptr< ::N_Intrants::IntrantList >
+  ::std::unique_ptr< ::N_Data::IntrantList >
   IntrantList_ (const ::std::string& uri,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::unique_ptr< ::N_Intrants::IntrantList >
+  ::std::unique_ptr< ::N_Data::IntrantList >
   IntrantList_ (const ::std::string& uri,
                 ::xml_schema::error_handler& eh,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::unique_ptr< ::N_Intrants::IntrantList >
+  ::std::unique_ptr< ::N_Data::IntrantList >
   IntrantList_ (const ::std::string& uri,
                 ::xercesc::DOMErrorHandler& eh,
                 ::xml_schema::flags f = 0,
@@ -476,37 +476,37 @@ namespace N_Intrants
   // Parse std::istream.
   //
 
-  ::std::unique_ptr< ::N_Intrants::IntrantList >
+  ::std::unique_ptr< ::N_Data::IntrantList >
   IntrantList_ (::std::istream& is,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::unique_ptr< ::N_Intrants::IntrantList >
+  ::std::unique_ptr< ::N_Data::IntrantList >
   IntrantList_ (::std::istream& is,
                 ::xml_schema::error_handler& eh,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::unique_ptr< ::N_Intrants::IntrantList >
+  ::std::unique_ptr< ::N_Data::IntrantList >
   IntrantList_ (::std::istream& is,
                 ::xercesc::DOMErrorHandler& eh,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::unique_ptr< ::N_Intrants::IntrantList >
+  ::std::unique_ptr< ::N_Data::IntrantList >
   IntrantList_ (::std::istream& is,
                 const ::std::string& id,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::unique_ptr< ::N_Intrants::IntrantList >
+  ::std::unique_ptr< ::N_Data::IntrantList >
   IntrantList_ (::std::istream& is,
                 const ::std::string& id,
                 ::xml_schema::error_handler& eh,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::unique_ptr< ::N_Intrants::IntrantList >
+  ::std::unique_ptr< ::N_Data::IntrantList >
   IntrantList_ (::std::istream& is,
                 const ::std::string& id,
                 ::xercesc::DOMErrorHandler& eh,
@@ -516,18 +516,18 @@ namespace N_Intrants
   // Parse xercesc::InputSource.
   //
 
-  ::std::unique_ptr< ::N_Intrants::IntrantList >
+  ::std::unique_ptr< ::N_Data::IntrantList >
   IntrantList_ (::xercesc::InputSource& is,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::unique_ptr< ::N_Intrants::IntrantList >
+  ::std::unique_ptr< ::N_Data::IntrantList >
   IntrantList_ (::xercesc::InputSource& is,
                 ::xml_schema::error_handler& eh,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::unique_ptr< ::N_Intrants::IntrantList >
+  ::std::unique_ptr< ::N_Data::IntrantList >
   IntrantList_ (::xercesc::InputSource& is,
                 ::xercesc::DOMErrorHandler& eh,
                 ::xml_schema::flags f = 0,
@@ -536,12 +536,12 @@ namespace N_Intrants
   // Parse xercesc::DOMDocument.
   //
 
-  ::std::unique_ptr< ::N_Intrants::IntrantList >
+  ::std::unique_ptr< ::N_Data::IntrantList >
   IntrantList_ (const ::xercesc::DOMDocument& d,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::unique_ptr< ::N_Intrants::IntrantList >
+  ::std::unique_ptr< ::N_Data::IntrantList >
   IntrantList_ (::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
@@ -555,7 +555,7 @@ namespace N_Intrants
 
 #include <xsd/cxx/xml/dom/auto-ptr.hxx>
 
-namespace N_Intrants
+namespace N_Data
 {
   void
   operator<< (::xercesc::DOMElement&, const IntrantList&);
@@ -565,14 +565,14 @@ namespace N_Intrants
 
   void
   IntrantList_ (::std::ostream& os,
-                const ::N_Intrants::IntrantList& x, 
+                const ::N_Data::IntrantList& x, 
                 const ::xml_schema::namespace_infomap& m = ::xml_schema::namespace_infomap (),
                 const ::std::string& e = "UTF-8",
                 ::xml_schema::flags f = 0);
 
   void
   IntrantList_ (::std::ostream& os,
-                const ::N_Intrants::IntrantList& x, 
+                const ::N_Data::IntrantList& x, 
                 ::xml_schema::error_handler& eh,
                 const ::xml_schema::namespace_infomap& m = ::xml_schema::namespace_infomap (),
                 const ::std::string& e = "UTF-8",
@@ -580,7 +580,7 @@ namespace N_Intrants
 
   void
   IntrantList_ (::std::ostream& os,
-                const ::N_Intrants::IntrantList& x, 
+                const ::N_Data::IntrantList& x, 
                 ::xercesc::DOMErrorHandler& eh,
                 const ::xml_schema::namespace_infomap& m = ::xml_schema::namespace_infomap (),
                 const ::std::string& e = "UTF-8",
@@ -591,14 +591,14 @@ namespace N_Intrants
 
   void
   IntrantList_ (::xercesc::XMLFormatTarget& ft,
-                const ::N_Intrants::IntrantList& x, 
+                const ::N_Data::IntrantList& x, 
                 const ::xml_schema::namespace_infomap& m = ::xml_schema::namespace_infomap (),
                 const ::std::string& e = "UTF-8",
                 ::xml_schema::flags f = 0);
 
   void
   IntrantList_ (::xercesc::XMLFormatTarget& ft,
-                const ::N_Intrants::IntrantList& x, 
+                const ::N_Data::IntrantList& x, 
                 ::xml_schema::error_handler& eh,
                 const ::xml_schema::namespace_infomap& m = ::xml_schema::namespace_infomap (),
                 const ::std::string& e = "UTF-8",
@@ -606,7 +606,7 @@ namespace N_Intrants
 
   void
   IntrantList_ (::xercesc::XMLFormatTarget& ft,
-                const ::N_Intrants::IntrantList& x, 
+                const ::N_Data::IntrantList& x, 
                 ::xercesc::DOMErrorHandler& eh,
                 const ::xml_schema::namespace_infomap& m = ::xml_schema::namespace_infomap (),
                 const ::std::string& e = "UTF-8",
@@ -617,14 +617,14 @@ namespace N_Intrants
 
   void
   IntrantList_ (::xercesc::DOMDocument& d,
-                const ::N_Intrants::IntrantList& x,
+                const ::N_Data::IntrantList& x,
                 ::xml_schema::flags f = 0);
 
   // Serialize to a new xercesc::DOMDocument.
   //
 
   ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument >
-  IntrantList_ (const ::N_Intrants::IntrantList& x, 
+  IntrantList_ (const ::N_Data::IntrantList& x, 
                 const ::xml_schema::namespace_infomap& m = ::xml_schema::namespace_infomap (),
                 ::xml_schema::flags f = 0);
 

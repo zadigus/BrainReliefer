@@ -6,16 +6,21 @@ CONFIG += c++11
 
 XSD_BASE_DIR = "G:/CodeSynthesis XSD 4.0/"
 
-DATA_FOLDER = logic\Data
+DATA_FOLDER   = logic\Data
+MODELS_FOLDER = logic\Models
 
 SOURCES += main.cpp \
     $${DATA_FOLDER}/Data.cpp \
     $${DATA_FOLDER}/IntrantList.cpp \
-    $${DATA_FOLDER}/DataValidator.cpp
+    $${DATA_FOLDER}/DataValidator.cpp \
+    $${MODELS_FOLDER}/NewIntrants.cpp \
+    $${MODELS_FOLDER}/ModelsHelper.cpp
 
 HEADERS += $${DATA_FOLDER}/Data.hpp \
     $${DATA_FOLDER}/IntrantList.hpp \
-    $${DATA_FOLDER}/DataValidator.hpp
+    $${DATA_FOLDER}/DataValidator.hpp \
+    $${MODELS_FOLDER}/NewIntrants.hpp \
+    $${MODELS_FOLDER}/ModelsHelper.hpp
 
 RESOURCES += gui/qml.qrc
 

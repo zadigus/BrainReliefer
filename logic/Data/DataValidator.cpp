@@ -8,7 +8,7 @@ namespace N_Data
 
   namespace N_DataValidator
   {
-
+    //-------------------------------------------------------------------------------------------
     bool validateXMLData(const QXmlSchema& a_Schema, QFile& a_XmlFile)
     {
       a_XmlFile.open(QIODevice::ReadOnly);
@@ -18,6 +18,7 @@ namespace N_Data
       return ret;
     }
 
+    //-------------------------------------------------------------------------------------------
     bool isXMLDataValid(QFile& a_XsdFile, QFile& a_XmlFile)
     {
       a_XsdFile.open(QIODevice::ReadOnly);

@@ -1,11 +1,14 @@
 <RCC>
     <qresource prefix="/qml">
         <file>main.qml</file>
-        <file>NewIntrants.qml</file>
+        <file>Mediator.qml</file>
     </qresource>
     <qresource prefix="/qml/MainMenu">
         <file alias="MainMenu.qml">MainMenu/MainMenu.qml</file>
         <file alias="MenuItem.qml">MainMenu/MenuItem.qml</file>
         <file>MainMenu/MenuFontMetrics.qml</file>
+    </qresource>
+    <qresource prefix="/qml/NewIntrants">
+        <file alias="NewIntrants.qml">NewIntrants/NewIntrants.qml</file>
     </qresource>
 </RCC>
