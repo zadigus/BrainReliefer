@@ -1,76 +1,28 @@
-import QtQuick 2.0
+import QtQuick 2.5
 
 import "/js/Global.js" as Global
-import ".."
+import "../BaseMenu"
 
-Item {
+Menu
+{
+    id: mainMenu
 
-    signal handle(string name)
+    menus: [
+                {text: "Add Intrant",          link: "newIntrants.add"},
+                {text: "Manage New Intrants",  link: "newIntrants.manage"},
+            ]
 
-    Component
+    menuFontMetrics: myMenuFontMetrics
+
+    MenuFontMetrics
     {
-        id: bannerComponent
-
-        Rectangle
-        {
-            id: banner
-            width: parent.width
-            height: 50
-            gradient: clubcolors
-            border {color: "#9EDDF2"; width: 2}
-            Text
-            {
-                anchors.centerIn: parent
-                text: "New Intrants"
-                font.pixelSize: 32
-            }
-        }
+        id: myMenuFontMetrics
+        myMenu: mainMenu
     }
 
-    Gradient
+    Component.onCompleted:
     {
-        id: clubcolors
-        GradientStop { position: 0.0; color: "#8EE2FE"}
-        GradientStop { position: 0.66; color: "#7ED2EE"}
-    }
-
-    Component
-    {
-        id: titleDelegate
-        Text
-        {
-            text: title;
-            font.pixelSize: 24
-        }
-    }
-
-    ListView
-    {
-//        anchors.fill: parent
-        width: mediator.width
-        height: mediator.height
-
-        signal handle(string name)
-
-        orientation: ListView.Vertical
-
-        model: newIntrantsModel
-        delegate: titleDelegate
-        header: bannerComponent
-        footer: Rectangle {
-            width: parent.width; height: 30;
-            gradient: clubcolors
-        }
-//        highlight: Rectangle {
-//            width: parent.width
-//            color: "lightgray"
-//        }
-        Component.onCompleted:
-        {
-            windowFooter.activateHome(true)
-            windowFooter.activateBackArrow(Global.history.length >= 2)
-            newIntrantsModel.reload()
-        }
-
+        windowFooter.activateBackArrow(Global.history.length >= 2)
+        buildMenu(Global.menuHeight)
     }
 }

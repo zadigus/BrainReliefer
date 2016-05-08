@@ -6,13 +6,15 @@ Item
 {
     property var pages:
     {
-        "mainMenu"          : "MainMenu/MainMenu.qml",
-        "newIntrants"       : "NewIntrants/NewIntrants.qml",
-        "incubatedIntrants" : "IncubatedIntrants.qml",
-        "references"        : "References.qml",
-        "projects"          : "Projects.qml",
-        "nextActions"       : "NextActions.qml",
-        "agenda"            : "Agenda.qml"
+        "mainMenu"              : "/MainMenu/MainMenu.qml",
+        "newIntrants"           : "/NewIntrants/NewIntrants.qml",
+        "newIntrants.add"       : "/NewIntrants/AddIntrant.qml",
+        "newIntrants.manage"    : "/NewIntrants/ManageNewIntrants.qml",
+        "incubatedIntrants"     : "/IncubatedIntrants/IncubatedIntrants.qml",
+        "references"            : "/References/References.qml",
+        "projects"              : "/Projects/Projects.qml",
+        "nextActions"           : "/NextActions/NextActions.qml",
+        "agenda"                : "/Agenda/Agenda.qml"
     }
 
     Loader
@@ -22,8 +24,7 @@ Item
 
     Component.onCompleted:
     {
-        Global.history.push("mainMenu")
-        mainLoader.source = pages["mainMenu"]
+        setLoaderSource("mainMenu")
     }
 
     Connections
@@ -31,8 +32,7 @@ Item
         target: windowFooter
         onGoHome:
         {
-            Global.history.push("mainMenu")
-            mainLoader.source = pages["mainMenu"]
+            setLoaderSource("mainMenu")
         }
         onGoBack:
         {
@@ -41,8 +41,7 @@ Item
 
             if(prev)
             {
-                Global.history.push(prev)
-                mainLoader.source = pages[prev]
+                setLoaderSource(prev)
             }
         }
     }
@@ -57,6 +56,12 @@ Item
             target.width  = mainWindow.width
             target.height = mainWindow.height
         }
+    }
+
+    function setLoaderSource(source)
+    {
+        Global.history.push(source)
+        mainLoader.source = pages[source]
     }
 
 }

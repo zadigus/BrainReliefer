@@ -15,7 +15,7 @@ FontMetrics
     {
         if(Global.optimalFontSize == 0)
         {
-            Global.optimalFontSize = fixedPoint(myMenu.menus[myMenu.getBiggestStringId()])
+            Global.optimalFontSize = fixedPoint(myMenu.menus[myMenu.getBiggestStringId()].text)
             font.pixelSize = Global.optimalFontSize
         }
         else
@@ -32,7 +32,7 @@ FontMetrics
 
     function fixedPointFunction(pixelSize, text)
     {
-    //        console.log("pixel size = " + pixelSize + " text width = " + textWidth(pixelSize, text) + " rect width = " + getMediator().getWidth())
+//        console.log("pixel size = " + pixelSize + " text width = " + textWidth(pixelSize, text) + " rect width = " + mediator.width)
         return pixelSize - 0.001 * (textWidth(pixelSize, text) - targetTextWidth)
     }
 

@@ -1,8 +1,12 @@
 import QtQuick 2.5
 
+//import "MainMenu"
+
 Rectangle
 {
     id: menuItem
+
+    property var myMenu
 
     color: "black"
     border.color: "white"
@@ -13,6 +17,11 @@ Rectangle
 
     property alias menuText: textItem.text
     property alias menuFont: textItem.font
+
+//    Component.onCompleted:
+//    {
+//        console.log("completed menuItem")
+//    }
 
     Text
     {
@@ -26,7 +35,8 @@ Rectangle
         anchors.fill: parent
         onClicked:
         {
-            menuItem.parent.switchTo("newIntrants");
+            myMenu.handle("newIntrants")
+//            menuItem.parent.switchTo("newIntrants")
         }
     }
 }
