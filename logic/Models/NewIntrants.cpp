@@ -17,10 +17,10 @@ using namespace N_Data;
 namespace N_Models {
 
   //-------------------------------------------------------------------------------------------
-  NewIntrants::NewIntrants(const QString& a_PathToXml, const QString& a_PathToXsd, QObject* a_Parent)
+  NewIntrants::NewIntrants(const QString& a_PathToXml, QObject* a_Parent)
     : QAbstractListModel(a_Parent)
-    , m_PathToXml(a_PathToXml)
-    , m_PathToXsd(a_PathToXsd)
+    , m_PathToXml(a_PathToXml) // TODO: get this file name from the DataManager
+    , m_PathToXsd(QStringLiteral("qrc:/xsd/IntrantList.xsd")) // TODO: this has nothing to do here; should be moved to the DataFilesManager
   {
 
   }
@@ -34,20 +34,14 @@ namespace N_Models {
   //-------------------------------------------------------------------------------------------
   void NewIntrants::reload()
   {    
-    QFile xsdFile(m_PathToXsd);
     QFile xmlFile(m_PathToXml);
-
-    if(!xsdFile.exists())
-    {
-      qFatal("Schema file %s does not exist.", m_PathToXsd.toStdString()); // TODO: this is a critical error; maybe throw an exception
-    }
 
     if(!xmlFile.exists())
     {
       qFatal("Data file %s does not exist.", m_PathToXml.toStdString()); // TODO: this is no problem in principle as the user may not have saved data yet
     }
 
-    if(!N_DataValidator::isXMLDataValid(xsdFile, xmlFile))
+    if(!N_DataValidator::isXMLDataValid(m_PathToXsd, xmlFile))
     {
       qFatal("Invalid XML file %s", xmlFile); // TODO: deal with that case
       // e.g. it could be that the file doesn't exist yet

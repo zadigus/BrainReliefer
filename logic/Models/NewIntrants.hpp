@@ -3,6 +3,8 @@
 
 #include <QAbstractListModel>
 
+#include <QUrl>
+
 #include <memory>
 
 namespace N_Data {
@@ -21,7 +23,7 @@ namespace N_Models {
       };
 
     public:
-      NewIntrants(const QString& a_PathToXml, const QString& a_PathToXsd, QObject *a_Parent = Q_NULLPTR);
+      NewIntrants(const QString& a_PathToXml, QObject *a_Parent = Q_NULLPTR);
       ~NewIntrants();
 
       Q_INVOKABLE void reload();
@@ -42,7 +44,7 @@ namespace N_Models {
 
     private:
       QString m_PathToXml;
-      QString m_PathToXsd;
+      QUrl m_PathToXsd;
       std::unique_ptr<N_Data::IntrantList> m_Data;
   };
 

@@ -3,6 +3,7 @@
 
 class QFile;
 class QXmlSchema;
+class QUrl;
 
 namespace N_Data
 {
@@ -12,6 +13,7 @@ namespace N_Data
 
     bool validateXMLData(const QXmlSchema& a_Schema, QFile& a_XmlFile);
     bool isXMLDataValid(QFile& a_XsdFile, QFile& a_XmlFile);
+    bool isXMLDataValid(const QUrl& a_XsdFile, QFile& a_XmlFile);
 
   }
 

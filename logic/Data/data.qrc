@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/xsd">
+        <file>Data.xsd</file>
+        <file>IntrantList.xsd</file>
+    </qresource>
+</RCC>

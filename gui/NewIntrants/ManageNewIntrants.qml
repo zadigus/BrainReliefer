@@ -7,7 +7,7 @@ Item {
 
     signal handle(string name)
 
-    Component
+    /*Component
     {
         id: bannerComponent
 
@@ -25,7 +25,7 @@ Item {
                 font.pixelSize: 32
             }
         }
-    }
+    }*/
 
     Gradient
     {
@@ -56,7 +56,7 @@ Item {
 
         model: newIntrantsModel
         delegate: titleDelegate
-        header: bannerComponent
+//        header: bannerComponent
         footer: Rectangle {
             width: parent.width; height: 30;
             gradient: clubcolors
@@ -69,6 +69,7 @@ Item {
         {
             windowFooter.activateHome(true)
             windowFooter.activateBackArrow(Global.history.length >= 2)
+            windowHeader.text = qsTr("New Intrants List")
             newIntrantsModel.reload()
         }
 

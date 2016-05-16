@@ -8,8 +8,8 @@ Menu
     id: mainMenu
 
     menus: [
-                {text: "Add Intrant",          link: "newIntrants.add"},
-                {text: "Manage New Intrants",  link: "newIntrants.manage"},
+                {text: qsTr("Add"),     link: "newIntrants.add"},
+                {text: qsTr("Manage"),  link: "newIntrants.manage"},
             ]
 
     menuFontMetrics: myMenuFontMetrics
@@ -23,6 +23,7 @@ Menu
     Component.onCompleted:
     {
         windowFooter.activateBackArrow(Global.history.length >= 2)
+        windowHeader.text = qsTr("New Intrants")
         buildMenu(Global.menuHeight)
     }
 }

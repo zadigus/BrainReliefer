@@ -3,19 +3,20 @@
         <file>main.qml</file>
         <file>Mediator.qml</file>
         <file>Footer.qml</file>
+        <file>Header.qml</file>
     </qresource>
-	<qresource prefix="/BaseMenu">
+    <qresource prefix="/BaseMenu">
         <file alias="Menu.qml">BaseMenu/Menu.qml</file>
         <file alias="MenuFontMetrics.qml">BaseMenu/MenuFontMetrics.qml</file>
-		<file alias="MenuItem.qml">BaseMenu/MenuItem.qml</file>
+        <file alias="MenuItem.qml">BaseMenu/MenuItem.qml</file>
     </qresource>
     <qresource prefix="/MainMenu">
         <file alias="MainMenu.qml">MainMenu/MainMenu.qml</file>
     </qresource>
     <qresource prefix="/NewIntrants">
         <file alias="NewIntrants.qml">NewIntrants/NewIntrants.qml</file>
-		<file alias="AddIntrant.qml">NewIntrants/AddIntrant.qml</file>
-		<file alias="ManageNewIntrants.qml">NewIntrants/ManageNewIntrants.qml</file>
+        <file alias="AddIntrant.qml">NewIntrants/AddIntrant.qml</file>
+        <file alias="ManageNewIntrants.qml">NewIntrants/ManageNewIntrants.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file>backArrow.png</file>

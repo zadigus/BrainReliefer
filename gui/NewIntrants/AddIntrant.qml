@@ -12,4 +12,9 @@ Rectangle
     height: mediator.height
 
     border {color: "red"; width: 2}
+
+    Component.onCompleted:
+    {
+        windowHeader.text = qsTr("Add intrant")
+    }
 }

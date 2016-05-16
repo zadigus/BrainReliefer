@@ -14,15 +14,20 @@ SOURCES += main.cpp \
     $${DATA_FOLDER}/IntrantList.cpp \
     $${DATA_FOLDER}/DataValidator.cpp \
     $${MODELS_FOLDER}/NewIntrants.cpp \
-    $${MODELS_FOLDER}/ModelsHelper.cpp
+    $${MODELS_FOLDER}/ModelsHelper.cpp \
+    logic/Data/DataManager.cpp
 
 HEADERS += $${DATA_FOLDER}/Data.hpp \
     $${DATA_FOLDER}/IntrantList.hpp \
     $${DATA_FOLDER}/DataValidator.hpp \
     $${MODELS_FOLDER}/NewIntrants.hpp \
-    $${MODELS_FOLDER}/ModelsHelper.hpp
+    $${MODELS_FOLDER}/ModelsHelper.hpp \
+    logic/Singleton.hpp \
+    logic/Data/DataManagerHelper.hpp \
+    logic/Data/DataManager.hpp
 
-RESOURCES += gui/qml.qrc
+RESOURCES += gui/qml.qrc \
+			logic/data/data.qrc
 
 INCLUDEPATH += $${XSD_BASE_DIR}/include \
 		gui \

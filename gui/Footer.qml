@@ -17,7 +17,7 @@ Rectangle
         id: backArrow
         x: parent.width / 4 - width / 2
         source: "../images/backArrow.png"
-        sourceSize: Qt.size(50, 50)
+        sourceSize: Qt.size(parent.height, parent.height)
 
         MouseArea
         {
@@ -40,7 +40,7 @@ Rectangle
         id: home
         x: 3 * parent.width / 4 - width / 2
         source: "../images/home.png"
-        sourceSize: Qt.size(50, 50)
+        sourceSize: Qt.size(parent.height, parent.height)
 
         MouseArea
         {
