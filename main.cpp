@@ -12,7 +12,8 @@ using namespace N_Models;
 
 int main(int argc, char *argv[])
 {
-  NewIntrants newIntrantsModel(DataFilesManager::getInstance().getNewIntrantsFile()); // TODO: call this inside of the reload method
+  DataManager::getInstance().load("config/Data.xml");
+  NewIntrants newIntrantsModel;
 
   QGuiApplication app(argc, argv);
 

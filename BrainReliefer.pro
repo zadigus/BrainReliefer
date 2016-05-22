@@ -15,7 +15,8 @@ SOURCES += main.cpp \
     $${DATA_FOLDER}/DataValidator.cpp \
     $${MODELS_FOLDER}/NewIntrants.cpp \
     $${MODELS_FOLDER}/ModelsHelper.cpp \
-    logic/Data/DataManager.cpp
+    $${DATA_FOLDER}/DataManager.cpp \
+    logic/Data/DataExceptions.cpp
 
 HEADERS += $${DATA_FOLDER}/Data.hpp \
     $${DATA_FOLDER}/IntrantList.hpp \
@@ -23,8 +24,9 @@ HEADERS += $${DATA_FOLDER}/Data.hpp \
     $${MODELS_FOLDER}/NewIntrants.hpp \
     $${MODELS_FOLDER}/ModelsHelper.hpp \
     logic/Singleton.hpp \
-    logic/Data/DataManagerHelper.hpp \
-    logic/Data/DataManager.hpp
+    $${DATA_FOLDER}/DataManagerHelper.hpp \
+    $${DATA_FOLDER}/DataManager.hpp \
+    logic/Data/DataExceptions.hpp
 
 RESOURCES += gui/qml.qrc \
 			logic/data/data.qrc

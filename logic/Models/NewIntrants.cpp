@@ -1,8 +1,8 @@
 #include "Models/NewIntrants.hpp"
 
-#include "Models/ModelsHelper.hpp"
-
 #include "Data/DataValidator.hpp"
+#include "Data/DataManager.hpp"
+#include "Data/DataExceptions.hpp"
 
 #include "Data/IntrantList.hpp"
 
@@ -17,10 +17,8 @@ using namespace N_Data;
 namespace N_Models {
 
   //-------------------------------------------------------------------------------------------
-  NewIntrants::NewIntrants(const QString& a_PathToXml, QObject* a_Parent)
+  NewIntrants::NewIntrants(QObject* a_Parent)
     : QAbstractListModel(a_Parent)
-    , m_PathToXml(a_PathToXml) // TODO: get this file name from the DataManager
-    , m_PathToXsd(QStringLiteral("qrc:/xsd/IntrantList.xsd")) // TODO: this has nothing to do here; should be moved to the DataFilesManager
   {
 
   }
@@ -34,21 +32,16 @@ namespace N_Models {
   //-------------------------------------------------------------------------------------------
   void NewIntrants::reload()
   {    
-    QFile xmlFile(m_PathToXml);
-
-    if(!xmlFile.exists())
-    {
-      qFatal("Data file %s does not exist.", m_PathToXml.toStdString()); // TODO: this is no problem in principle as the user may not have saved data yet
-    }
-
-    if(!N_DataValidator::isXMLDataValid(m_PathToXsd, xmlFile))
-    {
-      qFatal("Invalid XML file %s", xmlFile); // TODO: deal with that case
-      // e.g. it could be that the file doesn't exist yet
-    }
-
     beginResetModel();
-    m_Data = IntrantList_(N_ModelsHelper::pathToData(xmlFile));
+
+    try
+    {
+      m_Data = DataManager::getInstance().getNewIntrantsData();
+    }
+    catch(const XInexistentData& ex)
+    {
+      qDebug() << "Caught exception: " << ex.what();
+    }
 
     QModelIndex parentIndex = QModelIndex();
     QModelIndex topLeft     = index(0, 0, parentIndex);

@@ -23,7 +23,7 @@ namespace N_Models {
       };
 
     public:
-      NewIntrants(const QString& a_PathToXml, QObject *a_Parent = Q_NULLPTR);
+      NewIntrants(QObject* a_Parent = Q_NULLPTR);
       ~NewIntrants();
 
       Q_INVOKABLE void reload();
@@ -43,8 +43,6 @@ namespace N_Models {
       virtual QHash<int, QByteArray> roleNames() const;
 
     private:
-      QString m_PathToXml;
-      QUrl m_PathToXsd;
       std::unique_ptr<N_Data::IntrantList> m_Data;
   };
 

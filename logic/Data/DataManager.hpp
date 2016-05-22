@@ -13,30 +13,28 @@
 #include <memory>
 
 namespace N_Data {
+  class IntrantList;
+}
 
-  class DataFilesManager : public Singleton<DataFilesManager>
+namespace N_Data {
+
+  class DataManager : public Singleton<DataManager>
   {
-    friend class Singleton<DataFilesManager>;
+    friend class Singleton<DataManager>;
 
     public:
-      QString getNewIntrantsFile() const;
+      std::unique_ptr<N_Data::IntrantList> getNewIntrantsData() const;
+
+      void load(const QString& a_PathToFile);
 
     private:
-      DataFilesManager();
-
-      void initFileNames();
+      DataManager();
 
     private:
       QUrl m_DataXsd;
-      QFile m_DataXmlFile;
-      QString m_NewIntrantsFile;
-      QString m_IncubatedFile;
-      QString m_ReferencesFile;
-      QString m_ProjectsFile;
-      QString m_NextActionsFile;
-      QString m_AgendaFile;
+      QUrl m_IntrantListXsd;
 
-      std::function<std::unique_ptr<Data>(const std::string&)> m_DataCtor;
+      QFile m_DataXmlFile;
 
       std::unique_ptr<Data> m_Data;
   };
@@ -44,11 +42,6 @@ namespace N_Data {
   //----------------------------------------------------------------------------------
   // inline / template method(s) implementation
   //----------------------------------------------------------------------------------
-
-  inline QString DataFilesManager::getNewIntrantsFile() const
-  {
-    return m_NewIntrantsFile;
-  }
 
   //----------------------------------------------------------------------------------
   // non-member method(s)

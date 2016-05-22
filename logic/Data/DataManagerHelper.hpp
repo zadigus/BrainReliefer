@@ -3,6 +3,8 @@
 
 #include "Data/DataValidator.hpp"
 
+#include "Data/DataExceptions.hpp"
+
 #include <QUrl>
 #include <QFileInfo>
 
@@ -18,7 +20,7 @@ namespace N_Data {
     {
       if(!N_DataValidator::isXMLDataValid(a_Xsd, a_Xml))
       {
-        throw std::runtime_error("Invalid XML file"); // TODO: throw a custom exception that inherits this one and can give back the name of the Xml and Xsd files used to validate the data
+        throw XInvalidData(a_Xml, a_Xsd);
       }
 
       QFileInfo info(a_Xml);

@@ -36,16 +36,10 @@ namespace N_Data
     //-------------------------------------------------------------------------------------------
     bool isXMLDataValid(const QUrl& a_XsdFile, QFile& a_XmlFile)
     {
-//      a_XsdFile.open(QIODevice::ReadOnly);
-
       QXmlSchema schema;
-      schema.load(a_XsdFile); //, QUrl::fromLocalFile(a_XsdFile.fileName()));
+      schema.load(a_XsdFile);
 
-//      a_XsdFile.close();
-
-      bool ret(schema.isValid() ? validateXMLData(schema, a_XmlFile) : false);
-
-      return ret;
+      return schema.isValid() ? validateXMLData(schema, a_XmlFile) : false;
     }
 
 
