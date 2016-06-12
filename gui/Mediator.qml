@@ -48,6 +48,19 @@ Item
 
     Connections
     {
+        target: dataManager
+        onInvalidDataFile:
+        {
+            console.log("invalid data file!")
+            // ask to either:
+            // * create a new data file (first login)
+            // * load an existing file
+            // ==> create new "Menu" /InvalidData with two entries: CreateData.qml and LoadData.qml
+        }
+    }
+
+    Connections
+    {
         target: mainLoader.item
         onHandle:
         {

@@ -1,13 +1,12 @@
 #ifndef DATA_DATAFILESMANAGER_HPP
 #define DATA_DATAFILESMANAGER_HPP
 
-#include "Singleton.hpp"
-
 #include "Data/Data.hpp"
 
 #include <QUrl>
 #include <QFile>
 #include <QString>
+#include <QObject>
 
 #include <functional>
 #include <memory>
@@ -18,22 +17,26 @@ namespace N_Data {
 
 namespace N_Data {
 
-  class DataManager : public Singleton<DataManager>
+  class DataManager : public QObject
   {
-    friend class Singleton<DataManager>;
+    Q_OBJECT
 
     public:
-      std::unique_ptr<N_Data::IntrantList> getNewIntrantsData() const;
+      DataManager(QObject* a_Parent = NULL);
+      virtual ~DataManager();
 
-      void load(const QString& a_PathToFile);
+      Q_INVOKABLE void load(const QString& a_PathToFile);
 
     private:
-      DataManager();
+      void emitNewIntrantsLoaded();
+
+    signals:
+      void invalidDataFile();
+
+      void newIntrantsLoaded(const QString& a_FileName);
 
     private:
       QUrl m_DataXsd;
-      QUrl m_IntrantListXsd;
-
       QFile m_DataXmlFile;
 
       std::unique_ptr<Data> m_Data;

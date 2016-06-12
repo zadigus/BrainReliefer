@@ -1,27 +1,23 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <QQmlContext>
+
 #include <QDebug>
 
-#include "Data/DataManager.hpp"
-
-#include "Models/NewIntrants.hpp"
+#include "EngineConfigurator.hpp"
 
 using namespace N_Data;
 using namespace N_Models;
 
 int main(int argc, char *argv[])
 {
-  DataManager::getInstance().load("config/Data.xml");
-  NewIntrants newIntrantsModel;
-
   QGuiApplication app(argc, argv);
 
   QQmlApplicationEngine engine;
-  engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 
-  QQmlContext* context(engine.rootContext());
-  context->setContextProperty("newIntrantsModel", &newIntrantsModel);
+  EngineConfigurator ec(engine);
+  ec.setupContext();
+  ec.setupConnections();
+  ec.loadQML(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 
   return app.exec();
 }

@@ -15,11 +15,17 @@
 namespace N_Data {
 
   //----------------------------------------------------------------------------------------------
-  DataManager::DataManager()
-    : m_DataXsd(QStringLiteral("qrc:/xsd/Data.xsd"))
-    , m_IntrantListXsd(QStringLiteral("qrc:/xsd/IntrantList.xsd"))
+  DataManager::DataManager(QObject* a_Parent)
+    : QObject(a_Parent)
+    , m_DataXsd(QStringLiteral("qrc:/xsd/Data.xsd"))
   {
     // TODO: copy the XSD files in the same directory as Data.xml
+  }
+
+  //----------------------------------------------------------------------------------------------
+  DataManager::~DataManager()
+  {
+
   }
 
   //----------------------------------------------------------------------------------------------
@@ -31,20 +37,22 @@ namespace N_Data {
     try
     {
       m_Data = N_DataManagerHelper::getParsedXML<Data>(m_DataXmlFile, m_DataXsd, DataBuilder);
+      emitNewIntrantsLoaded();
     }
     catch(const XInvalidData& ex)
     {
       qDebug() << ex.what();
-      // TODO: ask the user to enter another file and then reload
-
-      // make this a QObject
-      // emit a signal that the exception has been thrown
-      // connect that signal to the handle signal of the object which called DataManager::load (probably MainMenu.qml)
+      emit invalidDataFile();
+    }
+    catch(const XInexistentData& ex)
+    {
+      qDebug() << ex.what();
+      // TODO: handle this exception
     }
   }
 
   //----------------------------------------------------------------------------------------------
-  std::unique_ptr<IntrantList> DataManager::getNewIntrantsData() const
+  void DataManager::emitNewIntrantsLoaded()
   {
     if(m_Data)
     {
@@ -52,26 +60,11 @@ namespace N_Data {
       Data::DataPath_const_iterator it(std::find_if(m_Data->DataPath().begin(), m_Data->DataPath().end(), IsDataWithName));
       if(it != m_Data->DataPath().end())
       {
-        auto DataBuilder = [] (const std::string& a_FileName) { return IntrantList_(a_FileName); };
-
-        std::unique_ptr<IntrantList> result;
-
-        try
-        {
-          QFile file(QString::fromStdString(*it));
-          result = N_DataManagerHelper::getParsedXML<IntrantList>(file, m_IntrantListXsd, DataBuilder);
-        }
-        catch(const XInvalidData& ex)
-        {
-          qDebug() << ex.what();
-          // TODO: if the data does not exist, then automatically create the missing file in the same directory as the main Data.xml
-        }
-
-        return result;
+        emit newIntrantsLoaded(QString::fromStdString(*it));
+        return;
       }
       throw XInexistentData("NewIntrantItems does not exist.");
     }
-
     throw XInexistentData("Main data file missing.");
   }
 

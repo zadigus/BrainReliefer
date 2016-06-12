@@ -17,6 +17,8 @@ namespace N_Models {
   {
     Q_OBJECT
 
+    Q_PROPERTY(QString test READ test)
+
     public:
       enum NewIntrantsRoles {
         TitleRole = Qt::UserRole + 1
@@ -26,7 +28,10 @@ namespace N_Models {
       NewIntrants(QObject* a_Parent = Q_NULLPTR);
       ~NewIntrants();
 
-      Q_INVOKABLE void reload();
+      QString test() const
+      {
+        return "hahahahaha";
+      }
 
       virtual int rowCount(const QModelIndex& a_Parent = QModelIndex()) const;
       virtual int columnCount(const QModelIndex& a_Parent = QModelIndex()) const;
@@ -43,6 +48,14 @@ namespace N_Models {
       virtual QHash<int, QByteArray> roleNames() const;
 
     private:
+      void loadData (const QString& a_FileName);
+
+    public slots:
+      void reload(const QString& a_FileName);
+
+    private:
+      QUrl m_IntrantListXsd;
+
       std::unique_ptr<N_Data::IntrantList> m_Data;
   };
 

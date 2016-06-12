@@ -26,6 +26,8 @@ Menu
 
     Component.onCompleted:
     {
+        dataManager.load("config/Data.xml")
+
         windowFooter.activateBackArrow(Global.history.length >= 2)
         windowFooter.activateHome(false)
         windowHeader.text = qsTr("Home")

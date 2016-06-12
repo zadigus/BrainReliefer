@@ -1,5 +1,6 @@
 #include "Models/NewIntrants.hpp"
 
+#include "Data/DataManagerHelper.hpp"
 #include "Data/DataValidator.hpp"
 #include "Data/DataManager.hpp"
 #include "Data/DataExceptions.hpp"
@@ -19,6 +20,7 @@ namespace N_Models {
   //-------------------------------------------------------------------------------------------
   NewIntrants::NewIntrants(QObject* a_Parent)
     : QAbstractListModel(a_Parent)
+    , m_IntrantListXsd(QStringLiteral("qrc:/xsd/IntrantList.xsd"))
   {
 
   }
@@ -30,18 +32,31 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  void NewIntrants::reload()
-  {    
-    beginResetModel();
-
+  void NewIntrants::loadData (const QString& a_FileName)
+  {
     try
     {
-      m_Data = DataManager::getInstance().getNewIntrantsData();
+      auto DataBuilder = [] (const std::string& a_FileName) { return IntrantList_(a_FileName); };
+      QFile file(a_FileName);
+      m_Data = N_DataManagerHelper::getParsedXML<IntrantList>(file, m_IntrantListXsd, DataBuilder);
     }
     catch(const XInexistentData& ex)
     {
       qDebug() << "Caught exception: " << ex.what();
     }
+    catch(const XInvalidData& ex)
+    {
+      qDebug() << "Caught exception: " << ex.what();
+      // TODO: if the data does not exist, then automatically create the missing file in the same directory as the main Data.xml
+    }
+  }
+
+  //-------------------------------------------------------------------------------------------
+  void NewIntrants::reload(const QString& a_FileName)
+  {    
+    beginResetModel();
+
+    loadData(a_FileName);
 
     QModelIndex parentIndex = QModelIndex();
     QModelIndex topLeft     = index(0, 0, parentIndex);

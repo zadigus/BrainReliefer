@@ -12,8 +12,6 @@ Window
     property real footerParts:    1
     property real mediatorParts: 15
 
-//    property int footerHeight: 50
-
 //    visibility: "FullScreen"
     visible: true
 
@@ -30,7 +28,7 @@ Window
         id: mediator
 
         width: mainWindow.width
-        height: mainWindow.height * mediatorParts / partsSum() // mainWindow.height - mainWindow.footerHeight //
+        height: mainWindow.height * mediatorParts / partsSum()
 
         anchors.top: windowHeader.bottom
     }
@@ -40,7 +38,7 @@ Window
         id: windowFooter
 
         width: mainWindow.width
-        height: mainWindow.height * footerParts / partsSum() // mainWindow.footerHeight
+        height: mainWindow.height * footerParts / partsSum()
 
         anchors.top: mediator.bottom
     }

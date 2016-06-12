@@ -70,7 +70,6 @@ Item {
             windowFooter.activateHome(true)
             windowFooter.activateBackArrow(Global.history.length >= 2)
             windowHeader.text = qsTr("New Intrants List")
-            newIntrantsModel.reload()
         }
 
     }
