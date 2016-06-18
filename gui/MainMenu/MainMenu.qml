@@ -2,6 +2,7 @@ import QtQuick 2.5
 
 import "/js/Global.js" as Global
 import "../BaseMenu"
+import "../InvalidData"
 
 Menu
 {
@@ -13,10 +14,13 @@ Menu
                 {text: qsTr("References"),            link: "references"},
                 {text: qsTr("Projects"),              link: "projects"},
                 {text: qsTr("Next Actions"),          link: "nextActions"},
-                {text: qsTr("Agenda"),                link: "agenda"}
+                {text: qsTr("Agenda"),                link: "agenda"}/*,
+                {text: qsTr("Wrong Data"),            link: "invalidData"}*/
             ]
 
     menuFontMetrics: myMenuFontMetrics
+
+//    property var dataFile: "config/Dat.xml"
 
     MenuFontMetrics
     {
@@ -26,8 +30,6 @@ Menu
 
     Component.onCompleted:
     {
-        dataManager.load("config/Data.xml")
-
         windowFooter.activateBackArrow(Global.history.length >= 2)
         windowFooter.activateHome(false)
         windowHeader.text = qsTr("Home")
@@ -35,5 +37,7 @@ Menu
         Global.menuHeight = mediator.height / mainMenu.menus.length
 
         buildMenu(Global.menuHeight)
+
+//        dataManager.load(dataFile) // can't be called here
     }
 }

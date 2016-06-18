@@ -7,13 +7,22 @@ Item
     property var pages:
     {
         "mainMenu"              : "/MainMenu/MainMenu.qml",
+
+        "invalidData"           : "/InvalidData/MainMenu.qml",
+        "invalidData.new"       : "/InvalidData/NewData.qml",
+        "invalidData.load"      : "/InvalidData/LoadData.qml",
+
         "newIntrants"           : "/NewIntrants/NewIntrants.qml",
         "newIntrants.add"       : "/NewIntrants/AddIntrant.qml",
         "newIntrants.manage"    : "/NewIntrants/ManageNewIntrants.qml",
+
         "incubatedIntrants"     : "/IncubatedIntrants/IncubatedIntrants.qml",
+
         "references"            : "/References/References.qml",
+
         "projects"              : "/Projects/Projects.qml",
         "nextActions"           : "/NextActions/NextActions.qml",
+
         "agenda"                : "/Agenda/Agenda.qml"
     }
 
@@ -52,10 +61,7 @@ Item
         onInvalidDataFile:
         {
             console.log("invalid data file!")
-            // ask to either:
-            // * create a new data file (first login)
-            // * load an existing file
-            // ==> create new "Menu" /InvalidData with two entries: CreateData.qml and LoadData.qml
+            setLoaderSource("invalidData")
         }
     }
 
@@ -70,6 +76,19 @@ Item
             target.height = mainWindow.height
         }
     }
+
+//    Connections
+//    {
+//        target: mainLoader.item
+//        onLoadData:
+//        {
+//            Global.history.push("mainMenu")
+//            mainLoader.source = mediator.pages["mainMenu"];
+//            target.width  = mainWindow.width
+//            target.height = mainWindow.height
+//            console.log("hahaha : " + mainLoader.item.dataFile)
+//        }
+//    }
 
     function setLoaderSource(source)
     {

@@ -5,7 +5,7 @@ import "../BaseMenu"
 
 Menu
 {
-    id: mainMenu
+    id: newIntrantsMenu
 
     menus: [
                 {text: qsTr("Add"),     link: "newIntrants.add"},
@@ -17,7 +17,7 @@ Menu
     MenuFontMetrics
     {
         id: myMenuFontMetrics
-        myMenu: mainMenu
+        myMenu: newIntrantsMenu
     }
 
     Component.onCompleted:

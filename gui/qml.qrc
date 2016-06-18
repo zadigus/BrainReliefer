@@ -13,6 +13,11 @@
     <qresource prefix="/MainMenu">
         <file alias="MainMenu.qml">MainMenu/MainMenu.qml</file>
     </qresource>
+	<qresource prefix="/InvalidData">
+        <file alias="MainMenu.qml">InvalidData/MainMenu.qml</file>
+		<file alias="NewData.qml">InvalidData/NewData.qml</file>
+		<file alias="LoadData.qml">InvalidData/LoadData.qml</file>
+    </qresource>
     <qresource prefix="/NewIntrants">
         <file alias="NewIntrants.qml">NewIntrants/NewIntrants.qml</file>
         <file alias="AddIntrant.qml">NewIntrants/AddIntrant.qml</file>
