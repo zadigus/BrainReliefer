@@ -3,6 +3,14 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			elementFormDefault="qualified">
 	
+	
+	<xsd:element name="RootDir">
+	  <xsd:simpleType>
+		<xsd:restriction base="xsd:string">
+		</xsd:restriction>
+	  </xsd:simpleType>
+	</xsd:element> 
+	
 	<xsd:element name="DataPath">
 		<xsd:complexType>
 			<xsd:simpleContent>
@@ -15,6 +23,7 @@
 	
 	<xsd:complexType name="Data">
 		<xsd:sequence>
+			<xsd:element ref="RootDir" minOccurs="1" maxOccurs="1"/>
 			<xsd:element ref="DataPath" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>

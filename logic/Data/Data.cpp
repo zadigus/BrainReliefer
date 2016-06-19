@@ -45,6 +45,30 @@ namespace N_Data
   // Data
   // 
 
+  const Data::RootDir_type& Data::
+  RootDir () const
+  {
+    return this->RootDir_.get ();
+  }
+
+  Data::RootDir_type& Data::
+  RootDir ()
+  {
+    return this->RootDir_.get ();
+  }
+
+  void Data::
+  RootDir (const RootDir_type& x)
+  {
+    this->RootDir_.set (x);
+  }
+
+  void Data::
+  RootDir (::std::unique_ptr< RootDir_type > x)
+  {
+    this->RootDir_.set (std::move (x));
+  }
+
   const Data::DataPath_sequence& Data::
   DataPath () const
   {
@@ -62,6 +86,10 @@ namespace N_Data
   {
     this->DataPath_ = s;
   }
+
+
+  // RootDir
+  // 
 
 
   // DataPath
@@ -100,8 +128,9 @@ namespace N_Data
   //
 
   Data::
-  Data ()
+  Data (const RootDir_type& RootDir)
   : ::xml_schema::type (),
+    RootDir_ (RootDir, this),
     DataPath_ (this)
   {
   }
@@ -111,6 +140,7 @@ namespace N_Data
         ::xml_schema::flags f,
         ::xml_schema::container* c)
   : ::xml_schema::type (x, f, c),
+    RootDir_ (x.RootDir_, f, this),
     DataPath_ (x.DataPath_, f, this)
   {
   }
@@ -120,6 +150,7 @@ namespace N_Data
         ::xml_schema::flags f,
         ::xml_schema::container* c)
   : ::xml_schema::type (e, f | ::xml_schema::flags::base, c),
+    RootDir_ (this),
     DataPath_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
@@ -139,6 +170,20 @@ namespace N_Data
       const ::xsd::cxx::xml::qualified_name< char > n (
         ::xsd::cxx::xml::dom::name< char > (i));
 
+      // RootDir
+      //
+      if (n.name () == "RootDir" && n.namespace_ ().empty ())
+      {
+        ::std::unique_ptr< RootDir_type > r (
+          RootDir_traits::create (i, f, this));
+
+        if (!RootDir_.present ())
+        {
+          this->RootDir_.set (::std::move (r));
+          continue;
+        }
+      }
+
       // DataPath
       //
       if (n.name () == "DataPath" && n.namespace_ ().empty ())
@@ -151,6 +196,13 @@ namespace N_Data
       }
 
       break;
+    }
+
+    if (!RootDir_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "RootDir",
+        "");
     }
   }
 
@@ -167,6 +219,7 @@ namespace N_Data
     if (this != &x)
     {
       static_cast< ::xml_schema::type& > (*this) = x;
+      this->RootDir_ = x.RootDir_;
       this->DataPath_ = x.DataPath_;
     }
 
@@ -175,6 +228,78 @@ namespace N_Data
 
   Data::
   ~Data ()
+  {
+  }
+
+  // RootDir
+  //
+
+  RootDir::
+  RootDir ()
+  : ::xml_schema::string ()
+  {
+  }
+
+  RootDir::
+  RootDir (const char* _xsd_string_base)
+  : ::xml_schema::string (_xsd_string_base)
+  {
+  }
+
+  RootDir::
+  RootDir (const ::std::string& _xsd_string_base)
+  : ::xml_schema::string (_xsd_string_base)
+  {
+  }
+
+  RootDir::
+  RootDir (const ::xml_schema::string& _xsd_string_base)
+  : ::xml_schema::string (_xsd_string_base)
+  {
+  }
+
+  RootDir::
+  RootDir (const RootDir& x,
+           ::xml_schema::flags f,
+           ::xml_schema::container* c)
+  : ::xml_schema::string (x, f, c)
+  {
+  }
+
+  RootDir::
+  RootDir (const ::xercesc::DOMElement& e,
+           ::xml_schema::flags f,
+           ::xml_schema::container* c)
+  : ::xml_schema::string (e, f, c)
+  {
+  }
+
+  RootDir::
+  RootDir (const ::xercesc::DOMAttr& a,
+           ::xml_schema::flags f,
+           ::xml_schema::container* c)
+  : ::xml_schema::string (a, f, c)
+  {
+  }
+
+  RootDir::
+  RootDir (const ::std::string& s,
+           const ::xercesc::DOMElement* e,
+           ::xml_schema::flags f,
+           ::xml_schema::container* c)
+  : ::xml_schema::string (s, e, f, c)
+  {
+  }
+
+  RootDir* RootDir::
+  _clone (::xml_schema::flags f,
+          ::xml_schema::container* c) const
+  {
+    return new class RootDir (*this, f, c);
+  }
+
+  RootDir::
+  ~RootDir ()
   {
   }
 
@@ -569,6 +694,17 @@ namespace N_Data
   {
     e << static_cast< const ::xml_schema::type& > (i);
 
+    // RootDir
+    //
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "RootDir",
+          e));
+
+      s << i.RootDir ();
+    }
+
     // DataPath
     //
     for (Data::DataPath_const_iterator
@@ -730,6 +866,25 @@ namespace N_Data
 
     ::N_Data::Data_ (*d, s, f);
     return d;
+  }
+
+  void
+  operator<< (::xercesc::DOMElement& e, const RootDir& i)
+  {
+    e << static_cast< const ::xml_schema::string& > (i);
+  }
+
+  void
+  operator<< (::xercesc::DOMAttr& a, const RootDir& i)
+  {
+    a << static_cast< const ::xml_schema::string& > (i);
+  }
+
+  void
+  operator<< (::xml_schema::list_stream& l,
+              const RootDir& i)
+  {
+    l << static_cast< const ::xml_schema::string& > (i);
   }
 
   void

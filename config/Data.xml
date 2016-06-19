@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Data	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-        xsi:noNamespaceSchemaLocation="Data.xsd"> 
-						
-	<DataPath name="NewIntrantItems">config\NewIntrants.xml</DataPath>
-	<DataPath name="IncubationItems">config\Incubation.xml</DataPath>
-	
+<Data>
+	<RootDir>G:/workspace/BrainReliefer/config</RootDir>
+	<DataPath name="NewIntrantItems">NewIntrants.xml</DataPath>
+	<DataPath name="IncubationItems">Incubation.xml</DataPath>
 </Data>

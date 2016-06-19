@@ -1,13 +1,13 @@
 TEMPLATE = app
 
-QT += qml quick xmlpatterns
+QT += qml quick xmlpatterns widgets
 
 CONFIG += c++11
 
 XSD_BASE_DIR = "G:/CodeSynthesis XSD 4.0/"
 
-DATA_FOLDER   = logic\Data
-MODELS_FOLDER = logic\Models
+DATA_FOLDER   = logic/Data
+MODELS_FOLDER = logic/Models
 
 SOURCES += main.cpp \
     $${DATA_FOLDER}/Data.cpp \
@@ -16,24 +16,27 @@ SOURCES += main.cpp \
     $${MODELS_FOLDER}/NewIntrants.cpp \
     $${MODELS_FOLDER}/ModelsHelper.cpp \
     $${DATA_FOLDER}/DataManager.cpp \
-    logic/Data/DataExceptions.cpp \
+    $${DATA_FOLDER}/DataExceptions.cpp \
     EngineConfigurator.cpp \
-    AppConfiguration.cpp
+    AppConfiguration.cpp \
+    gui/InvalidData/FileSaveDialog.cpp
 
 HEADERS += $${DATA_FOLDER}/Data.hpp \
     $${DATA_FOLDER}/IntrantList.hpp \
     $${DATA_FOLDER}/DataValidator.hpp \
     $${MODELS_FOLDER}/NewIntrants.hpp \
     $${MODELS_FOLDER}/ModelsHelper.hpp \
-    logic/Singleton.hpp \
     $${DATA_FOLDER}/DataManagerHelper.hpp \
     $${DATA_FOLDER}/DataManager.hpp \
-    logic/Data/DataExceptions.hpp \
+    $${DATA_FOLDER}/DataExceptions.hpp \
+    $${DATA_FOLDER}/DataConstants.hpp \
+    logic/Singleton.hpp \
     EngineConfigurator.hpp \
-    AppConfiguration.hpp
+    AppConfiguration.hpp \
+    gui/InvalidData/FileSaveDialog.hpp
 
-RESOURCES += gui/qml.qrc \
-			logic/data/data.qrc
+RESOURCES += gui/qml/qml.qrc \
+      $${DATA_FOLDER}/data.qrc
 
 INCLUDEPATH += $${XSD_BASE_DIR}/include \
 		gui \

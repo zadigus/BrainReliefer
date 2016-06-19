@@ -6,6 +6,8 @@
 
 #include "Models/NewIntrants.hpp"
 
+#include "InvalidData/FileSaveDialog.hpp"
+
 #include <QQmlContext>
 
 //----------------------------------------------------------------------------------------------
@@ -25,6 +27,12 @@ void EngineConfigurator::setupContext()
   context->setContextProperty("appConfiguration", m_AppConfiguration);
   context->setContextProperty("dataManager", m_DataManager);
   context->setContextProperty("newIntrantsModel", m_NewIntrantsModel);
+}
+
+//----------------------------------------------------------------------------------------------
+void EngineConfigurator::registerMetaTypes ()
+{
+  qmlRegisterType<FileSaveDialog>("InvalidData", 1, 0, "FileSaveDialog");
 }
 
 //----------------------------------------------------------------------------------------------

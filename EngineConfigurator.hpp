@@ -21,6 +21,7 @@ class EngineConfigurator
     EngineConfigurator(QQmlApplicationEngine& a_Engine);
 
     void setupContext();
+    void registerMetaTypes();
     void loadQML(const QUrl& a_MainQml);
     void setupConnections();
 

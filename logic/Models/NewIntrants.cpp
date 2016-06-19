@@ -12,9 +12,6 @@
 
 using namespace N_Data;
 
-// TODO:
-// * implement save functionality
-
 namespace N_Models {
 
   //-------------------------------------------------------------------------------------------

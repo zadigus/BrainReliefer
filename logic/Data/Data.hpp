@@ -255,6 +255,7 @@ namespace xml_schema
 namespace N_Data
 {
   class Data;
+  class RootDir;
   class DataPath;
 }
 
@@ -278,6 +279,23 @@ namespace N_Data
   class Data: public ::xml_schema::type
   {
     public:
+    // RootDir
+    //
+    typedef ::N_Data::RootDir RootDir_type;
+    typedef ::xsd::cxx::tree::traits< RootDir_type, char > RootDir_traits;
+
+    const RootDir_type&
+    RootDir () const;
+
+    RootDir_type&
+    RootDir ();
+
+    void
+    RootDir (const RootDir_type& x);
+
+    void
+    RootDir (::std::unique_ptr< RootDir_type > p);
+
     // DataPath
     //
     typedef ::N_Data::DataPath DataPath_type;
@@ -297,7 +315,7 @@ namespace N_Data
 
     // Constructors.
     //
-    Data ();
+    Data (const RootDir_type&);
 
     Data (const ::xercesc::DOMElement& e,
           ::xml_schema::flags f = 0,
@@ -325,7 +343,46 @@ namespace N_Data
            ::xml_schema::flags);
 
     protected:
+    ::xsd::cxx::tree::one< RootDir_type > RootDir_;
     DataPath_sequence DataPath_;
+  };
+
+  class RootDir: public ::xml_schema::string
+  {
+    public:
+    // Constructors.
+    //
+    RootDir ();
+
+    RootDir (const char*);
+
+    RootDir (const ::std::string&);
+
+    RootDir (const ::xml_schema::string&);
+
+    RootDir (const ::xercesc::DOMElement& e,
+             ::xml_schema::flags f = 0,
+             ::xml_schema::container* c = 0);
+
+    RootDir (const ::xercesc::DOMAttr& a,
+             ::xml_schema::flags f = 0,
+             ::xml_schema::container* c = 0);
+
+    RootDir (const ::std::string& s,
+             const ::xercesc::DOMElement* e,
+             ::xml_schema::flags f = 0,
+             ::xml_schema::container* c = 0);
+
+    RootDir (const RootDir& x,
+             ::xml_schema::flags f = 0,
+             ::xml_schema::container* c = 0);
+
+    virtual RootDir*
+    _clone (::xml_schema::flags f = 0,
+            ::xml_schema::container* c = 0) const;
+
+    virtual 
+    ~RootDir ();
   };
 
   class DataPath: public ::xml_schema::string
@@ -573,6 +630,16 @@ namespace N_Data
   Data_ (const ::N_Data::Data& x, 
          const ::xml_schema::namespace_infomap& m = ::xml_schema::namespace_infomap (),
          ::xml_schema::flags f = 0);
+
+  void
+  operator<< (::xercesc::DOMElement&, const RootDir&);
+
+  void
+  operator<< (::xercesc::DOMAttr&, const RootDir&);
+
+  void
+  operator<< (::xml_schema::list_stream&,
+              const RootDir&);
 
   void
   operator<< (::xercesc::DOMElement&, const DataPath&);

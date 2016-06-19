@@ -14,8 +14,7 @@ Menu
                 {text: qsTr("References"),            link: "references"},
                 {text: qsTr("Projects"),              link: "projects"},
                 {text: qsTr("Next Actions"),          link: "nextActions"},
-                {text: qsTr("Agenda"),                link: "agenda"}/*,
-                {text: qsTr("Wrong Data"),            link: "invalidData"}*/
+                {text: qsTr("Agenda"),                link: "agenda"}
             ]
 
     menuFontMetrics: myMenuFontMetrics

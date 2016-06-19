@@ -2,13 +2,14 @@
 
 #include "Data/DataManagerHelper.hpp"
 #include "Data/DataExceptions.hpp"
-
+#include "Data/DataConstants.hpp"
 #include "Data/Data.hpp"
 #include "Data/IntrantList.hpp"
 
 #include <iostream>
 
 #include <QFile>
+#include <QDir>
 
 #include <QDebug>
 
@@ -56,11 +57,11 @@ namespace N_Data {
   {
     if(m_Data)
     {
-      auto IsDataWithName = [] (const DataPath& a_DataPath) { return a_DataPath.name() == "NewIntrantItems"; };
+      auto IsDataWithName = [] (const DataPath& a_DataPath) { return a_DataPath.name() == N_Data::NEW_INTRANTS_ITEMS; };
       Data::DataPath_const_iterator it(std::find_if(m_Data->DataPath().begin(), m_Data->DataPath().end(), IsDataWithName));
       if(it != m_Data->DataPath().end())
       {
-        emit newIntrantsLoaded(QString::fromStdString(*it));
+        emit newIntrantsLoaded(QDir(QString::fromStdString(m_Data->RootDir())).filePath(QString::fromStdString(*it)));
         return;
       }
       throw XInexistentData("NewIntrantItems does not exist.");

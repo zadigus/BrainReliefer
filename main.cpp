@@ -1,5 +1,6 @@
-#include <QGuiApplication>
 #include <QQmlApplicationEngine>
+
+#include <QApplication>
 
 #include <QDebug>
 
@@ -10,12 +11,13 @@ using namespace N_Models;
 
 int main(int argc, char *argv[])
 {
-  QGuiApplication app(argc, argv);
+  QApplication app(argc, argv);
 
   QQmlApplicationEngine engine;
 
   EngineConfigurator ec(engine);
   ec.setupContext();
+  ec.registerMetaTypes();
   ec.setupConnections();
   ec.loadQML(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 
