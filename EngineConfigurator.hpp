@@ -5,6 +5,8 @@
 
 class QUrl;
 
+class AppConfiguration;
+
 namespace N_Models {
   class NewIntrants;
 }
@@ -24,6 +26,8 @@ class EngineConfigurator
 
   private:
     QQmlApplicationEngine& m_Engine;
+
+    AppConfiguration* m_AppConfiguration;
 
     N_Models::NewIntrants* m_NewIntrantsModel;
     N_Data::DataManager* m_DataManager;

@@ -20,8 +20,6 @@ Menu
 
     menuFontMetrics: myMenuFontMetrics
 
-//    property var dataFile: "config/Dat.xml"
-
     MenuFontMetrics
     {
         id: myMenuFontMetrics
@@ -38,6 +36,6 @@ Menu
 
         buildMenu(Global.menuHeight)
 
-//        dataManager.load(dataFile) // can't be called here
+        dataManager.load(appConfiguration.dataFileUrl)
     }
 }

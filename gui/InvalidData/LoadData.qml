@@ -2,7 +2,6 @@ import QtQuick 2.0
 import QtQuick.Dialogs 1.0
 
 import "/js/Global.js" as Global
-//import "../MainMenu"
 import ".."
 
 Rectangle
@@ -29,9 +28,8 @@ Rectangle
         title: "Please choose a file"
         folder: shortcuts.home
         onAccepted: {
-            console.log("You chose: " + fileDialog.fileUrls)
-//            loadData(fileDialog.fileUrls)
-            dataManager.load(fileDialog.fileUrls)
+            console.log("You chose: " + fileDialog.fileUrl)
+            appConfiguration.dataFileUrl = fileDialog.fileUrl
             handle("mainMenu")
         }
         onRejected: {

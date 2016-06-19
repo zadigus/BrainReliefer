@@ -1,5 +1,7 @@
 #include "EngineConfigurator.hpp"
 
+#include "AppConfiguration.hpp"
+
 #include "Data/DataManager.hpp"
 
 #include "Models/NewIntrants.hpp"
@@ -9,6 +11,7 @@
 //----------------------------------------------------------------------------------------------
 EngineConfigurator::EngineConfigurator(QQmlApplicationEngine& a_Engine)
   : m_Engine(a_Engine)
+  , m_AppConfiguration(new AppConfiguration())
   , m_NewIntrantsModel(new N_Models::NewIntrants())
   , m_DataManager(new N_Data::DataManager())
 {
@@ -19,6 +22,7 @@ EngineConfigurator::EngineConfigurator(QQmlApplicationEngine& a_Engine)
 void EngineConfigurator::setupContext()
 {
   QQmlContext* context(m_Engine.rootContext());
+  context->setContextProperty("appConfiguration", m_AppConfiguration);
   context->setContextProperty("dataManager", m_DataManager);
   context->setContextProperty("newIntrantsModel", m_NewIntrantsModel);
 }

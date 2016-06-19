@@ -17,7 +17,8 @@ SOURCES += main.cpp \
     $${MODELS_FOLDER}/ModelsHelper.cpp \
     $${DATA_FOLDER}/DataManager.cpp \
     logic/Data/DataExceptions.cpp \
-    EngineConfigurator.cpp
+    EngineConfigurator.cpp \
+    AppConfiguration.cpp
 
 HEADERS += $${DATA_FOLDER}/Data.hpp \
     $${DATA_FOLDER}/IntrantList.hpp \
@@ -28,7 +29,8 @@ HEADERS += $${DATA_FOLDER}/Data.hpp \
     $${DATA_FOLDER}/DataManagerHelper.hpp \
     $${DATA_FOLDER}/DataManager.hpp \
     logic/Data/DataExceptions.hpp \
-    EngineConfigurator.hpp
+    EngineConfigurator.hpp \
+    AppConfiguration.hpp
 
 RESOURCES += gui/qml.qrc \
 			logic/data/data.qrc

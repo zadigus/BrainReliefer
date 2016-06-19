@@ -77,19 +77,6 @@ Item
         }
     }
 
-//    Connections
-//    {
-//        target: mainLoader.item
-//        onLoadData:
-//        {
-//            Global.history.push("mainMenu")
-//            mainLoader.source = mediator.pages["mainMenu"];
-//            target.width  = mainWindow.width
-//            target.height = mainWindow.height
-//            console.log("hahaha : " + mainLoader.item.dataFile)
-//        }
-//    }
-
     function setLoaderSource(source)
     {
         Global.history.push(source)

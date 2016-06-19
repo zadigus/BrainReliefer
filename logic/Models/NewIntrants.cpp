@@ -36,7 +36,7 @@ namespace N_Models {
   {
     try
     {
-      auto DataBuilder = [] (const std::string& a_FileName) { return IntrantList_(a_FileName); };
+      auto DataBuilder = [] (const std::string& a_FileName) { return IntrantList_(a_FileName, xml_schema::flags::dont_validate); };
       QFile file(a_FileName);
       m_Data = N_DataManagerHelper::getParsedXML<IntrantList>(file, m_IntrantListXsd, DataBuilder);
     }

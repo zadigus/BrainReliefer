@@ -25,7 +25,7 @@ namespace N_Data {
       DataManager(QObject* a_Parent = NULL);
       virtual ~DataManager();
 
-      Q_INVOKABLE void load(const QString& a_PathToFile);
+      Q_INVOKABLE void load(const QUrl& a_PathToFile);
 
     private:
       void emitNewIntrantsLoaded();

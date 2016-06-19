@@ -19,7 +19,7 @@ namespace N_Data {
     : QObject(a_Parent)
     , m_DataXsd(QStringLiteral("qrc:/xsd/Data.xsd"))
   {
-    // TODO: copy the XSD files in the same directory as Data.xml
+
   }
 
   //----------------------------------------------------------------------------------------------
@@ -29,10 +29,10 @@ namespace N_Data {
   }
 
   //----------------------------------------------------------------------------------------------
-  void DataManager::load(const QString& a_PathToFile)
+  void DataManager::load(const QUrl& a_PathToFile)
   {
-    m_DataXmlFile.setFileName(a_PathToFile);
-    auto DataBuilder = [] (const std::string& a_FileName) { return Data_(a_FileName); };
+    m_DataXmlFile.setFileName(a_PathToFile.toLocalFile());
+    auto DataBuilder = [] (const std::string& a_FileName) { return Data_(a_FileName, xml_schema::flags::dont_validate); };
 
     try
     {
