@@ -32,12 +32,10 @@ namespace N_Data {
   //----------------------------------------------------------------------------------------------
   void DataManager::load(const QUrl& a_PathToFile)
   {
-    m_DataXmlFile.setFileName(a_PathToFile.toLocalFile());
-    auto DataBuilder = [] (const std::string& a_FileName) { return Data_(a_FileName, xml_schema::flags::dont_validate); };
-
     try
     {
-      m_Data = N_DataManagerHelper::getParsedXML<Data>(m_DataXmlFile, m_DataXsd, DataBuilder);
+      auto DataBuilder = [] (const std::string& a_FileName) { return Data_(a_FileName, xml_schema::flags::dont_validate); };
+      m_Data = N_DataManagerHelper::getParsedXML<Data>(a_PathToFile.toLocalFile(), m_DataXsd, DataBuilder);
       emitNewIntrantsLoaded();
     }
     catch(const XInvalidData& ex)

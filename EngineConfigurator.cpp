@@ -23,6 +23,8 @@ EngineConfigurator::EngineConfigurator(QQmlApplicationEngine& a_Engine)
 //----------------------------------------------------------------------------------------------
 void EngineConfigurator::setupContext()
 {
+  m_AppConfiguration->setup();
+
   QQmlContext* context(m_Engine.rootContext());
   context->setContextProperty("appConfiguration", m_AppConfiguration);
   context->setContextProperty("dataManager", m_DataManager);

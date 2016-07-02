@@ -8,7 +8,8 @@ namespace N_Data {
   //-------------------------------------------------------------------------------
   const char* XInvalidData::what() const
   {
-    if(!m_Xml.exists())
+    QFile xmlFile(m_Xml);
+    if(!xmlFile.exists())
     {
       return "XML file does not exist.";
     }

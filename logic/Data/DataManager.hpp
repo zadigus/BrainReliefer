@@ -37,7 +37,7 @@ namespace N_Data {
 
     private:
       QUrl m_DataXsd;
-      QFile m_DataXmlFile;
+//      QFile m_DataXmlFile;
 
       std::unique_ptr<Data> m_Data;
   };

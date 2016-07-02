@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Application>
+	<Log>
+		<Filename>G:/workspace/BrainReliefer/log/BrainReliefer.log</Filename>
+		<Mode>INF</Mode>
+	</Log>
+	
+	<Settings>
+		<Filename>G:/workspace/BrainReliefer/config/Data.xml</Filename>
+	</Settings>
+</Application>

@@ -11,13 +11,13 @@ namespace N_Data {
   class XInvalidData : public std::exception
   {
     public:
-      XInvalidData(QFile& a_Xml, const QUrl& a_Xsd) : m_Xml(a_Xml), m_Xsd(a_Xsd) { }
+      XInvalidData(const QString& a_Xml, const QUrl& a_Xsd) : m_Xml(a_Xml), m_Xsd(a_Xsd) { }
       virtual ~XInvalidData() { }
 
       virtual const char* what() const;
 
     private:
-      QFile& m_Xml;
+      QString m_Xml;
       QUrl m_Xsd;
   };
 

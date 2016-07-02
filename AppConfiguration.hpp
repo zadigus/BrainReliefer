@@ -14,6 +14,8 @@ class AppConfiguration : public QObject
   public:
     explicit AppConfiguration(QObject* a_Parent = 0);
 
+    void setup();
+
     QUrl dataFileUrl() const;
     void setDataFileUrl(const QUrl& a_Value);
 
@@ -23,6 +25,8 @@ class AppConfiguration : public QObject
   public slots:
 
   private:
+    QUrl m_ConfXmlUrl;
+    QUrl m_ConfXsdUrl;
     QUrl m_DataFileUrl;
 };
 

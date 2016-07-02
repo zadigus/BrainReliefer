@@ -16,15 +16,16 @@ namespace N_Data {
 
   namespace N_DataManagerHelper {
 
-    template <class T> std::unique_ptr<T> getParsedXML(QFile& a_Xml, const QUrl& a_Xsd, const std::function<std::unique_ptr<T>(const std::string&)>& a_Functor)
+    template <class T> std::unique_ptr<T> getParsedXML(const QString& a_XmlFilename, const QUrl& a_XsdFilename, const std::function<std::unique_ptr<T>(const std::string&)>& a_Functor)
     {
-      if(!N_DataValidator::isXMLDataValid(a_Xsd, a_Xml))
+      QFile xmlFile(a_XmlFilename);
+      if(!N_DataValidator::isXMLDataValid(a_XsdFilename, xmlFile))
       {
-        throw XInvalidData(a_Xml, a_Xsd);
+        throw XInvalidData(a_XmlFilename, a_XsdFilename);
       }
 
-      QFileInfo info(a_Xml);
-      return (a_Functor(info.absoluteFilePath().toStdString()));
+      QFileInfo info(xmlFile);
+      return a_Functor(info.absoluteFilePath().toStdString());
     }
 
   }
