@@ -1,6 +1,8 @@
 #ifndef DATA_DATAVALIDATOR_HPP
 #define DATA_DATAVALIDATOR_HPP
 
+#include "core/Global.hpp"
+
 class QFile;
 class QXmlSchema;
 class QUrl;

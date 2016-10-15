@@ -1,6 +1,8 @@
 #ifndef MODELS_NEWINTRANTS_HPP
 #define MODELS_NEWINTRANTS_HPP
 
+#include "core/Global.hpp"
+
 #include <QAbstractListModel>
 
 #include <QUrl>

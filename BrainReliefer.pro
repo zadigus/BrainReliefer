@@ -9,6 +9,8 @@ XSD_BASE_DIR = "G:/CodeSynthesis XSD 4.0/"
 DATA_FOLDER   = logic/Data
 MODELS_FOLDER = logic/Models
 LOGGER_FOLDER = logic/Logger
+CORE_FOLDER   = core
+
 
 SOURCES += main.cpp \
     $${DATA_FOLDER}/Application.cpp \
@@ -24,7 +26,8 @@ SOURCES += main.cpp \
     AppConfiguration.cpp \
     gui/InvalidData/FileSaveDialog.cpp
 
-HEADERS += $${DATA_FOLDER}/Application.hpp \
+HEADERS += $${CORE_FOLDER}/Global.hpp \
+    $${DATA_FOLDER}/Application.hpp \
     $${LOGGER_FOLDER}/Logger.hpp \
     $${LOGGER_FOLDER}/Log.hpp \
     $${LOGGER_FOLDER}/LoggerExceptions.hpp \

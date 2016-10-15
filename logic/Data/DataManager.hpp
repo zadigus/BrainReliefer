@@ -1,6 +1,8 @@
 #ifndef DATA_DATAFILESMANAGER_HPP
 #define DATA_DATAFILESMANAGER_HPP
 
+#include "core/Global.hpp"
+
 #include "Data/Data.hpp"
 
 #include <QUrl>

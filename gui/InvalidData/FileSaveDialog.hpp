@@ -1,6 +1,8 @@
 #ifndef FILESAVEDIALOG_HPP
 #define FILESAVEDIALOG_HPP
 
+#include "core/Global.hpp"
+
 #include <QQuickItem>
 
 class FileSaveDialog : public QQuickItem

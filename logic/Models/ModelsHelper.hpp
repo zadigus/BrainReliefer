@@ -1,6 +1,8 @@
 #ifndef MODELS_MODELSHELPER_HPP
 #define MODELS_MODELSHELPER_HPP
 
+#include "core/Global.hpp"
+
 #include <string>
 
 class QFile;

@@ -1,8 +1,9 @@
 #ifndef DATA_DATAMANAGERHELPER_HPP
 #define DATA_DATAMANAGERHELPER_HPP
 
-#include "Data/DataValidator.hpp"
+#include "core/Global.hpp"
 
+#include "Data/DataValidator.hpp"
 #include "Data/DataExceptions.hpp"
 
 #include <QUrl>
