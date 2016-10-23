@@ -121,34 +121,76 @@ namespace N_Data
     this->description_.set (std::move (x));
   }
 
-  const Intrant::notes_optional& Intrant::
-  notes () const
+  const Intrant::image_sequence& Intrant::
+  image () const
   {
-    return this->notes_;
+    return this->image_;
   }
 
-  Intrant::notes_optional& Intrant::
-  notes ()
+  Intrant::image_sequence& Intrant::
+  image ()
   {
-    return this->notes_;
-  }
-
-  void Intrant::
-  notes (const notes_type& x)
-  {
-    this->notes_.set (x);
+    return this->image_;
   }
 
   void Intrant::
-  notes (const notes_optional& x)
+  image (const image_sequence& s)
   {
-    this->notes_ = x;
+    this->image_ = s;
+  }
+
+  const Intrant::pdf_sequence& Intrant::
+  pdf () const
+  {
+    return this->pdf_;
+  }
+
+  Intrant::pdf_sequence& Intrant::
+  pdf ()
+  {
+    return this->pdf_;
   }
 
   void Intrant::
-  notes (::std::unique_ptr< notes_type > x)
+  pdf (const pdf_sequence& s)
   {
-    this->notes_.set (std::move (x));
+    this->pdf_ = s;
+  }
+
+  const Intrant::sound_sequence& Intrant::
+  sound () const
+  {
+    return this->sound_;
+  }
+
+  Intrant::sound_sequence& Intrant::
+  sound ()
+  {
+    return this->sound_;
+  }
+
+  void Intrant::
+  sound (const sound_sequence& s)
+  {
+    this->sound_ = s;
+  }
+
+  const Intrant::webReference_sequence& Intrant::
+  webReference () const
+  {
+    return this->webReference_;
+  }
+
+  Intrant::webReference_sequence& Intrant::
+  webReference ()
+  {
+    return this->webReference_;
+  }
+
+  void Intrant::
+  webReference (const webReference_sequence& s)
+  {
+    this->webReference_ = s;
   }
 
   const Intrant::ID_type& Intrant::
@@ -271,7 +313,10 @@ namespace N_Data
   : ::xml_schema::type (),
     title_ (title, this),
     description_ (this),
-    notes_ (this),
+    image_ (this),
+    pdf_ (this),
+    sound_ (this),
+    webReference_ (this),
     ID_ (ID, this)
   {
   }
@@ -283,7 +328,10 @@ namespace N_Data
   : ::xml_schema::type (x, f, c),
     title_ (x.title_, f, this),
     description_ (x.description_, f, this),
-    notes_ (x.notes_, f, this),
+    image_ (x.image_, f, this),
+    pdf_ (x.pdf_, f, this),
+    sound_ (x.sound_, f, this),
+    webReference_ (x.webReference_, f, this),
     ID_ (x.ID_, f, this)
   {
   }
@@ -295,7 +343,10 @@ namespace N_Data
   : ::xml_schema::type (e, f | ::xml_schema::flags::base, c),
     title_ (this),
     description_ (this),
-    notes_ (this),
+    image_ (this),
+    pdf_ (this),
+    sound_ (this),
+    webReference_ (this),
     ID_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
@@ -343,18 +394,48 @@ namespace N_Data
         }
       }
 
-      // notes
+      // image
       //
-      if (n.name () == "notes" && n.namespace_ ().empty ())
+      if (n.name () == "image" && n.namespace_ ().empty ())
       {
-        ::std::unique_ptr< notes_type > r (
-          notes_traits::create (i, f, this));
+        ::std::unique_ptr< image_type > r (
+          image_traits::create (i, f, this));
 
-        if (!this->notes_)
-        {
-          this->notes_.set (::std::move (r));
-          continue;
-        }
+        this->image_.push_back (::std::move (r));
+        continue;
+      }
+
+      // pdf
+      //
+      if (n.name () == "pdf" && n.namespace_ ().empty ())
+      {
+        ::std::unique_ptr< pdf_type > r (
+          pdf_traits::create (i, f, this));
+
+        this->pdf_.push_back (::std::move (r));
+        continue;
+      }
+
+      // sound
+      //
+      if (n.name () == "sound" && n.namespace_ ().empty ())
+      {
+        ::std::unique_ptr< sound_type > r (
+          sound_traits::create (i, f, this));
+
+        this->sound_.push_back (::std::move (r));
+        continue;
+      }
+
+      // webReference
+      //
+      if (n.name () == "webReference" && n.namespace_ ().empty ())
+      {
+        ::std::unique_ptr< webReference_type > r (
+          webReference_traits::create (i, f, this));
+
+        this->webReference_.push_back (::std::move (r));
+        continue;
       }
 
       break;
@@ -403,7 +484,10 @@ namespace N_Data
       static_cast< ::xml_schema::type& > (*this) = x;
       this->title_ = x.title_;
       this->description_ = x.description_;
-      this->notes_ = x.notes_;
+      this->image_ = x.image_;
+      this->pdf_ = x.pdf_;
+      this->sound_ = x.sound_;
+      this->webReference_ = x.webReference_;
       this->ID_ = x.ID_;
     }
 
@@ -891,16 +975,60 @@ namespace N_Data
       s << *i.description ();
     }
 
-    // notes
+    // image
     //
-    if (i.notes ())
+    for (Intrant::image_const_iterator
+         b (i.image ().begin ()), n (i.image ().end ());
+         b != n; ++b)
     {
       ::xercesc::DOMElement& s (
         ::xsd::cxx::xml::dom::create_element (
-          "notes",
+          "image",
           e));
 
-      s << *i.notes ();
+      s << *b;
+    }
+
+    // pdf
+    //
+    for (Intrant::pdf_const_iterator
+         b (i.pdf ().begin ()), n (i.pdf ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "pdf",
+          e));
+
+      s << *b;
+    }
+
+    // sound
+    //
+    for (Intrant::sound_const_iterator
+         b (i.sound ().begin ()), n (i.sound ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "sound",
+          e));
+
+      s << *b;
+    }
+
+    // webReference
+    //
+    for (Intrant::webReference_const_iterator
+         b (i.webReference ().begin ()), n (i.webReference ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "webReference",
+          e));
+
+      s << *b;
     }
 
     // ID

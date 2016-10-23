@@ -369,26 +369,73 @@ namespace N_Data
     void
     description (::std::unique_ptr< description_type > p);
 
-    // notes
+    // image
     //
-    typedef ::xml_schema::string notes_type;
-    typedef ::xsd::cxx::tree::optional< notes_type > notes_optional;
-    typedef ::xsd::cxx::tree::traits< notes_type, char > notes_traits;
+    typedef ::xml_schema::string image_type;
+    typedef ::xsd::cxx::tree::sequence< image_type > image_sequence;
+    typedef image_sequence::iterator image_iterator;
+    typedef image_sequence::const_iterator image_const_iterator;
+    typedef ::xsd::cxx::tree::traits< image_type, char > image_traits;
 
-    const notes_optional&
-    notes () const;
+    const image_sequence&
+    image () const;
 
-    notes_optional&
-    notes ();
-
-    void
-    notes (const notes_type& x);
-
-    void
-    notes (const notes_optional& x);
+    image_sequence&
+    image ();
 
     void
-    notes (::std::unique_ptr< notes_type > p);
+    image (const image_sequence& s);
+
+    // pdf
+    //
+    typedef ::xml_schema::string pdf_type;
+    typedef ::xsd::cxx::tree::sequence< pdf_type > pdf_sequence;
+    typedef pdf_sequence::iterator pdf_iterator;
+    typedef pdf_sequence::const_iterator pdf_const_iterator;
+    typedef ::xsd::cxx::tree::traits< pdf_type, char > pdf_traits;
+
+    const pdf_sequence&
+    pdf () const;
+
+    pdf_sequence&
+    pdf ();
+
+    void
+    pdf (const pdf_sequence& s);
+
+    // sound
+    //
+    typedef ::xml_schema::string sound_type;
+    typedef ::xsd::cxx::tree::sequence< sound_type > sound_sequence;
+    typedef sound_sequence::iterator sound_iterator;
+    typedef sound_sequence::const_iterator sound_const_iterator;
+    typedef ::xsd::cxx::tree::traits< sound_type, char > sound_traits;
+
+    const sound_sequence&
+    sound () const;
+
+    sound_sequence&
+    sound ();
+
+    void
+    sound (const sound_sequence& s);
+
+    // webReference
+    //
+    typedef ::xml_schema::string webReference_type;
+    typedef ::xsd::cxx::tree::sequence< webReference_type > webReference_sequence;
+    typedef webReference_sequence::iterator webReference_iterator;
+    typedef webReference_sequence::const_iterator webReference_const_iterator;
+    typedef ::xsd::cxx::tree::traits< webReference_type, char > webReference_traits;
+
+    const webReference_sequence&
+    webReference () const;
+
+    webReference_sequence&
+    webReference ();
+
+    void
+    webReference (const webReference_sequence& s);
 
     // ID
     //
@@ -440,7 +487,10 @@ namespace N_Data
     protected:
     ::xsd::cxx::tree::one< title_type > title_;
     description_optional description_;
-    notes_optional notes_;
+    image_sequence image_;
+    pdf_sequence pdf_;
+    sound_sequence sound_;
+    webReference_sequence webReference_;
     ::xsd::cxx::tree::one< ID_type > ID_;
   };
 }
