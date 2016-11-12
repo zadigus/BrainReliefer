@@ -13,6 +13,7 @@ namespace N_Models {
 
 namespace N_Data {
   class DataManager;
+  class QIntrant;
 }
 
 class EngineConfigurator
@@ -32,6 +33,7 @@ class EngineConfigurator
 
     N_Models::NewIntrants* m_NewIntrantsModel;
     N_Data::DataManager* m_DataManager;
+    N_Data::QIntrant* m_Intrant;
 };
 
 #endif // ENGINECONFIGURATOR_HPP

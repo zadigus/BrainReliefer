@@ -43,7 +43,8 @@ HEADERS += $${CORE_FOLDER}/Global.hpp \
     logic/Singleton.hpp \
     EngineConfigurator.hpp \
     AppConfiguration.hpp \
-    gui/InvalidData/FileSaveDialog.hpp
+    gui/InvalidData/FileSaveDialog.hpp \
+    $${DATA_FOLDER}/QIntrant.hpp
 
 RESOURCES += gui/qml/qml.qrc \
       $${DATA_FOLDER}/data.qrc

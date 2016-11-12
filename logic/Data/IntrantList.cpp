@@ -175,22 +175,22 @@ namespace N_Data
     this->sound_ = s;
   }
 
-  const Intrant::webReference_sequence& Intrant::
-  webReference () const
+  const Intrant::url_sequence& Intrant::
+  url () const
   {
-    return this->webReference_;
+    return this->url_;
   }
 
-  Intrant::webReference_sequence& Intrant::
-  webReference ()
+  Intrant::url_sequence& Intrant::
+  url ()
   {
-    return this->webReference_;
+    return this->url_;
   }
 
   void Intrant::
-  webReference (const webReference_sequence& s)
+  url (const url_sequence& s)
   {
-    this->webReference_ = s;
+    this->url_ = s;
   }
 
   const Intrant::ID_type& Intrant::
@@ -316,7 +316,7 @@ namespace N_Data
     image_ (this),
     pdf_ (this),
     sound_ (this),
-    webReference_ (this),
+    url_ (this),
     ID_ (ID, this)
   {
   }
@@ -331,7 +331,7 @@ namespace N_Data
     image_ (x.image_, f, this),
     pdf_ (x.pdf_, f, this),
     sound_ (x.sound_, f, this),
-    webReference_ (x.webReference_, f, this),
+    url_ (x.url_, f, this),
     ID_ (x.ID_, f, this)
   {
   }
@@ -346,7 +346,7 @@ namespace N_Data
     image_ (this),
     pdf_ (this),
     sound_ (this),
-    webReference_ (this),
+    url_ (this),
     ID_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
@@ -427,14 +427,14 @@ namespace N_Data
         continue;
       }
 
-      // webReference
+      // url
       //
-      if (n.name () == "webReference" && n.namespace_ ().empty ())
+      if (n.name () == "url" && n.namespace_ ().empty ())
       {
-        ::std::unique_ptr< webReference_type > r (
-          webReference_traits::create (i, f, this));
+        ::std::unique_ptr< url_type > r (
+          url_traits::create (i, f, this));
 
-        this->webReference_.push_back (::std::move (r));
+        this->url_.push_back (::std::move (r));
         continue;
       }
 
@@ -487,7 +487,7 @@ namespace N_Data
       this->image_ = x.image_;
       this->pdf_ = x.pdf_;
       this->sound_ = x.sound_;
-      this->webReference_ = x.webReference_;
+      this->url_ = x.url_;
       this->ID_ = x.ID_;
     }
 
@@ -1017,15 +1017,15 @@ namespace N_Data
       s << *b;
     }
 
-    // webReference
+    // url
     //
-    for (Intrant::webReference_const_iterator
-         b (i.webReference ().begin ()), n (i.webReference ().end ());
+    for (Intrant::url_const_iterator
+         b (i.url ().begin ()), n (i.url ().end ());
          b != n; ++b)
     {
       ::xercesc::DOMElement& s (
         ::xsd::cxx::xml::dom::create_element (
-          "webReference",
+          "url",
           e));
 
       s << *b;

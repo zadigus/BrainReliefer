@@ -17,9 +17,7 @@ namespace N_Models {
 
   class NewIntrants : public QAbstractListModel
   {
-    Q_OBJECT
-
-    Q_PROPERTY(QString test READ test)
+      Q_OBJECT
 
     public:
       enum NewIntrantsRoles {
@@ -30,22 +28,11 @@ namespace N_Models {
       NewIntrants(QObject* a_Parent = Q_NULLPTR);
       ~NewIntrants();
 
-      QString test() const
-      {
-        return "hahahahaha";
-      }
-
       virtual int rowCount(const QModelIndex& a_Parent = QModelIndex()) const;
       virtual int columnCount(const QModelIndex& a_Parent = QModelIndex()) const;
 
       virtual QVariant data(const QModelIndex& a_Index, int a_Role = Qt::DisplayRole) const;
       virtual QVariant headerData(int a_Section, Qt::Orientation a_Orientation, int a_Role = Qt::DisplayRole) const;
-
-//      virtual bool insertRows(int a_Row, int a_Count, const QModelIndex& a_Parent = QModelIndex());
-//      virtual bool removeRows(int a_Row, int a_Count, const QModelIndex& a_Parent = QModelIndex());
-
-//      virtual bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
-//      virtual Qt::ItemFlags flags(const QModelIndex &index) const;
 
       virtual QHash<int, QByteArray> roleNames() const;
 

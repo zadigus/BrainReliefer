@@ -420,22 +420,22 @@ namespace N_Data
     void
     sound (const sound_sequence& s);
 
-    // webReference
+    // url
     //
-    typedef ::xml_schema::string webReference_type;
-    typedef ::xsd::cxx::tree::sequence< webReference_type > webReference_sequence;
-    typedef webReference_sequence::iterator webReference_iterator;
-    typedef webReference_sequence::const_iterator webReference_const_iterator;
-    typedef ::xsd::cxx::tree::traits< webReference_type, char > webReference_traits;
+    typedef ::xml_schema::string url_type;
+    typedef ::xsd::cxx::tree::sequence< url_type > url_sequence;
+    typedef url_sequence::iterator url_iterator;
+    typedef url_sequence::const_iterator url_const_iterator;
+    typedef ::xsd::cxx::tree::traits< url_type, char > url_traits;
 
-    const webReference_sequence&
-    webReference () const;
+    const url_sequence&
+    url () const;
 
-    webReference_sequence&
-    webReference ();
+    url_sequence&
+    url ();
 
     void
-    webReference (const webReference_sequence& s);
+    url (const url_sequence& s);
 
     // ID
     //
@@ -490,7 +490,7 @@ namespace N_Data
     image_sequence image_;
     pdf_sequence pdf_;
     sound_sequence sound_;
-    webReference_sequence webReference_;
+    url_sequence url_;
     ::xsd::cxx::tree::one< ID_type > ID_;
   };
 }

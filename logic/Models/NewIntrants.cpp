@@ -112,28 +112,6 @@ namespace N_Models {
     return QVariant();
   }
 
-//  bool NewIntrants::insertRows(int a_Row, int a_Count, const QModelIndex& a_Parent)
-//  {
-
-//  }
-
-//  bool NewIntrants::removeRows(int a_Row, int a_Count, const QModelIndex& a_Parent)
-//  {
-
-//  }
-
-//  //-------------------------------------------------------------------------------------------
-//  bool NewIntrants::setData(const QModelIndex& index, const QVariant& value, int role)
-//  {
-
-//  }
-
-//  //-------------------------------------------------------------------------------------------
-//  Qt::ItemFlags NewIntrants::flags(const QModelIndex& index) const
-//  {
-
-//  }
-
   //-------------------------------------------------------------------------------------------
   QHash<int, QByteArray> NewIntrants::roleNames() const
   {

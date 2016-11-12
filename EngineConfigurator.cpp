@@ -3,6 +3,7 @@
 #include "AppConfiguration.hpp"
 
 #include "Data/DataManager.hpp"
+#include "Data/QIntrant.hpp"
 
 #include "Models/NewIntrants.hpp"
 
@@ -13,9 +14,10 @@
 //----------------------------------------------------------------------------------------------
 EngineConfigurator::EngineConfigurator(QQmlApplicationEngine& a_Engine)
   : m_Engine(a_Engine)
-  , m_AppConfiguration(new AppConfiguration())
-  , m_NewIntrantsModel(new N_Models::NewIntrants())
-  , m_DataManager(new N_Data::DataManager())
+  , m_AppConfiguration(new AppConfiguration)
+  , m_NewIntrantsModel(new N_Models::NewIntrants)
+  , m_DataManager(new N_Data::DataManager)
+  , m_Intrant(new N_Data::QIntrant)
 {
 
 }
@@ -29,6 +31,7 @@ void EngineConfigurator::setupContext()
   context->setContextProperty("appConfiguration", m_AppConfiguration);
   context->setContextProperty("dataManager", m_DataManager);
   context->setContextProperty("newIntrantsModel", m_NewIntrantsModel);
+  context->setContextProperty("intrant", m_Intrant);
 }
 
 //----------------------------------------------------------------------------------------------
