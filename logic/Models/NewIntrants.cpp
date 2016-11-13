@@ -5,10 +5,13 @@
 #include "Data/DataManager.hpp"
 #include "Data/DataExceptions.hpp"
 
+#include "Data/QIntrant.hpp"
 #include "Data/IntrantList.hpp"
 
 #include <QDebug>
 #include <QFile>
+
+#include <fstream>
 
 using namespace N_Data;
 
@@ -29,6 +32,51 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
+  void NewIntrants::store(const IntrantList& a_List)
+  {
+    LOG_INF("Storing the data in the file <" << m_LoadedFilename.toStdString() << ">.");
+
+    xml_schema::namespace_infomap map;
+    map[""].name = "";
+    map[""].schema = "";
+
+    std::ofstream ofs(m_LoadedFilename.toStdString());
+    IntrantList_ (ofs, a_List, map);
+    ofs.close();
+  }
+
+  //-------------------------------------------------------------------------------------------
+  void NewIntrants::addIntrant(QObject* a_Intrant)
+  {
+    if(QIntrant* intrant = qobject_cast<QIntrant*>(a_Intrant))
+    {
+      N_Data::Intrant data(intrant->getIntrant());
+      LOG_INF("Adding new intrant with title <" << data.title() << ">.");
+
+      // TODO: be careful with the unique ID:
+      // - get highest id from the list (or store it during loading and then update the value)
+      // - set a higher id to the item we are adding to the list
+      // - the DataManager must be responsible for the uniqueID's incrementation
+      auto dataCpy(*m_Data); // keep the original data just in case we have a problem serializing the data
+      m_Data->Intrant().push_back(data);
+
+      LOG_INF("Serializing into file <" << m_LoadedFilename.toStdString() << "> following the XSD scheme <" << m_IntrantListXsd.toString().toStdString() << ">.");
+
+      try
+      {
+        store(*m_Data);
+        reload(m_LoadedFilename);
+      }
+      catch(const XInvalidData& ex)
+      {
+        LOG_ERR("Serialization failed. Restoring the data to their original state (" << ex.what() << ").");
+        store(dataCpy);
+        reload(m_LoadedFilename);
+      }
+    }
+  }
+
+  //-------------------------------------------------------------------------------------------
   void NewIntrants::loadData (const QString& a_FileName)
   {
     try
@@ -38,21 +86,23 @@ namespace N_Models {
     }
     catch(const XInexistentData& ex)
     {
-      qDebug() << "Caught exception: " << ex.what();
+      LOG_ERR("Caught exception: " << ex.what());
+      m_Data.reset();
     }
     catch(const XInvalidData& ex)
     {
-      qDebug() << "Caught exception: " << ex.what();
+      LOG_ERR("Caught exception: " << ex.what());
+      m_Data.reset();
+      throw ex;
       // TODO: if the data does not exist, then automatically create the missing file in the same directory as the main Data.xml
     }
+    m_LoadedFilename = a_FileName;
   }
 
   //-------------------------------------------------------------------------------------------
-  void NewIntrants::reload(const QString& a_FileName)
-  {    
+  void NewIntrants::reload()
+  {
     beginResetModel();
-
-    loadData(a_FileName);
 
     QModelIndex parentIndex = QModelIndex();
     QModelIndex topLeft     = index(0, 0, parentIndex);
@@ -64,6 +114,13 @@ namespace N_Models {
 
     emit dataChanged(topLeft, bottomRight);
     endResetModel();
+  }
+
+  //-------------------------------------------------------------------------------------------
+  void NewIntrants::reload(const QString& a_FileName)
+  {
+    loadData(a_FileName);
+    reload();
   }
 
   //-------------------------------------------------------------------------------------------

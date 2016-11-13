@@ -14,6 +14,7 @@ Window
 
 //    visibility: "FullScreen"
     visible: true
+    modality: Qt.ApplicationModal
 
     Header
     {

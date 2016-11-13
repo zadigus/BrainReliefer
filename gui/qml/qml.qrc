@@ -24,6 +24,8 @@
         <file alias="ManageNewIntrants.qml">NewIntrants/ManageNewIntrants.qml</file>
 		<file alias="FocusRectangle.qml">NewIntrants/FocusRectangle.qml</file>
 		<file alias="PlaceHolderText.qml">NewIntrants/PlaceHolderText.qml</file>
+		<file alias="FocusableTextEdit.qml">NewIntrants/FocusableTextEdit.qml</file>
+		<file alias="ActionButton.qml">NewIntrants/ActionButton.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file>backArrow.png</file>

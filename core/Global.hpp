@@ -3,4 +3,8 @@
 
 #include "logic/Logger/Logger.hpp"
 
+#include <QDebug>
+
+#include <memory>
+
 #endif

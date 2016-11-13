@@ -1,21 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<IntrantList> 
-						
-	<Intrant ID="1">
-		<title>System Icon Tray</title>
-		<description>
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<IntrantList>
+  <Intrant ID="1">
+    <title>System Icon Tray</title>
+    <description>
 		It would be handy to have the brain booster application running 
 		in background. To do so, I can call 
 		QApplication::setQuitOnLastWindowClosed(false); 
 		in the code and have a look at the example given by Qt's System Icon 
 		Tray example.
 		</description>
-		<url>http://doc.qt.io/qt-5/qtwidgets-desktop-systray-example.html</url>
-	</Intrant>
-	
-	<Intrant ID="2">
-		<title>Hi there, this is my second intrant.</title>
-	</Intrant>
-	
+    <url>http://doc.qt.io/qt-5/qtwidgets-desktop-systray-example.html</url>
+  </Intrant>
+  <Intrant ID="2">
+    <title>Hi there, this is my second intrant.</title>
+  </Intrant>
 </IntrantList>

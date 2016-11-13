@@ -1,6 +1,10 @@
 #ifndef DATA_QINTRANT_HPP
 #define DATA_QINTRANT_HPP
 
+#include "core/Global.hpp"
+
+#include "Data/IntrantList.hpp"
+
 #include <QObject>
 
 namespace N_Data {
@@ -15,7 +19,9 @@ namespace N_Data {
     public:
       explicit QIntrant(QObject *a_Parent = 0);
 
-      Q_INVOKABLE void clear();
+      Q_INVOKABLE void reset();
+
+      N_Data::Intrant getIntrant() const;
 
       QString title() const;
       void setTitle(const QString& a_Value);
@@ -30,42 +36,19 @@ namespace N_Data {
     public slots:
 
     private:
-      QString m_Title;
-      QString m_Description;
+      static const N_Data::Intrant::title_type DEFAULT_TITLE;
+      static const N_Data::Intrant::ID_type DEFAULT_ID;
+
+      std::unique_ptr<N_Data::Intrant> m_Data;
   };
 
   //----------------------------------------------------------------------------------
   // inline / template method(s) implementation
   //----------------------------------------------------------------------------------
 
-  inline QIntrant::QIntrant(QObject *a_Parent)
-    : QObject(a_Parent)
-  { }
-
-  inline void QIntrant::clear()
+  inline N_Data::Intrant QIntrant::getIntrant() const
   {
-    m_Title.clear();
-    m_Description.clear();
-  }
-
-  inline QString QIntrant::title() const
-  {
-    return m_Title;
-  }
-
-  inline void QIntrant::setTitle(const QString& a_Value)
-  {
-    m_Title = a_Value;
-  }
-
-  inline QString QIntrant::description() const
-  {
-    return m_Description;
-  }
-
-  inline void QIntrant::setDescription(const QString& a_Value)
-  {
-    m_Description = a_Value;
+    return *m_Data;
   }
 
 }

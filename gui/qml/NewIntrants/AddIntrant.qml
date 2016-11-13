@@ -13,6 +13,8 @@ Rectangle
   width: mediator.width
   height: mediator.height
 
+  // TODO: make the whole rectangle flickable
+
   TextField {
     id: titleField
     focus: true
@@ -22,49 +24,55 @@ Rectangle
     background: FocusRectangle {
       textField: titleField
     }
-    onEditingFinished:
-    {
-      intrant.title =  titleField.text
+    Binding {
+      target: intrant
+      property: "title"
+      value: titleField.text
     }
   }
 
-  FocusRectangle {
-    textField: editDescription
+  Rectangle {
+    id: toBeRemoved1
+    width: parent.width
+    height: 50
+    anchors.top: titleField.bottom
+    Text {
+      text: "TODO: Put a button to add optional fields like the description"
+    }
+  }
+
+  Rectangle {
+    id: toBeRemoved2
+    width: parent.width
+    height: 50
+    anchors.top: toBeRemoved1.bottom
+    Text {
+      text: "TODO: Once save button is clicked, reset the data"
+    }
+  }
+
+  FocusableTextEdit {
+    id: descriptionField
     width: parent.width
     height: 100
-    border.color: editDescription.focus ? "red" : "transparent"
-    anchors.top: titleField.bottom
+    anchors.top: toBeRemoved2.bottom
+    placeHolderText: qsTr("Enter description here")
+    Binding {
+      target: intrant
+      property: "description"
+      value: descriptionField.editedText
+    }
+  }
 
-    Flickable {
-      id: flickDescription
+  ActionButton {
+    anchors.bottom: parent.bottom
+    width: parent.width
+    height: 100
+    buttonText: qsTr("Save")
 
-      width: parent.width; height: parent.height;
-      contentWidth: editDescription.paintedWidth
-      contentHeight: editDescription.paintedHeight
-      clip: true
-      flickableDirection: Flickable.VerticalFlick
-      leftMargin: 10
-
-      function ensureVisible(r)
-      {
-        if (contentY >= r.y)
-          contentY = r.y;
-        else if (contentY+height <= r.y+r.height)
-          contentY = r.y+r.height-height;
-      }
-
-      TextEdit {
-        id: editDescription
-        width: flickDescription.width
-        height: flickDescription.height
-        wrapMode: TextEdit.Wrap
-        onCursorRectangleChanged: flickDescription.ensureVisible(cursorRectangle)
-
-        PlaceHolderText {
-          placeHolderText:  "Enter description here..."
-          textField: editDescription
-        }
-      }
+    function onClicked()
+    {
+      newIntrantsModel.addIntrant(intrant)
     }
   }
 
@@ -72,8 +80,9 @@ Rectangle
   {
     windowHeader.text = qsTr("Add intrant")
   }
+
   Component.onDestruction:
   {
-    intrant.clear()
+    intrant.reset()
   }
 }

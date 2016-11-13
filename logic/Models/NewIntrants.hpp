@@ -3,6 +3,8 @@
 
 #include "core/Global.hpp"
 
+#include "Data/QIntrant.hpp"
+
 #include <QAbstractListModel>
 
 #include <QUrl>
@@ -28,6 +30,8 @@ namespace N_Models {
       NewIntrants(QObject* a_Parent = Q_NULLPTR);
       ~NewIntrants();
 
+      Q_INVOKABLE void addIntrant(QObject* a_Intrant);
+
       virtual int rowCount(const QModelIndex& a_Parent = QModelIndex()) const;
       virtual int columnCount(const QModelIndex& a_Parent = QModelIndex()) const;
 
@@ -38,12 +42,15 @@ namespace N_Models {
 
     private:
       void loadData (const QString& a_FileName);
+      void reload();
+      void store(const N_Data::IntrantList& a_List);
 
     public slots:
       void reload(const QString& a_FileName);
 
     private:
       QUrl m_IntrantListXsd;
+      QString m_LoadedFilename;
 
       std::unique_ptr<N_Data::IntrantList> m_Data;
   };

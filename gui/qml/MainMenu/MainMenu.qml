@@ -2,7 +2,10 @@ import QtQuick 2.5
 
 import "/js/Global.js" as Global
 import "../BaseMenu"
-import "../InvalidData"
+
+//import "../InvalidData"
+
+//import InvalidData 1.0
 
 Menu
 {
