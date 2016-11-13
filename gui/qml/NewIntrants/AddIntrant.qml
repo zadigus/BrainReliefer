@@ -73,6 +73,7 @@ Rectangle
     function onClicked()
     {
       newIntrantsModel.addIntrant(intrant)
+      windowFooter.goBack()
     }
   }
 

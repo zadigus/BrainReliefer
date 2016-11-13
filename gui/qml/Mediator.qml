@@ -72,8 +72,6 @@ Item
         {
             Global.history.push(name)
             mainLoader.source = mediator.pages[name];
-            /*target.width  = mainWindow.width
-            target.height = mainWindow.height*/
         }
     }
 

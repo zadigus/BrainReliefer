@@ -437,27 +437,9 @@ namespace N_Data
     void
     url (const url_sequence& s);
 
-    // ID
-    //
-    typedef ::xml_schema::string ID_type;
-    typedef ::xsd::cxx::tree::traits< ID_type, char > ID_traits;
-
-    const ID_type&
-    ID () const;
-
-    ID_type&
-    ID ();
-
-    void
-    ID (const ID_type& x);
-
-    void
-    ID (::std::unique_ptr< ID_type > p);
-
     // Constructors.
     //
-    Intrant (const title_type&,
-             const ID_type&);
+    Intrant (const title_type&);
 
     Intrant (const ::xercesc::DOMElement& e,
              ::xml_schema::flags f = 0,
@@ -491,7 +473,6 @@ namespace N_Data
     pdf_sequence pdf_;
     sound_sequence sound_;
     url_sequence url_;
-    ::xsd::cxx::tree::one< ID_type > ID_;
   };
 }
 

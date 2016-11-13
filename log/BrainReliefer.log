@@ -1,7 +1,3 @@
-@INF : [13/11/2016 17:48:31][N_Models::NewIntrants::addIntrant] : Adding new intrant with title <hohohoho>.
-@INF : [13/11/2016 17:48:31][N_Models::NewIntrants::addIntrant] : Serializing into file <G:/workspace/BrainReliefer/config/NewIntrants.xml> following the XSD scheme <qrc:/xsd/IntrantList.xsd>.
-@INF : [13/11/2016 17:48:31][N_Models::NewIntrants::store] : Storing the data in the file <G:/workspace/BrainReliefer/config/NewIntrants.xml
-@ERR : [13/11/2016 17:48:32][N_Models::NewIntrants::loadData][..\logic\Models\NewIntrants.cpp][106] : Caught exception: XML not validated by XSD file.
-@ERR : [13/11/2016 17:48:32][N_Models::NewIntrants::addIntrant][..\logic\Models\NewIntrants.cpp][80] : Caught XInvalidData exception: XML not validated by XSD file.
-@ERR : [13/11/2016 17:48:32][N_Models::NewIntrants::addIntrant][..\logic\Models\NewIntrants.cpp][81] : Serialization failed. Restoring the data to their original state.
-@INF : [13/11/2016 17:48:32][N_Models::NewIntrants::store] : Storing the data in the file <G:/workspace/BrainReliefer/config/NewIntrants.xml
+@INF : [13/11/2016 19:44:28][N_Models::NewIntrants::addIntrant] : Adding new intrant with title <fdadasfsadfas>.
+@INF : [13/11/2016 19:44:28][N_Models::NewIntrants::addIntrant] : Serializing into file <G:/workspace/BrainReliefer/config/NewIntrants.xml> following the XSD scheme <qrc:/xsd/IntrantList.xsd>.
+@INF : [13/11/2016 19:44:28][N_Models::NewIntrants::store] : Storing the data in the file <G:/workspace/BrainReliefer/config/NewIntrants.xml>.

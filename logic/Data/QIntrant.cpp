@@ -3,7 +3,7 @@
 namespace N_Data {
 
   const N_Data::Intrant::title_type QIntrant::DEFAULT_TITLE = "DefaultTitle";
-  const N_Data::Intrant::ID_type QIntrant::DEFAULT_ID = "1";
+//  const N_Data::Intrant::ID_type QIntrant::DEFAULT_ID = "1";
 
   //---------------------------------------------------------------------------------------------------
   QIntrant::QIntrant(QObject *a_Parent)
@@ -15,7 +15,7 @@ namespace N_Data {
   //---------------------------------------------------------------------------------------------------
   void QIntrant::reset()
   {
-    m_Data.reset(new N_Data::Intrant(DEFAULT_TITLE, DEFAULT_ID));
+    m_Data.reset(new N_Data::Intrant(DEFAULT_TITLE)); //, DEFAULT_ID));
   }
 
   //---------------------------------------------------------------------------------------------------

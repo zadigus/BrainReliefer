@@ -192,30 +192,6 @@ namespace N_Data
   {
     this->url_ = s;
   }
-
-  const Intrant::ID_type& Intrant::
-  ID () const
-  {
-    return this->ID_.get ();
-  }
-
-  Intrant::ID_type& Intrant::
-  ID ()
-  {
-    return this->ID_.get ();
-  }
-
-  void Intrant::
-  ID (const ID_type& x)
-  {
-    this->ID_.set (x);
-  }
-
-  void Intrant::
-  ID (::std::unique_ptr< ID_type > x)
-  {
-    this->ID_.set (std::move (x));
-  }
 }
 
 #include <xsd/cxx/xml/dom/parsing-source.hxx>
@@ -308,16 +284,14 @@ namespace N_Data
   //
 
   Intrant::
-  Intrant (const title_type& title,
-           const ID_type& ID)
+  Intrant (const title_type& title)
   : ::xml_schema::type (),
     title_ (title, this),
     description_ (this),
     image_ (this),
     pdf_ (this),
     sound_ (this),
-    url_ (this),
-    ID_ (ID, this)
+    url_ (this)
   {
   }
 
@@ -331,8 +305,7 @@ namespace N_Data
     image_ (x.image_, f, this),
     pdf_ (x.pdf_, f, this),
     sound_ (x.sound_, f, this),
-    url_ (x.url_, f, this),
-    ID_ (x.ID_, f, this)
+    url_ (x.url_, f, this)
   {
   }
 
@@ -346,12 +319,11 @@ namespace N_Data
     image_ (this),
     pdf_ (this),
     sound_ (this),
-    url_ (this),
-    ID_ (this)
+    url_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
     {
-      ::xsd::cxx::xml::dom::parser< char > p (e, true, false, true);
+      ::xsd::cxx::xml::dom::parser< char > p (e, true, false, false);
       this->parse (p, f);
     }
   }
@@ -447,26 +419,6 @@ namespace N_Data
         "title",
         "");
     }
-
-    while (p.more_attributes ())
-    {
-      const ::xercesc::DOMAttr& i (p.next_attribute ());
-      const ::xsd::cxx::xml::qualified_name< char > n (
-        ::xsd::cxx::xml::dom::name< char > (i));
-
-      if (n.name () == "ID" && n.namespace_ ().empty ())
-      {
-        this->ID_.set (ID_traits::create (i, f, this));
-        continue;
-      }
-    }
-
-    if (!ID_.present ())
-    {
-      throw ::xsd::cxx::tree::expected_attribute< char > (
-        "ID",
-        "");
-    }
   }
 
   Intrant* Intrant::
@@ -488,7 +440,6 @@ namespace N_Data
       this->pdf_ = x.pdf_;
       this->sound_ = x.sound_;
       this->url_ = x.url_;
-      this->ID_ = x.ID_;
     }
 
     return *this;
@@ -1029,17 +980,6 @@ namespace N_Data
           e));
 
       s << *b;
-    }
-
-    // ID
-    //
-    {
-      ::xercesc::DOMAttr& a (
-        ::xsd::cxx::xml::dom::create_attribute (
-          "ID",
-          e));
-
-      a << i.ID ();
     }
   }
 }

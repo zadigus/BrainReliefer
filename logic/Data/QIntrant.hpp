@@ -37,7 +37,7 @@ namespace N_Data {
 
     private:
       static const N_Data::Intrant::title_type DEFAULT_TITLE;
-      static const N_Data::Intrant::ID_type DEFAULT_ID;
+//      static const N_Data::Intrant::ID_type DEFAULT_ID;
 
       std::unique_ptr<N_Data::Intrant> m_Data;
   };

@@ -13,7 +13,7 @@
 				 <xsd:element name="sound" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
 				 <xsd:element name="url" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
 			</xsd:sequence>
-			<xsd:attribute name="ID" type="xsd:string" use="required"/>
+      <!--xsd:attribute name="ID" type="xsd:string" use="required"/-->
 		</xsd:complexType>
 	</xsd:element>
 	
@@ -29,10 +29,10 @@
 			This schema provides the generic definition of an intrant. Any intrant will inherit from this base definition.
 		  </xsd:documentation>
 		</xsd:annotation>
-		<xsd:unique name="UniqueID">
+    <!--xsd:unique name="UniqueID">
 			<xsd:selector xpath="Intrant"/> 
 			<xsd:field xpath="@ID"/> 
-		</xsd:unique>
+    </xsd:unique-->
 	</xsd:element>
 	
 </xsd:schema>
