@@ -3,3 +3,4 @@
 build/
 log/BrainReliefer.log
 config/NewIntrants - Copie.xml
+*.log
