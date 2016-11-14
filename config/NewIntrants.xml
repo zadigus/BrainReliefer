@@ -2,12 +2,9 @@
 <IntrantList>
   <Intrant>
     <title>System Icon Tray</title>
-    <description>
-		It would be handy to have the brain booster application running 
-		in background. To do so, I can call 
-		QApplication::setQuitOnLastWindowClosed(false); 
-		in the code and have a look at the example given by Qt's System Icon 
-		Tray example.
+    <description>It would be handy to have the brain booster application running in background. To do so, I can call 
+	QApplication::setQuitOnLastWindowClosed(false); 
+in the code and have a look at the example given by Qt's System Icon Tray example.
 		</description>
     <url>http://doc.qt.io/qt-5/qtwidgets-desktop-systray-example.html</url>
   </Intrant>
@@ -17,5 +14,12 @@
   <Intrant>
     <title>fdadasfsadfas</title>
     <description/>
+  </Intrant>
+  <Intrant>
+    <title>Make the whole "Add intrant" page flickable</title>
+  </Intrant>
+  <Intrant>
+    <title>Gray out empty menu categories</title>
+    <description>For example, if there is no incubated intrants, then put the menu entry in the list, but don't make it available, e.g. gray it out</description>
   </Intrant>
 </IntrantList>

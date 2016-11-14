@@ -1,3 +1,0 @@
-@INF : [13/11/2016 19:44:28][N_Models::NewIntrants::addIntrant] : Adding new intrant with title <fdadasfsadfas>.
-@INF : [13/11/2016 19:44:28][N_Models::NewIntrants::addIntrant] : Serializing into file <G:/workspace/BrainReliefer/config/NewIntrants.xml> following the XSD scheme <qrc:/xsd/IntrantList.xsd>.
-@INF : [13/11/2016 19:44:28][N_Models::NewIntrants::store] : Storing the data in the file <G:/workspace/BrainReliefer/config/NewIntrants.xml>.

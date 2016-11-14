@@ -139,9 +139,17 @@ namespace N_Models {
   //-------------------------------------------------------------------------------------------
   QVariant NewIntrants::data(const QModelIndex& a_Index, int a_Role) const
   {
-    if(a_Role == TitleRole)
+    switch(a_Role)
     {
-      return QString::fromStdString(m_Data->Intrant().at(a_Index.row()).title());
+      case TitleRole:
+        return QString::fromStdString(m_Data->Intrant().at(a_Index.row()).title());
+      case DescriptionRole:
+      {
+        Intrant::description_optional descr(m_Data->Intrant().at(a_Index.row()).description());
+        return descr.present() ? QString::fromStdString(*descr) : QString();
+      }
+      default:
+        break;
     }
     return QVariant();
   }
@@ -170,6 +178,7 @@ namespace N_Models {
   {
     QHash<int, QByteArray> result;
     result[TitleRole] = "title";
+    result[DescriptionRole] = "description";
     return result;
   }
 

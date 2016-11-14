@@ -80,10 +80,6 @@ Rectangle
   Component.onCompleted:
   {
     windowHeader.text = qsTr("Add intrant")
-  }
-
-  Component.onDestruction:
-  {
     intrant.reset()
   }
 }

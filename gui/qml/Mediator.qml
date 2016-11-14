@@ -15,6 +15,7 @@ Item
         "newIntrants"           : "/NewIntrants/NewIntrants.qml",
         "newIntrants.add"       : "/NewIntrants/AddIntrant.qml",
         "newIntrants.manage"    : "/NewIntrants/ManageNewIntrants.qml",
+//        "newIntrants.whatisit"  : "/NewIntrants/WhatIsIt.qml",
 
         "incubatedIntrants"     : "/IncubatedIntrants/IncubatedIntrants.qml",
 

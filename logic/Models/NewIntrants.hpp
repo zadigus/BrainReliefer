@@ -23,7 +23,8 @@ namespace N_Models {
 
     public:
       enum NewIntrantsRoles {
-        TitleRole = Qt::UserRole + 1
+        TitleRole = Qt::UserRole + 1,
+        DescriptionRole
       };
 
     public:
