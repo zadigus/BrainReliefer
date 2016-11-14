@@ -2,12 +2,7 @@
 
 #include <QApplication>
 
-#include <QDebug>
-
 #include "EngineConfigurator.hpp"
-
-using namespace N_Data;
-using namespace N_Models;
 
 int main(int argc, char *argv[])
 {

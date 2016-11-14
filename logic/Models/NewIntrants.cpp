@@ -53,10 +53,6 @@ namespace N_Models {
       N_Data::Intrant data(intrant->getIntrant());
       LOG_INF("Adding new intrant with title <" << data.title() << ">.");
 
-      // TODO: be careful with the unique ID:
-      // - get highest id from the list (or store it during loading and then update the value)
-      // - set a higher id to the item we are adding to the list
-      // - the DataManager must be responsible for the uniqueID's incrementation
       auto dataCpy(*m_Data); // keep the original data just in case we have a problem serializing the data
       m_Data->Intrant().push_back(data);
 

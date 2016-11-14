@@ -40,12 +40,13 @@ namespace N_Data {
     }
     catch(const XInvalidData& ex)
     {
-      qDebug() << ex.what();
+      LOG_WRN("Caught XInvalidData exception: " << ex.what());
       emit invalidDataFile();
     }
     catch(const XInexistentData& ex)
     {
-      qDebug() << ex.what();
+      LOG_ERR("Caught XInexistentData exception: " << ex.what());
+      LOG_ERR("This exception is not handled yet.");
       // TODO: handle this exception
     }
   }

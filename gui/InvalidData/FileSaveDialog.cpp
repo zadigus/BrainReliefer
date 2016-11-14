@@ -6,7 +6,6 @@
 #include <QApplication>
 #include <QtWidgets/QFileDialog>
 #include <QFileInfo>
-//#include <QDir>
 
 #include <fstream>
 
@@ -54,6 +53,7 @@ bool FileSaveDialog::open()
   return !m_Filename.isEmpty();
 }
 
+//----------------------------------------------------------------------------------------------
 QUrl FileSaveDialog::filenameUrl() const
 {
   return QUrl::fromLocalFile(m_Filename);

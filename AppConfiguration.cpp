@@ -38,7 +38,8 @@ void AppConfiguration::setup()
   }
   catch(const XInvalidData& ex)
   {
-    qDebug() << ex.what();
+    LOG_WRN("Caught XInvalidData exception: " << ex.what());
+    LOG_WRN("I should use default settings, which is not implemented yet.");
     // TODO: use default settings
   }
 }
@@ -48,5 +49,6 @@ void AppConfiguration::setDataFileUrl(const QUrl& a_Value)
 {
   m_DataFileUrl = a_Value;
   emit dataFileUrlChanged();
+  LOG_INF("I should write the filename in the Application.xml file which is not implemented yet.");
   // TODO: write the filename in the Application.xml file
 }
