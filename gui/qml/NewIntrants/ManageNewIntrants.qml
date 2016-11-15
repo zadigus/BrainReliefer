@@ -46,9 +46,10 @@ Item {
       // rather than having a "PropertyChanges" line for each element we
       // want to fade.
       property real detailsOpacity : 0
+      property int initialIntrantHeight: 40
 
       width: parent.width
-      height: 40
+      height: initialIntrantHeight
 
       // A simple rounded rectangle for the background
       Rectangle {
@@ -76,6 +77,9 @@ Item {
 
         Text {
           text: title
+          elide: Text.ElideRight
+          wrapMode: detailsOpacity ? Text.Wrap : Text.NoWrap
+          width: parent.width
           font.pixelSize: 24
         }
 
@@ -83,33 +87,42 @@ Item {
           text: description
           textFormat: Text.RichText
           font.pixelSize: 15
-          width: parent.width - 4
+          width: parent.width
           wrapMode: Text.Wrap
           opacity: detailsOpacity
         }
       }
 
-//      Row {
-//        anchors.bottom: intrant.bottom
-//        opacity: detailsOpacity
-//        spacing: 10
-//        ActionButton {
-//          buttonText: qsTr("Doable")
-//          width: background.width
-//          height: 25
-//        }
-//        ActionButton {
-//          buttonText: qsTr("Not Doable")
-//          width: 50
-//          height: 25
-//        }
-//      }
+      Row {
+
+        property int leftMargin: 2;
+
+        anchors {
+          bottom: background.bottom; bottomMargin: 1
+          left: background.left; leftMargin: leftMargin
+        }
+        opacity: detailsOpacity
+        spacing: 0
+        ActionButton {
+          buttonText: qsTr("Doable")
+          width: parent.opacity * (background.width - 2 * parent.leftMargin) / 2
+          height: parent.opacity * 25
+          radius: 5
+        }
+        ActionButton {
+          buttonText: qsTr("Not Doable")
+          width: parent.opacity * (background.width - 2 * parent.leftMargin) / 2
+          height: parent.opacity * 25
+          radius: 5
+        }
+      }
 
       // A button to close the detailed view, i.e. set the state back to default ('').
       TextButton {
+        id: closeButton
         y: 10
         anchors { right: background.right; rightMargin: 10 }
-        opacity: intrant.detailsOpacity
+        opacity: detailsOpacity
         text: "Close"
 
         onClicked: intrant.state = '';
@@ -121,14 +134,15 @@ Item {
         PropertyChanges { target: background; color: "red" }
         // Make details visible
         PropertyChanges { target: intrant; detailsOpacity: 1; x: 0 }
+
         // Fill the entire list area with the detailed view
-        PropertyChanges { target: intrant; height: list.height }
+        PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
 
         // Move the list so that this item is at the top.
-        PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: recipe.y }
+        PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
 
         // Disallow flicking while we're in detailed view
-        PropertyChanges { target: intrant.ListView.view; interactive: false }
+        PropertyChanges { target: intrant.ListView.view; interactive: true }
       }
 
       transitions: Transition {
