@@ -10,6 +10,7 @@
 #include <QUrl>
 
 #include <memory>
+#include <functional>
 
 namespace N_Data {
   class IntrantList;
@@ -17,21 +18,22 @@ namespace N_Data {
 
 namespace N_Models {
 
-  class NewIntrants : public QAbstractListModel
+  class IntrantsList : public QAbstractListModel
   {
       Q_OBJECT
 
     public:
-      enum NewIntrantsRoles {
+      enum IntrantsListRoles {
         TitleRole = Qt::UserRole + 1,
         DescriptionRole
       };
 
     public:
-      NewIntrants(QObject* a_Parent = Q_NULLPTR);
-      ~NewIntrants();
+      IntrantsList(QObject* a_Parent = Q_NULLPTR);
+      ~IntrantsList();
 
       Q_INVOKABLE void addIntrant(QObject* a_Intrant);
+      Q_INVOKABLE void removeIntrant(int a_Idx);
 
       virtual int rowCount(const QModelIndex& a_Parent = QModelIndex()) const;
       virtual int columnCount(const QModelIndex& a_Parent = QModelIndex()) const;
@@ -45,6 +47,7 @@ namespace N_Models {
       void loadData (const QString& a_FileName);
       void reload();
       void store(const N_Data::IntrantList& a_List);
+      void serialize(const std::function<void(void)>& a_CmdToBeSerialized);
 
     public slots:
       void reload(const QString& a_FileName);

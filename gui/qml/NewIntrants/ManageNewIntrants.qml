@@ -45,7 +45,8 @@ Item {
       // We can bind multiple element's opacity to this one property,
       // rather than having a "PropertyChanges" line for each element we
       // want to fade.
-      property real detailsOpacity : 0
+      property real detailsOpacity : 0 // TODO: use bools
+      property real notDoableOpacity : 0
       property int initialIntrantHeight: 40
 
       width: parent.width
@@ -62,7 +63,18 @@ Item {
 
       MouseArea {
         anchors.fill: parent
-        onClicked: intrant.state = 'Details'
+        onClicked: if(intrant.state == '') intrant.state = 'Details'
+      }
+
+      // A button to close the detailed view, i.e. set the state back to default ('').
+      TextButton {
+        id: closeButton
+        y: 10
+        anchors { right: background.right; rightMargin: 10 }
+        opacity: detailsOpacity || notDoableOpacity
+        text: "Close"
+
+        onClicked: intrant.state = '';
       }
 
       // Lay out the page: title, description, ...
@@ -103,47 +115,89 @@ Item {
         }
         opacity: detailsOpacity
         spacing: 0
+
+        property int buttonWidth: opacity * (background.width - 2 * leftMargin) / 2
+        property int buttonHeight: opacity * 25
+
         ActionButton {
           buttonText: qsTr("Doable")
-          width: parent.opacity * (background.width - 2 * parent.leftMargin) / 2
-          height: parent.opacity * 25
+          width: parent.buttonWidth
+          height: parent.buttonHeight
           radius: 5
         }
         ActionButton {
-          buttonText: qsTr("Not Doable")
-          width: parent.opacity * (background.width - 2 * parent.leftMargin) / 2
-          height: parent.opacity * 25
+          buttonText: qsTr("Not doable")
+          width: parent.buttonWidth
+          height: parent.buttonHeight
+          radius: 5
+          function onClicked()
+          {
+            intrant.state = 'NotDoable'
+          }
+        }
+      }
+
+      Column {
+
+        id: notDoableLayout
+        spacing: 10
+        opacity: notDoableOpacity
+
+        anchors {
+          bottom: background.bottom; bottomMargin: 1
+          horizontalCenter: background.horizontalCenter
+        }
+
+        property int buttonWidth: opacity * background.width
+        property int buttonHeight: opacity * 25
+
+        ActionButton {
+          buttonText: qsTr("Delete")
+          width: parent.buttonWidth
+          height: parent.buttonHeight
+          radius: 5
+          function onClicked()
+          {
+            console.log("current index = " + index)
+            newIntrantsModel.removeIntrant(index)
+          }
+        }
+        ActionButton {
+          buttonText: qsTr("Incubate")
+          width: parent.buttonWidth
+          height: parent.buttonHeight
+          radius: 5
+        }
+        ActionButton {
+          buttonText: qsTr("Keep as reference")
+          width: parent.buttonWidth
+          height: parent.buttonHeight
           radius: 5
         }
       }
 
-      // A button to close the detailed view, i.e. set the state back to default ('').
-      TextButton {
-        id: closeButton
-        y: 10
-        anchors { right: background.right; rightMargin: 10 }
-        opacity: detailsOpacity
-        text: "Close"
-
-        onClicked: intrant.state = '';
-      }
-
-      states: State {
+      states: [ State {
         name: "Details"
-
         PropertyChanges { target: background; color: "red" }
         // Make details visible
         PropertyChanges { target: intrant; detailsOpacity: 1; x: 0 }
-
         // Fill the entire list area with the detailed view
         PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
-
         // Move the list so that this item is at the top.
         PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
-
         // Disallow flicking while we're in detailed view
-        PropertyChanges { target: intrant.ListView.view; interactive: true }
-      }
+        PropertyChanges { target: intrant.ListView.view; interactive: false }
+      }, State {
+       name: "NotDoable"
+       PropertyChanges { target: background; color: "green" }
+       PropertyChanges { target: intrant; detailsOpacity: 0; x: 0; notDoableOpacity: 1 }
+       // Fill the entire list area with the "not doable" view
+       PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
+       // Move the list so that this item is at the top.
+       PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
+       // Disallow flicking while we're in detailed view
+       PropertyChanges { target: intrant.ListView.view; interactive: false }
+      }]
 
       transitions: Transition {
         // Make the state changes smooth

@@ -5,7 +5,7 @@
 #include "Data/DataManager.hpp"
 #include "Data/QIntrant.hpp"
 
-#include "Models/NewIntrants.hpp"
+#include "Models/IntrantsList.hpp"
 
 #include "InvalidData/FileSaveDialog.hpp"
 
@@ -15,7 +15,7 @@
 EngineConfigurator::EngineConfigurator(QQmlApplicationEngine& a_Engine)
   : m_Engine(a_Engine)
   , m_AppConfiguration(new AppConfiguration)
-  , m_NewIntrantsModel(new N_Models::NewIntrants)
+  , m_NewIntrantsModel(new N_Models::IntrantsList)
   , m_DataManager(new N_Data::DataManager)
   , m_Intrant(new N_Data::QIntrant)
 {

@@ -1,4 +1,4 @@
-#include "Models/NewIntrants.hpp"
+#include "Models/IntrantsList.hpp"
 
 #include "Data/DataManagerHelper.hpp"
 #include "Data/DataValidator.hpp"
@@ -18,7 +18,7 @@ using namespace N_Data;
 namespace N_Models {
 
   //-------------------------------------------------------------------------------------------
-  NewIntrants::NewIntrants(QObject* a_Parent)
+  IntrantsList::IntrantsList(QObject* a_Parent)
     : QAbstractListModel(a_Parent)
     , m_IntrantListXsd(QStringLiteral("qrc:/xsd/IntrantList.xsd"))
   {
@@ -26,13 +26,13 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  NewIntrants::~NewIntrants()
+  IntrantsList::~IntrantsList()
   {
 
   }
 
   //-------------------------------------------------------------------------------------------
-  void NewIntrants::store(const IntrantList& a_List)
+  void IntrantsList::store(const IntrantList& a_List)
   {
     LOG_INF("Storing the data in the file <" << m_LoadedFilename.toStdString() << ">.");
 
@@ -46,34 +46,46 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  void NewIntrants::addIntrant(QObject* a_Intrant)
+  void IntrantsList::serialize(const std::function<void(void)>& a_CmdToBeSerialized)
+  {
+    LOG_INF("Serializing into file <" << m_LoadedFilename.toStdString() << "> following the XSD scheme <" << m_IntrantListXsd.toString().toStdString() << ">.");
+
+    auto dataCpy(*m_Data); // keep the original data just in case we have a problem serializing the data
+    a_CmdToBeSerialized();
+
+    try
+    {
+      store(*m_Data);
+      reload(m_LoadedFilename);
+    }
+    catch(const XInvalidData& ex)
+    {
+      LOG_ERR("Serialization failed. Restoring the data to their original state (" << ex.what() << ").");
+      store(dataCpy);
+      reload(m_LoadedFilename);
+    }
+  }
+
+  //-------------------------------------------------------------------------------------------
+  void IntrantsList::addIntrant(QObject* a_Intrant)
   {
     if(QIntrant* intrant = qobject_cast<QIntrant*>(a_Intrant))
     {
       N_Data::Intrant data(intrant->getIntrant());
       LOG_INF("Adding new intrant with title <" << data.title() << ">.");
-
-      auto dataCpy(*m_Data); // keep the original data just in case we have a problem serializing the data
-      m_Data->Intrant().push_back(data);
-
-      LOG_INF("Serializing into file <" << m_LoadedFilename.toStdString() << "> following the XSD scheme <" << m_IntrantListXsd.toString().toStdString() << ">.");
-
-      try
-      {
-        store(*m_Data);
-        reload(m_LoadedFilename);
-      }
-      catch(const XInvalidData& ex)
-      {
-        LOG_ERR("Serialization failed. Restoring the data to their original state (" << ex.what() << ").");
-        store(dataCpy);
-        reload(m_LoadedFilename);
-      }
+      serialize([this, &data](){ m_Data->Intrant().push_back(data); });
     }
   }
 
   //-------------------------------------------------------------------------------------------
-  void NewIntrants::loadData (const QString& a_FileName)
+  void IntrantsList::removeIntrant(int a_Idx)
+  {
+    LOG_INF("Deleting intrant with title <" << m_Data->Intrant().at(a_Idx).title() << ">...");
+    serialize([this, &a_Idx](){ m_Data->Intrant().erase(m_Data->Intrant().begin() + a_Idx); });
+  }
+
+  //-------------------------------------------------------------------------------------------
+  void IntrantsList::loadData (const QString& a_FileName)
   {
     try
     {
@@ -96,7 +108,7 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  void NewIntrants::reload()
+  void IntrantsList::reload()
   {
     beginResetModel();
 
@@ -113,14 +125,14 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  void NewIntrants::reload(const QString& a_FileName)
+  void IntrantsList::reload(const QString& a_FileName)
   {
     loadData(a_FileName);
     reload();
   }
 
   //-------------------------------------------------------------------------------------------
-  int NewIntrants::rowCount(const QModelIndex& /*parent*/) const
+  int IntrantsList::rowCount(const QModelIndex& /*parent*/) const
   {
     if(m_Data)
     {
@@ -131,13 +143,13 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  int NewIntrants::columnCount(const QModelIndex& /*parent*/) const
+  int IntrantsList::columnCount(const QModelIndex& /*parent*/) const
   {
     return 1;
   }
 
   //-------------------------------------------------------------------------------------------
-  QVariant NewIntrants::data(const QModelIndex& a_Index, int a_Role) const
+  QVariant IntrantsList::data(const QModelIndex& a_Index, int a_Role) const
   {
     switch(a_Role)
     {
@@ -155,7 +167,7 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  QVariant NewIntrants::headerData(int a_Section, Qt::Orientation a_Orientation, int a_Role) const
+  QVariant IntrantsList::headerData(int a_Section, Qt::Orientation a_Orientation, int a_Role) const
   {
     if(a_Role != TitleRole)
     {
@@ -174,7 +186,7 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  QHash<int, QByteArray> NewIntrants::roleNames() const
+  QHash<int, QByteArray> IntrantsList::roleNames() const
   {
     QHash<int, QByteArray> result;
     result[TitleRole] = "title";

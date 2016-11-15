@@ -8,7 +8,7 @@ class QUrl;
 class AppConfiguration;
 
 namespace N_Models {
-  class NewIntrants;
+  class IntrantsList;
 }
 
 namespace N_Data {
@@ -31,7 +31,7 @@ class EngineConfigurator
 
     AppConfiguration* m_AppConfiguration;
 
-    N_Models::NewIntrants* m_NewIntrantsModel;
+    N_Models::IntrantsList* m_NewIntrantsModel;
     N_Data::DataManager* m_DataManager;
     N_Data::QIntrant* m_Intrant;
 };
