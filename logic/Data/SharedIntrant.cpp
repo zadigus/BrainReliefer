@@ -1,43 +1,42 @@
-#include "Data/QIntrant.hpp"
+#include "Data/SharedIntrant.hpp"
 
 namespace N_Data {
 
-  const N_Data::Intrant::title_type QIntrant::DEFAULT_TITLE = "DefaultTitle";
-//  const N_Data::Intrant::ID_type QIntrant::DEFAULT_ID = "1";
+  const N_Data::Intrant::title_type SharedIntrant::DEFAULT_TITLE = "DefaultTitle";
 
   //---------------------------------------------------------------------------------------------------
-  QIntrant::QIntrant(QObject *a_Parent)
+  SharedIntrant::SharedIntrant(QObject* a_Parent)
     : QObject(a_Parent)
   {
     reset();
   }
 
   //---------------------------------------------------------------------------------------------------
-  void QIntrant::reset()
+  void SharedIntrant::reset()
   {
-    m_Data.reset(new N_Data::Intrant(DEFAULT_TITLE)); //, DEFAULT_ID));
+    m_Data.reset(new Intrant(DEFAULT_TITLE));
   }
 
   //---------------------------------------------------------------------------------------------------
-  QString QIntrant::title() const
+  QString SharedIntrant::title() const
   {
     return QString::fromStdString(m_Data->title());
   }
 
   //---------------------------------------------------------------------------------------------------
-  void QIntrant::setTitle(const QString& a_Value)
+  void SharedIntrant::setTitle(const QString& a_Value)
   {
     m_Data->title(a_Value.toStdString());
   }
 
   //---------------------------------------------------------------------------------------------------
-  QString QIntrant::description() const
+  QString SharedIntrant::description() const
   {
-    return m_Data->description().present() ? QString::fromStdString(*(m_Data->description())) : QString();
+    return m_Data->description().present() ? QString::fromStdString(*m_Data->description()) : QString();
   }
 
   //---------------------------------------------------------------------------------------------------
-  void QIntrant::setDescription(const QString& a_Value)
+  void SharedIntrant::setDescription(const QString& a_Value)
   {
     m_Data->description(a_Value.toStdString());
   }

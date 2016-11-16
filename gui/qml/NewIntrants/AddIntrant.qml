@@ -1,8 +1,9 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 
+import MyDataManagement 1.0
+
 import "/js/Global.js" as Global
-//import ".."
 import "../Common/"
 
 Rectangle
@@ -26,7 +27,7 @@ Rectangle
       textField: titleField
     }
     Binding {
-      target: intrant
+      target: sharedIntrant
       property: "title"
       value: titleField.text
     }
@@ -42,24 +43,14 @@ Rectangle
     }
   }
 
-  Rectangle {
-    id: toBeRemoved2
-    width: parent.width
-    height: 50
-    anchors.top: toBeRemoved1.bottom
-    Text {
-      text: "TODO: Once save button is clicked, reset the data"
-    }
-  }
-
   FocusableTextEdit {
     id: descriptionField
     width: parent.width
     height: 100
-    anchors.top: toBeRemoved2.bottom
+    anchors.top: toBeRemoved1.bottom
     placeHolderText: qsTr("Enter description here")
     Binding {
-      target: intrant
+      target: sharedIntrant
       property: "description"
       value: descriptionField.editedText
     }
@@ -73,7 +64,8 @@ Rectangle
 
     function onClicked()
     {
-      newIntrantsModel.addIntrant(intrant)
+//      newIntrantsModel.addIntrant(sharedIntrant)
+      dataManager.addIntrant(newIntrantsModel, sharedIntrant)
       windowFooter.goBack()
     }
   }
@@ -81,6 +73,6 @@ Rectangle
   Component.onCompleted:
   {
     windowHeader.text = qsTr("Add intrant")
-    intrant.reset()
+    sharedIntrant.reset()
   }
 }

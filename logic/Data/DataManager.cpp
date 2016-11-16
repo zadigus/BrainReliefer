@@ -5,6 +5,9 @@
 #include "Data/DataConstants.hpp"
 #include "Data/Data.hpp"
 #include "Data/IntrantList.hpp"
+#include "Data/SharedIntrant.hpp"
+
+#include "Models/IntrantsList.hpp"
 
 #include <iostream>
 
@@ -19,14 +22,29 @@ namespace N_Data {
   DataManager::DataManager(QObject* a_Parent)
     : QObject(a_Parent)
     , m_DataXsd(QStringLiteral("qrc:/xsd/Data.xsd"))
-  {
-
-  }
+  { }
 
   //----------------------------------------------------------------------------------------------
   DataManager::~DataManager()
-  {
+  { }
 
+  //----------------------------------------------------------------------------------------------
+  void DataManager::addIntrant(N_Models::IntrantsList* a_SrcModel, SharedIntrant* a_Intrant)
+  {
+    a_SrcModel->addIntrant(a_Intrant->getIntrant());
+  }
+
+  //----------------------------------------------------------------------------------------------
+  void DataManager::removeIntrant(N_Models::IntrantsList* a_SrcModel, int a_Idx)
+  {
+    a_SrcModel->removeIntrant(a_Idx);
+  }
+
+  //----------------------------------------------------------------------------------------------
+  void DataManager::transferIntrant(N_Models::IntrantsList* a_SrcModel, N_Models::IntrantsList* a_DestModel, int a_Idx)
+  {
+    std::unique_ptr<Intrant> intrant(a_SrcModel->popIntrant(a_Idx));
+    a_DestModel->addIntrant(*intrant);
   }
 
   //----------------------------------------------------------------------------------------------
@@ -36,7 +54,8 @@ namespace N_Data {
     {
       auto DataBuilder = [] (const std::string& a_FileName) { return Data_(a_FileName, xml_schema::flags::dont_validate); };
       m_Data = N_DataManagerHelper::getParsedXML<Data>(a_PathToFile.toLocalFile(), m_DataXsd, DataBuilder);
-      emitNewIntrantsLoaded();
+      emitLoaded(NEW_INTRANTS_ITEMS, std::bind(&DataManager::newIntrantsLoaded, this, std::placeholders::_1));
+      emitLoaded(REFERENCE_ITEMS, std::bind(&DataManager::referencesLoaded, this, std::placeholders::_1));
     }
     catch(const XInvalidData& ex)
     {
@@ -46,24 +65,28 @@ namespace N_Data {
     catch(const XInexistentData& ex)
     {
       LOG_ERR("Caught XInexistentData exception: " << ex.what());
-      LOG_ERR("This exception is not handled yet.");
+      LOG_ERR("This exception is not handled yet; we should create a new empty file in this case, shouldn't we?");
       // TODO: handle this exception
     }
   }
 
   //----------------------------------------------------------------------------------------------
-  void DataManager::emitNewIntrantsLoaded()
+  void DataManager::emitLoaded(const std::string& a_ItemName, const std::function<void(const QString&)>& a_EmitCallback)
   {
     if(m_Data)
     {
-      auto IsDataWithName = [] (const DataPath& a_DataPath) { return a_DataPath.name() == N_Data::NEW_INTRANTS_ITEMS; };
+      auto IsDataWithName = [&a_ItemName] (const DataPath& a_DataPath) { return a_DataPath.name() == a_ItemName; };
       Data::DataPath_const_iterator it(std::find_if(m_Data->DataPath().begin(), m_Data->DataPath().end(), IsDataWithName));
       if(it != m_Data->DataPath().end())
       {
-        emit newIntrantsLoaded(QDir(QString::fromStdString(m_Data->RootDir())).filePath(QString::fromStdString(*it)));
+        emit a_EmitCallback(QDir(QString::fromStdString(m_Data->RootDir())).filePath(QString::fromStdString(*it)));
         return;
       }
-      throw XInexistentData("NewIntrantItems does not exist.");
+      std::stringstream ss;
+      ss << a_ItemName;
+      ss << " do not exist.";
+      throw XInexistentData(ss.str());
+      // TODO : create the file
     }
     throw XInexistentData("Main data file missing.");
   }

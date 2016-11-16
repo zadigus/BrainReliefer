@@ -6,5 +6,6 @@
 #include <QDebug>
 
 #include <memory>
+#include <functional>
 
 #endif

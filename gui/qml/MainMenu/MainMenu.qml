@@ -14,7 +14,7 @@ Menu
     menus: [
                 {text: qsTr("New Intrants"),          link: "newIntrants"},
                 {text: qsTr("Incubated Intrants"),    link: "incubatedIntrants"},
-                {text: qsTr("References"),            link: "references"},
+                {text: qsTr("References"),            link: "references.browse"},
                 {text: qsTr("Projects"),              link: "projects"},
                 {text: qsTr("Next Actions"),          link: "nextActions"},
                 {text: qsTr("Agenda"),                link: "agenda"}

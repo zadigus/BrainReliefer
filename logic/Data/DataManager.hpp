@@ -10,11 +10,13 @@
 #include <QString>
 #include <QObject>
 
-#include <functional>
-#include <memory>
-
 namespace N_Data {
   class IntrantList;
+  class SharedIntrant;
+}
+
+namespace N_Models {
+  class IntrantsList;
 }
 
 namespace N_Data {
@@ -29,17 +31,21 @@ namespace N_Data {
 
       Q_INVOKABLE void load(const QUrl& a_PathToFile);
 
+      Q_INVOKABLE void addIntrant(N_Models::IntrantsList* a_SrcModel, N_Data::SharedIntrant* a_Intrant);
+      Q_INVOKABLE void removeIntrant(N_Models::IntrantsList* a_SrcModel, int a_Idx);
+      Q_INVOKABLE void transferIntrant(N_Models::IntrantsList* a_SrcModel, N_Models::IntrantsList* a_DestModel, int a_Idx);
+
     private:
-      void emitNewIntrantsLoaded();
+      void emitLoaded(const std::string& a_ItemName, const std::function<void(const QString&)>& a_EmitCallback);
 
     signals:
       void invalidDataFile();
 
       void newIntrantsLoaded(const QString& a_FileName);
+      void referencesLoaded(const QString& a_FileName);
 
     private:
       QUrl m_DataXsd;
-//      QFile m_DataXmlFile;
 
       std::unique_ptr<Data> m_Data;
   };

@@ -1,5 +1,7 @@
 import QtQuick 2.0
 
+import MyDataManagement 1.0
+
 import "/js/Global.js" as Global
 import ".."
 import "../Common"
@@ -109,7 +111,6 @@ Item {
       }
 
       Row {
-
         property int leftMargin: 2;
 
         anchors {
@@ -161,8 +162,8 @@ Item {
           radius: 5
           function onClicked()
           {
-            console.log("current index = " + index)
-            newIntrantsModel.removeIntrant(index)
+            console.log("deleting index = " + index)
+            dataManager.removeIntrant(newIntrantsModel, index)
           }
         }
         ActionButton {
@@ -176,6 +177,11 @@ Item {
           width: parent.buttonWidth
           height: parent.buttonHeight
           radius: 5
+          function onClicked()
+          {
+            console.log("setting index " + index + " as a reference")
+            dataManager.transferIntrant(newIntrantsModel, referencesModel, index)
+          }
         }
       }
 

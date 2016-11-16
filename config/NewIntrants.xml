@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <IntrantList>
   <Intrant>
-    <title>System Icon Tray</title>
-    <description>It would be handy to have the brain booster application running in background. To do so, I can call 
-	QApplication::setQuitOnLastWindowClosed(false); 
-in the code and have a look at the example given by Qt's System Icon Tray example.
-		</description>
-    <url>http://doc.qt.io/qt-5/qtwidgets-desktop-systray-example.html</url>
-  </Intrant>
-  <Intrant>
     <title>Make the whole "Add intrant" page flickable</title>
   </Intrant>
   <Intrant>
@@ -29,5 +21,24 @@ in the code and have a look at the example given by Qt's System Icon Tray exampl
   <Intrant>
     <title>Implement loading of references</title>
     <description>I have already connected the DataManager to the ReferencesModel::reload. I only need to implement the loading of the XML from the DataManager and the emission of the referencesLoaded signal.</description>
+  </Intrant>
+  <Intrant>
+    <title>Implement filter for references</title>
+    <description>The filter should filter over all the fields, i.e. title, description, urls, etc.</description>
+  </Intrant>
+  <Intrant>
+    <title>Port to Android</title>
+  </Intrant>
+  <Intrant>
+    <title>Port to Windows Phone</title>
+  </Intrant>
+  <Intrant>
+    <title>Port to IPhone</title>
+  </Intrant>
+  <Intrant>
+    <title>Organiser la redirection de courrier</title>
+  </Intrant>
+  <Intrant>
+    <title>Implement intrant addition in the intrant management page</title>
   </Intrant>
 </IntrantList>

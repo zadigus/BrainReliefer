@@ -5,7 +5,7 @@
 #include "Data/DataManager.hpp"
 #include "Data/DataExceptions.hpp"
 
-#include "Data/QIntrant.hpp"
+#include "Data/SharedIntrant.hpp"
 #include "Data/IntrantList.hpp"
 
 #include <QDebug>
@@ -21,15 +21,11 @@ namespace N_Models {
   IntrantsList::IntrantsList(QObject* a_Parent)
     : QAbstractListModel(a_Parent)
     , m_IntrantListXsd(QStringLiteral("qrc:/xsd/IntrantList.xsd"))
-  {
-
-  }
+  { }
 
   //-------------------------------------------------------------------------------------------
   IntrantsList::~IntrantsList()
-  {
-
-  }
+  { }
 
   //-------------------------------------------------------------------------------------------
   void IntrantsList::store(const IntrantList& a_List)
@@ -67,14 +63,19 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  void IntrantsList::addIntrant(QObject* a_Intrant)
+  std::unique_ptr<Intrant> IntrantsList::popIntrant(int a_Idx)
   {
-    if(QIntrant* intrant = qobject_cast<QIntrant*>(a_Intrant))
-    {
-      N_Data::Intrant data(intrant->getIntrant());
-      LOG_INF("Adding new intrant with title <" << data.title() << ">.");
-      serialize([this, &data](){ m_Data->Intrant().push_back(data); });
-    }
+    std::unique_ptr<Intrant> result(new Intrant(m_Data->Intrant().at(a_Idx)));
+    LOG_INF("Popping out intrant with title <" << result->title() << ">");
+    removeIntrant(a_Idx);
+    return result;
+  }
+
+  //-------------------------------------------------------------------------------------------
+  void IntrantsList::addIntrant(const Intrant& a_Intrant)
+  {
+    LOG_INF("Adding new intrant with title <" << a_Intrant.title() << ">.");
+    serialize([this, &a_Intrant](){ m_Data->Intrant().push_back(a_Intrant); });
   }
 
   //-------------------------------------------------------------------------------------------
@@ -95,15 +96,16 @@ namespace N_Models {
     catch(const XInexistentData& ex)
     {
       LOG_ERR("Caught exception: " << ex.what());
-      m_Data.reset();
+      m_Data.reset(new IntrantList);
     }
     catch(const XInvalidData& ex)
     {
       LOG_ERR("Caught exception: " << ex.what());
-      m_Data.reset();
+      m_Data.reset(new IntrantList);
       throw ex;
       // TODO: if the data does not exist, then automatically create the missing file in the same directory as the main Data.xml
     }
+    // TODO: what happens if a_FileName is empty???? --> set default filename
     m_LoadedFilename = a_FileName;
   }
 
@@ -117,11 +119,14 @@ namespace N_Models {
     QModelIndex bottomRight = index(rowCount(parentIndex) - 1,
                                     columnCount(parentIndex) - 1, parentIndex);
 
-    beginInsertRows(parentIndex, 0, static_cast<int>(m_Data->Intrant().size()) - 1);
-    endInsertRows();
+    if(m_Data->Intrant().size() > 0)
+    {
+      beginInsertRows(parentIndex, 0, static_cast<int>(m_Data->Intrant().size()) - 1);
+      endInsertRows();
 
-    emit dataChanged(topLeft, bottomRight);
-    endResetModel();
+      emit dataChanged(topLeft, bottomRight);
+      endResetModel();
+    }
   }
 
   //-------------------------------------------------------------------------------------------

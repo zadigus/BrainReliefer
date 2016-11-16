@@ -3,7 +3,7 @@
 #include "AppConfiguration.hpp"
 
 #include "Data/DataManager.hpp"
-#include "Data/QIntrant.hpp"
+#include "Data/SharedIntrant.hpp"
 
 #include "Models/IntrantsList.hpp"
 
@@ -18,7 +18,7 @@ EngineConfigurator::EngineConfigurator(QQmlApplicationEngine& a_Engine)
   , m_NewIntrantsModel(new N_Models::IntrantsList)
   , m_ReferencesModel(new N_Models::IntrantsList)
   , m_DataManager(new N_Data::DataManager)
-  , m_Intrant(new N_Data::QIntrant)
+  , m_SharedIntrant(new N_Data::SharedIntrant)
 {
 
 }
@@ -33,13 +33,15 @@ void EngineConfigurator::setupContext()
   context->setContextProperty("dataManager", m_DataManager);
   context->setContextProperty("newIntrantsModel", m_NewIntrantsModel);
   context->setContextProperty("referencesModel", m_ReferencesModel);
-  context->setContextProperty("intrant", m_Intrant);
+  context->setContextProperty("sharedIntrant", m_SharedIntrant);
 }
 
 //----------------------------------------------------------------------------------------------
 void EngineConfigurator::registerMetaTypes ()
 {
   qmlRegisterType<FileSaveDialog>("InvalidData", 1, 0, "FileSaveDialog");
+  qmlRegisterType<N_Models::IntrantsList>("MyDataManagement", 1, 0, "IntrantsList");
+  qmlRegisterType<N_Data::SharedIntrant>("MyDataManagement", 1, 0, "SharedIntrant");
 }
 
 //----------------------------------------------------------------------------------------------

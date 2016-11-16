@@ -3,7 +3,7 @@
 
 #include "core/Global.hpp"
 
-#include "Data/QIntrant.hpp"
+//#include "Data/IntrantList.hpp"
 
 #include <QAbstractListModel>
 
@@ -13,6 +13,7 @@
 #include <functional>
 
 namespace N_Data {
+  class Intrant;
   class IntrantList;
 }
 
@@ -32,8 +33,9 @@ namespace N_Models {
       IntrantsList(QObject* a_Parent = Q_NULLPTR);
       ~IntrantsList();
 
-      Q_INVOKABLE void addIntrant(QObject* a_Intrant);
-      Q_INVOKABLE void removeIntrant(int a_Idx);
+      std::unique_ptr<N_Data::Intrant> popIntrant(int a_Idx);
+      void addIntrant(const N_Data::Intrant& a_Intrant);
+      void removeIntrant(int a_Idx);
 
       virtual int rowCount(const QModelIndex& a_Parent = QModelIndex()) const;
       virtual int columnCount(const QModelIndex& a_Parent = QModelIndex()) const;
