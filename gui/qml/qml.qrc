@@ -22,12 +22,17 @@
         <file alias="NewIntrants.qml">NewIntrants/NewIntrants.qml</file>
         <file alias="AddIntrant.qml">NewIntrants/AddIntrant.qml</file>
         <file alias="ManageNewIntrants.qml">NewIntrants/ManageNewIntrants.qml</file>
-		<file alias="FocusRectangle.qml">NewIntrants/FocusRectangle.qml</file>
-		<file alias="PlaceHolderText.qml">NewIntrants/PlaceHolderText.qml</file>
-		<file alias="FocusableTextEdit.qml">NewIntrants/FocusableTextEdit.qml</file>
-		<file alias="ActionButton.qml">NewIntrants/ActionButton.qml</file>
-		<file alias="TextButton.qml">NewIntrants/TextButton.qml</file>
     </qresource>
+	<qresource prefix="/References">
+        <file alias="BrowseReferences.qml">References/BrowseReferences.qml</file>
+    </qresource>
+	<qresource prefix="/Common">
+		<file alias="FocusRectangle.qml">Common/FocusRectangle.qml</file>
+		<file alias="PlaceHolderText.qml">Common/PlaceHolderText.qml</file>
+		<file alias="FocusableTextEdit.qml">Common/FocusableTextEdit.qml</file>
+		<file alias="ActionButton.qml">Common/ActionButton.qml</file>
+		<file alias="TextButton.qml">Common/TextButton.qml</file>
+	</qresource>
     <qresource prefix="/images">
         <file>backArrow.png</file>
         <file>home.png</file>

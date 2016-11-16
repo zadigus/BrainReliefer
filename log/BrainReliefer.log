@@ -1,6 +1,3 @@
-@INF : [15/11/2016 18:34:59][N_Models::IntrantsList::addIntrant] : Adding new intrant with title <héhé, je suis de nouveau làààààààà>.
-@INF : [15/11/2016 18:34:59][N_Models::IntrantsList::serialize] : Serializing into file <G:/workspace/BrainReliefer/config/NewIntrants.xml> following the XSD scheme <qrc:/xsd/IntrantList.xsd>.
-@INF : [15/11/2016 18:34:59][N_Models::IntrantsList::store] : Storing the data in the file <G:/workspace/BrainReliefer/config/NewIntrants.xml>.
-@INF : [15/11/2016 18:35:07][N_Models::IntrantsList::removeIntrant] : Deleting intrant with title <héhé, je suis de nouveau làààààààà>...
-@INF : [15/11/2016 18:35:07][N_Models::IntrantsList::serialize] : Serializing into file <G:/workspace/BrainReliefer/config/NewIntrants.xml> following the XSD scheme <qrc:/xsd/IntrantList.xsd>.
-@INF : [15/11/2016 18:35:07][N_Models::IntrantsList::store] : Storing the data in the file <G:/workspace/BrainReliefer/config/NewIntrants.xml>.
+@INF : [16/11/2016 10:12:04][N_Models::IntrantsList::addIntrant] : Adding new intrant with title <Implement loading of references>.
+@INF : [16/11/2016 10:12:04][N_Models::IntrantsList::serialize] : Serializing into file <G:/workspace/BrainReliefer/config/NewIntrants.xml> following the XSD scheme <qrc:/xsd/IntrantList.xsd>.
+@INF : [16/11/2016 10:12:04][N_Models::IntrantsList::store] : Storing the data in the file <G:/workspace/BrainReliefer/config/NewIntrants.xml>.

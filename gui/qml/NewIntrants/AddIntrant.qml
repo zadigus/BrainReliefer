@@ -2,7 +2,8 @@ import QtQuick 2.0
 import QtQuick.Controls 2.0
 
 import "/js/Global.js" as Global
-import ".."
+//import ".."
+import "../Common/"
 
 Rectangle
 {

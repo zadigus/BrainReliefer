@@ -19,7 +19,6 @@ FocusRectangle {
       contentHeight: myTextEdit.paintedHeight
       clip: true
       flickableDirection: Flickable.VerticalFlick
-      leftMargin: 10
 
       function ensureVisible(r)
       {
@@ -31,7 +30,8 @@ FocusRectangle {
 
       TextEdit {
         id: myTextEdit
-        width: myFlickable.width
+        x: 10;
+        width: myFlickable.width - 2*x
         height: myFlickable.height
         wrapMode: TextEdit.Wrap
         onCursorRectangleChanged: myFlickable.ensureVisible(cursorRectangle)

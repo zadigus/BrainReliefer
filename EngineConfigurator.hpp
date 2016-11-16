@@ -32,6 +32,7 @@ class EngineConfigurator
     AppConfiguration* m_AppConfiguration;
 
     N_Models::IntrantsList* m_NewIntrantsModel;
+    N_Models::IntrantsList* m_ReferencesModel;
     N_Data::DataManager* m_DataManager;
     N_Data::QIntrant* m_Intrant;
 };

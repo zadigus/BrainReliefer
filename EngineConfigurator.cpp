@@ -16,6 +16,7 @@ EngineConfigurator::EngineConfigurator(QQmlApplicationEngine& a_Engine)
   : m_Engine(a_Engine)
   , m_AppConfiguration(new AppConfiguration)
   , m_NewIntrantsModel(new N_Models::IntrantsList)
+  , m_ReferencesModel(new N_Models::IntrantsList)
   , m_DataManager(new N_Data::DataManager)
   , m_Intrant(new N_Data::QIntrant)
 {
@@ -31,6 +32,7 @@ void EngineConfigurator::setupContext()
   context->setContextProperty("appConfiguration", m_AppConfiguration);
   context->setContextProperty("dataManager", m_DataManager);
   context->setContextProperty("newIntrantsModel", m_NewIntrantsModel);
+  context->setContextProperty("referencesModel", m_ReferencesModel);
   context->setContextProperty("intrant", m_Intrant);
 }
 
@@ -50,4 +52,5 @@ void EngineConfigurator::loadQML(const QUrl& a_MainQml)
 void EngineConfigurator::setupConnections()
 {
   QObject::connect(m_DataManager, SIGNAL(newIntrantsLoaded(QString)), m_NewIntrantsModel, SLOT(reload(QString)));
+  QObject::connect(m_DataManager, SIGNAL(referencesLoaded(QString)), m_ReferencesModel, SLOT(reload(QString)));
 }

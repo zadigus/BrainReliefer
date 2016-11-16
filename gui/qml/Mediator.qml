@@ -15,11 +15,10 @@ Item
         "newIntrants"           : "/NewIntrants/NewIntrants.qml",
         "newIntrants.add"       : "/NewIntrants/AddIntrant.qml",
         "newIntrants.manage"    : "/NewIntrants/ManageNewIntrants.qml",
-//        "newIntrants.whatisit"  : "/NewIntrants/WhatIsIt.qml",
 
         "incubatedIntrants"     : "/IncubatedIntrants/IncubatedIntrants.qml",
 
-        "references"            : "/References/References.qml",
+        "references.browse"     : "/References/BrowseReferences.qml",
 
         "projects"              : "/Projects/Projects.qml",
         "nextActions"           : "/NextActions/NextActions.qml",

@@ -2,6 +2,7 @@ import QtQuick 2.0
 
 import "/js/Global.js" as Global
 import ".."
+import "../Common"
 
 Item {
 
@@ -45,8 +46,8 @@ Item {
       // We can bind multiple element's opacity to this one property,
       // rather than having a "PropertyChanges" line for each element we
       // want to fade.
-      property real detailsOpacity : 0 // TODO: use bools
-      property real notDoableOpacity : 0
+      property bool detailsOpacity : false // TODO: use bools
+      property bool notDoableOpacity : false
       property int initialIntrantHeight: 40
 
       width: parent.width
@@ -82,7 +83,7 @@ Item {
       // mode have their opacity set to detailsOpacity.
       Column {
         id: topLayout
-        x: 10; y: 10;
+        x: 0; y: 10;
         height: parent.height;
         width: parent.width
         spacing: 10
@@ -91,7 +92,8 @@ Item {
           text: title
           elide: Text.ElideRight
           wrapMode: detailsOpacity ? Text.Wrap : Text.NoWrap
-          width: parent.width
+          x: 10
+          width: parent.width - 2 * x
           font.pixelSize: 24
         }
 
@@ -99,7 +101,8 @@ Item {
           text: description
           textFormat: Text.RichText
           font.pixelSize: 15
-          width: parent.width
+          x: 15
+          width: parent.width - 2 * x
           wrapMode: Text.Wrap
           opacity: detailsOpacity
         }
@@ -180,7 +183,7 @@ Item {
         name: "Details"
         PropertyChanges { target: background; color: "red" }
         // Make details visible
-        PropertyChanges { target: intrant; detailsOpacity: 1; x: 0 }
+        PropertyChanges { target: intrant; detailsOpacity: true; x: 0 }
         // Fill the entire list area with the detailed view
         PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
         // Move the list so that this item is at the top.
@@ -190,7 +193,7 @@ Item {
       }, State {
        name: "NotDoable"
        PropertyChanges { target: background; color: "green" }
-       PropertyChanges { target: intrant; detailsOpacity: 0; x: 0; notDoableOpacity: 1 }
+       PropertyChanges { target: intrant; detailsOpacity: false; x: 0; notDoableOpacity: true }
        // Fill the entire list area with the "not doable" view
        PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
        // Move the list so that this item is at the top.
@@ -203,7 +206,7 @@ Item {
         // Make the state changes smooth
         ParallelAnimation {
           ColorAnimation { property: "color"; duration: 500 }
-          NumberAnimation { duration: 300; properties: "detailsOpacity,x,contentY,height,width" }
+          NumberAnimation { duration: 300; properties: "detailsOpacity,notDoableOpacity,x,contentY,height,width" }
         }
       }
 

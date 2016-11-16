@@ -18,4 +18,16 @@ in the code and have a look at the example given by Qt's System Icon Tray exampl
   <Intrant>
     <title>Organiser la crèche</title>
   </Intrant>
+  <Intrant>
+    <title>Implement perpetual agenda</title>
+    <description>The idea of the perpetual agenda is that the agenda sends you a notification at a later date about an incubated intrant.</description>
+  </Intrant>
+  <Intrant>
+    <title>Implement the "One day maybe" incubation list</title>
+    <description>In addition to the incubated intrants we want to be notified about at some date in the future, we need a list for incubated intrants that have no deadline. For example, intrants of the type "Learn Spanish", "Learn how to cook", "Go to Australia", etc., may belong to this list.</description>
+  </Intrant>
+  <Intrant>
+    <title>Implement loading of references</title>
+    <description>I have already connected the DataManager to the ReferencesModel::reload. I only need to implement the loading of the XML from the DataManager and the emission of the referencesLoaded signal.</description>
+  </Intrant>
 </IntrantList>
