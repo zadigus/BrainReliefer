@@ -437,6 +437,27 @@ namespace N_Data
     void
     url (const url_sequence& s);
 
+    // deadlineDate
+    //
+    typedef ::xml_schema::date deadlineDate_type;
+    typedef ::xsd::cxx::tree::optional< deadlineDate_type > deadlineDate_optional;
+    typedef ::xsd::cxx::tree::traits< deadlineDate_type, char > deadlineDate_traits;
+
+    const deadlineDate_optional&
+    deadlineDate () const;
+
+    deadlineDate_optional&
+    deadlineDate ();
+
+    void
+    deadlineDate (const deadlineDate_type& x);
+
+    void
+    deadlineDate (const deadlineDate_optional& x);
+
+    void
+    deadlineDate (::std::unique_ptr< deadlineDate_type > p);
+
     // Constructors.
     //
     Intrant (const title_type&);
@@ -473,6 +494,7 @@ namespace N_Data
     pdf_sequence pdf_;
     sound_sequence sound_;
     url_sequence url_;
+    deadlineDate_optional deadlineDate_;
   };
 }
 

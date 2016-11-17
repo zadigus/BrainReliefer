@@ -10,6 +10,7 @@
 
 #include <QDebug>
 #include <QFile>
+#include <QDate>
 
 #include <fstream>
 
@@ -26,6 +27,20 @@ namespace N_Models {
   //-------------------------------------------------------------------------------------------
   IntrantsList::~IntrantsList()
   { }
+
+  //-------------------------------------------------------------------------------------------
+  int IntrantsList::getNbrOfIntrants() const
+  {
+    return m_Data->Intrant().size();
+  }
+
+  //-------------------------------------------------------------------------------------------
+  void IntrantsList::setDate(int a_Idx, const QDate& a_Date)
+  {
+    m_Data->Intrant().at(a_Idx).deadlineDate(Intrant::deadlineDate_type(a_Date.year(), a_Date.month(), a_Date.day()));
+//    serialize([this, &a_Date, &a_Idx]() // TODO: why doesn't this work???? It actually works, but then the DataManager is not available any more
+//                { m_Data->Intrant().at(a_Idx).deadlineDate(Intrant::deadlineDate_type(a_Date.year(), a_Date.month(), a_Date.day())); });
+  }
 
   //-------------------------------------------------------------------------------------------
   void IntrantsList::store(const IntrantList& a_List)

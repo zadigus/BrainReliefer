@@ -12,6 +12,8 @@
 #include <memory>
 #include <functional>
 
+class QDate;
+
 namespace N_Data {
   class Intrant;
   class IntrantList;
@@ -32,6 +34,9 @@ namespace N_Models {
     public:
       IntrantsList(QObject* a_Parent = Q_NULLPTR);
       ~IntrantsList();
+
+      Q_INVOKABLE void setDate(int a_Idx, const QDate& a_Date);
+      Q_INVOKABLE int getNbrOfIntrants() const;
 
       std::unique_ptr<N_Data::Intrant> popIntrant(int a_Idx);
       void addIntrant(const N_Data::Intrant& a_Intrant);

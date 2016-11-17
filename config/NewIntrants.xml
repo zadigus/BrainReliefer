@@ -8,9 +8,6 @@
     <description>For example, if there is no incubated intrants, then put the menu entry in the list, but don't make it available, e.g. gray it out</description>
   </Intrant>
   <Intrant>
-    <title>Organiser la crèche</title>
-  </Intrant>
-  <Intrant>
     <title>Implement perpetual agenda</title>
     <description>The idea of the perpetual agenda is that the agenda sends you a notification at a later date about an incubated intrant.</description>
   </Intrant>
@@ -40,5 +37,12 @@
   </Intrant>
   <Intrant>
     <title>Implement intrant addition in the intrant management page</title>
+  </Intrant>
+  <Intrant>
+    <title>Acheter wireless repeater</title>
+    <description>Commander chez Amazon.</description>
+  </Intrant>
+  <Intrant>
+    <title>Organiser la crèche</title>
   </Intrant>
 </IntrantList>

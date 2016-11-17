@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Controls 1.4
 
 import MyDataManagement 1.0
 
@@ -44,15 +45,9 @@ Item {
     {
       id: intrant
 
-      // Create a property to contain the visibility of the details.
-      // We can bind multiple element's opacity to this one property,
-      // rather than having a "PropertyChanges" line for each element we
-      // want to fade.
-      property bool detailsOpacity : false // TODO: use bools
-      property bool notDoableOpacity : false
       property int initialIntrantHeight: 40
 
-      width: parent.width
+      width: list.width
       height: initialIntrantHeight
 
       // A simple rounded rectangle for the background
@@ -74,54 +69,58 @@ Item {
         id: closeButton
         y: 10
         anchors { right: background.right; rightMargin: 10 }
-        opacity: detailsOpacity || notDoableOpacity
+        visible: false
         text: "Close"
 
         onClicked: intrant.state = '';
       }
 
-      // Lay out the page: title, description, ...
-      // Note that elements that should not be visible in the list
-      // mode have their opacity set to detailsOpacity.
+      /*
+       * Lay out the data: title, description,...
+       */
       Column {
-        id: topLayout
+        id: dataLayout
         x: 0; y: 10;
-        height: parent.height;
-        width: parent.width
         spacing: 10
 
         Text {
+          id: titleData
           text: title
           elide: Text.ElideRight
-          wrapMode: detailsOpacity ? Text.Wrap : Text.NoWrap
+          wrapMode: intrant.state == 'Details' ? Text.Wrap : Text.NoWrap
           x: 10
-          width: parent.width - 2 * x
+          width: background.width - 2 * x
           font.pixelSize: 24
         }
 
         Text {
+          id: descriptionData
           text: description
           textFormat: Text.RichText
           font.pixelSize: 15
           x: 15
-          width: parent.width - 2 * x
+          width: background.width - 2 * x
           wrapMode: Text.Wrap
-          opacity: detailsOpacity
+          visible: false
         }
       }
 
+      /*
+       * Doable / not doable buttons
+       */
       Row {
+        id: doableBtnsLayout
         property int leftMargin: 2;
 
         anchors {
           bottom: background.bottom; bottomMargin: 1
           left: background.left; leftMargin: leftMargin
         }
-        opacity: detailsOpacity
+        visible: false
         spacing: 0
 
-        property int buttonWidth: opacity * (background.width - 2 * leftMargin) / 2
-        property int buttonHeight: opacity * 25
+        property int buttonWidth: (background.width - 2 * leftMargin) / 2
+        property int buttonHeight: 25
 
         ActionButton {
           buttonText: qsTr("Doable")
@@ -141,21 +140,24 @@ Item {
         }
       }
 
+      /*
+       * "Not doable" actions: delete, incubate, set as reference
+       */
       Column {
-
         id: notDoableLayout
         spacing: 10
-        opacity: notDoableOpacity
+        visible: false
 
         anchors {
-          bottom: background.bottom; bottomMargin: 1
+          top: dataLayout.bottom; topMargin: 1
           horizontalCenter: background.horizontalCenter
         }
 
-        property int buttonWidth: opacity * background.width
-        property int buttonHeight: opacity * 25
+        property int buttonWidth: background.width
+        property int buttonHeight: 25
 
         ActionButton {
+          id: deleteBtn
           buttonText: qsTr("Delete")
           width: parent.buttonWidth
           height: parent.buttonHeight
@@ -167,52 +169,146 @@ Item {
           }
         }
         ActionButton {
+          id: incubateBtn
           buttonText: qsTr("Incubate")
           width: parent.buttonWidth
           height: parent.buttonHeight
           radius: 5
+          function onClicked()
+          {
+            intrant.state = 'Incubate'
+          }
         }
+
+        DatePicker {
+          id: incubationDateSelectionLayout
+          background: background
+          defaultText: qsTr("Maybe one day")
+          visible: false
+          function onDateValidated(pickedDate)
+          {
+            console.log("incubating index " + index + " with date " + pickedDate)
+            console.log("year = " + pickedDate.toLocaleDateString(Qt.locale(), "yyyy"))
+
+          }
+          function onDefaultClicked()
+          {
+            console.log("incubating index " + index + " without date")
+          }
+        }
+
         ActionButton {
+          id: referenceBtn
           buttonText: qsTr("Keep as reference")
           width: parent.buttonWidth
           height: parent.buttonHeight
           radius: 5
           function onClicked()
           {
-            console.log("setting index " + index + " as a reference")
+            intrant.state = 'SetAsReference'
+          }
+        }
+
+        DatePicker {
+          id: referenceDateSelectionLayout
+          background: background
+          defaultText: qsTr("No deadline")
+          visible: false
+          function onDateValidated(pickedDate)
+          {
+            console.log("setting index " + index + " as a reference with date " + pickedDate)
+            newIntrantsModel.setDate(index, pickedDate) // TODO: why can't I serialize here??? it works, but the dataManager is then unavailable ...
+            dataManager.transferIntrant(newIntrantsModel, referencesModel, index)
+            // TODO: why aren't the models available here after this call???? The following command will fail:
+//            console.log("nbrOfReferences = " + newIntrantsModel.getNbrOfIntrants())
+          }
+          function onDefaultClicked()
+          {
+            console.log("setting index " + index + " as a reference without date")
             dataManager.transferIntrant(newIntrantsModel, referencesModel, index)
           }
         }
+
       }
 
+      /*
+       * State machine
+       */
       states: [ State {
-        name: "Details"
-        PropertyChanges { target: background; color: "red" }
-        // Make details visible
-        PropertyChanges { target: intrant; detailsOpacity: true; x: 0 }
-        // Fill the entire list area with the detailed view
-        PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
-        // Move the list so that this item is at the top.
-        PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
-        // Disallow flicking while we're in detailed view
-        PropertyChanges { target: intrant.ListView.view; interactive: false }
-      }, State {
-       name: "NotDoable"
-       PropertyChanges { target: background; color: "green" }
-       PropertyChanges { target: intrant; detailsOpacity: false; x: 0; notDoableOpacity: true }
-       // Fill the entire list area with the "not doable" view
-       PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
-       // Move the list so that this item is at the top.
-       PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
-       // Disallow flicking while we're in detailed view
-       PropertyChanges { target: intrant.ListView.view; interactive: false }
-      }]
+          name: "Details"
+          PropertyChanges { target: background; color: "red" }
+          // Make details visible
+          PropertyChanges { target: intrant; x: 0 }
+          // Fill the entire list area with the detailed view
+          PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
+          // Move the list so that this item is at the top.
+          PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
+          // Disallow flicking while we're in detailed view
+          PropertyChanges { target: intrant.ListView.view; interactive: false }
+          // Show close button
+          PropertyChanges { target: closeButton; visible: true }
+          // Show doable / not doable buttons
+          PropertyChanges { target: doableBtnsLayout; visible: true }
+          // Show description
+          PropertyChanges { target: descriptionData; visible: true }
+        }, State {
+          name: "NotDoable"
+          PropertyChanges { target: background; color: "green" }
+          PropertyChanges { target: intrant; x: 0; }
+          // Fill the entire list area with the "not doable" view
+          PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
+          // Move the list so that this item is at the top.
+          PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
+          // Disallow flicking while we're in detailed view
+          PropertyChanges { target: intrant.ListView.view; interactive: false }
+          // Show close button
+          PropertyChanges { target: closeButton; visible: true }
+          // Show not doable buttons: delete, incubate, keep as reference
+          PropertyChanges { target: notDoableLayout; visible: true }
+        }, State {
+          name: "Incubate"
+          PropertyChanges { target: background; color: "blue" }
+          PropertyChanges { target: intrant; x: 0; }
+          // Fill the entire list area with the "not doable" view
+          PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
+          // Move the list so that this item is at the top.
+          PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
+          // Disallow flicking while we're in detailed view
+          PropertyChanges { target: intrant.ListView.view; interactive: false }
+          // Show close button
+          PropertyChanges { target: closeButton; visible: true }
+          // Show not doable buttons: delete, incubate, keep as reference
+          PropertyChanges { target: notDoableLayout; visible: true }
+          // Show Calendar settings
+          PropertyChanges { target: incubationDateSelectionLayout; visible: true }
+          PropertyChanges { target: deleteBtn; visible: false }
+          PropertyChanges { target: referenceBtn; visible: false }
+        }, State {
+          name: "SetAsReference"
+          PropertyChanges { target: background; color: "blue" }
+          PropertyChanges { target: intrant; x: 0; }
+          // Fill the entire list area with the "not doable" view
+          PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
+          // Move the list so that this item is at the top.
+          PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
+          // Disallow flicking while we're in detailed view
+          PropertyChanges { target: intrant.ListView.view; interactive: false }
+          // Show close button
+          PropertyChanges { target: closeButton; visible: true }
+          // Show not doable buttons: delete, incubate, keep as reference
+          PropertyChanges { target: notDoableLayout; visible: true }
+          // Show Calendar settings
+          PropertyChanges { target: referenceDateSelectionLayout; visible: true }
+          PropertyChanges { target: deleteBtn; visible: false }
+          PropertyChanges { target: incubateBtn; visible: false }
+        }
+      ]
 
       transitions: Transition {
         // Make the state changes smooth
         ParallelAnimation {
           ColorAnimation { property: "color"; duration: 500 }
-          NumberAnimation { duration: 300; properties: "detailsOpacity,notDoableOpacity,x,contentY,height,width" }
+          NumberAnimation { duration: 300; properties: "x,contentY,height,width" }
         }
       }
 

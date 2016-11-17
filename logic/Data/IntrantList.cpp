@@ -192,6 +192,36 @@ namespace N_Data
   {
     this->url_ = s;
   }
+
+  const Intrant::deadlineDate_optional& Intrant::
+  deadlineDate () const
+  {
+    return this->deadlineDate_;
+  }
+
+  Intrant::deadlineDate_optional& Intrant::
+  deadlineDate ()
+  {
+    return this->deadlineDate_;
+  }
+
+  void Intrant::
+  deadlineDate (const deadlineDate_type& x)
+  {
+    this->deadlineDate_.set (x);
+  }
+
+  void Intrant::
+  deadlineDate (const deadlineDate_optional& x)
+  {
+    this->deadlineDate_ = x;
+  }
+
+  void Intrant::
+  deadlineDate (::std::unique_ptr< deadlineDate_type > x)
+  {
+    this->deadlineDate_.set (std::move (x));
+  }
 }
 
 #include <xsd/cxx/xml/dom/parsing-source.hxx>
@@ -291,7 +321,8 @@ namespace N_Data
     image_ (this),
     pdf_ (this),
     sound_ (this),
-    url_ (this)
+    url_ (this),
+    deadlineDate_ (this)
   {
   }
 
@@ -305,7 +336,8 @@ namespace N_Data
     image_ (x.image_, f, this),
     pdf_ (x.pdf_, f, this),
     sound_ (x.sound_, f, this),
-    url_ (x.url_, f, this)
+    url_ (x.url_, f, this),
+    deadlineDate_ (x.deadlineDate_, f, this)
   {
   }
 
@@ -319,7 +351,8 @@ namespace N_Data
     image_ (this),
     pdf_ (this),
     sound_ (this),
-    url_ (this)
+    url_ (this),
+    deadlineDate_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
     {
@@ -410,6 +443,20 @@ namespace N_Data
         continue;
       }
 
+      // deadlineDate
+      //
+      if (n.name () == "deadlineDate" && n.namespace_ ().empty ())
+      {
+        ::std::unique_ptr< deadlineDate_type > r (
+          deadlineDate_traits::create (i, f, this));
+
+        if (!this->deadlineDate_)
+        {
+          this->deadlineDate_.set (::std::move (r));
+          continue;
+        }
+      }
+
       break;
     }
 
@@ -440,6 +487,7 @@ namespace N_Data
       this->pdf_ = x.pdf_;
       this->sound_ = x.sound_;
       this->url_ = x.url_;
+      this->deadlineDate_ = x.deadlineDate_;
     }
 
     return *this;
@@ -980,6 +1028,18 @@ namespace N_Data
           e));
 
       s << *b;
+    }
+
+    // deadlineDate
+    //
+    if (i.deadlineDate ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "deadlineDate",
+          e));
+
+      s << *i.deadlineDate ();
     }
   }
 }

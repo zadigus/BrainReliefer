@@ -22,6 +22,8 @@
         <file alias="NewIntrants.qml">NewIntrants/NewIntrants.qml</file>
         <file alias="AddIntrant.qml">NewIntrants/AddIntrant.qml</file>
         <file alias="ManageNewIntrants.qml">NewIntrants/ManageNewIntrants.qml</file>
+		<file alias="NewIntrantCalendar.qml">NewIntrants/NewIntrantCalendar.qml</file>
+		<file alias="DatePicker.qml">NewIntrants/DatePicker.qml</file>
     </qresource>
 	<qresource prefix="/References">
         <file alias="BrowseReferences.qml">References/BrowseReferences.qml</file>
