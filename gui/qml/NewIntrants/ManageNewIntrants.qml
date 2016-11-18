@@ -188,12 +188,13 @@ Item {
           function onDateValidated(pickedDate)
           {
             console.log("incubating index " + index + " with date " + pickedDate)
-            console.log("year = " + pickedDate.toLocaleDateString(Qt.locale(), "yyyy"))
-
+            newIntrantsModel.setDate(index, pickedDate)
+            dataManager.transferIntrant(newIntrantsModel, incubatedModel, index)
           }
           function onDefaultClicked()
           {
             console.log("incubating index " + index + " without date")
+            dataManager.transferIntrant(newIntrantsModel, incubatedModel, index)
           }
         }
 
@@ -217,10 +218,8 @@ Item {
           function onDateValidated(pickedDate)
           {
             console.log("setting index " + index + " as a reference with date " + pickedDate)
-            newIntrantsModel.setDate(index, pickedDate) // TODO: why can't I serialize here??? it works, but the dataManager is then unavailable ...
+            newIntrantsModel.setDate(index, pickedDate)
             dataManager.transferIntrant(newIntrantsModel, referencesModel, index)
-            // TODO: why aren't the models available here after this call???? The following command will fail:
-//            console.log("nbrOfReferences = " + newIntrantsModel.getNbrOfIntrants())
           }
           function onDefaultClicked()
           {

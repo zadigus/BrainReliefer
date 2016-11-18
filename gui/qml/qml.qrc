@@ -28,6 +28,9 @@
 	<qresource prefix="/References">
         <file alias="BrowseReferences.qml">References/BrowseReferences.qml</file>
     </qresource>
+		<qresource prefix="/IncubatedIntrants">
+        <file alias="BrowseIncubation.qml">IncubatedIntrants/BrowseIncubation.qml</file>
+    </qresource>
 	<qresource prefix="/Common">
 		<file alias="FocusRectangle.qml">Common/FocusRectangle.qml</file>
 		<file alias="PlaceHolderText.qml">Common/PlaceHolderText.qml</file>

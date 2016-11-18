@@ -16,7 +16,7 @@ Item
         "newIntrants.add"       : "/NewIntrants/AddIntrant.qml",
         "newIntrants.manage"    : "/NewIntrants/ManageNewIntrants.qml",
 
-        "incubatedIntrants"     : "/IncubatedIntrants/IncubatedIntrants.qml",
+        "incubation.browse"     : "/IncubatedIntrants/BrowseIncubation.qml",
 
         "references.browse"     : "/References/BrowseReferences.qml",
 

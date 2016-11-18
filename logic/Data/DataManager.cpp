@@ -54,6 +54,7 @@ namespace N_Data {
       m_Data = N_DataManagerHelper::getParsedXML<Data>(a_PathToFile.toLocalFile(), m_DataXsd, DataBuilder);
       emitLoaded(NEW_INTRANTS_ITEMS, std::bind(&DataManager::newIntrantsLoaded, this, std::placeholders::_1));
       emitLoaded(REFERENCE_ITEMS, std::bind(&DataManager::referencesLoaded, this, std::placeholders::_1));
+      emitLoaded(INCUBATION_ITEMS, std::bind(&DataManager::incubatedLoaded, this, std::placeholders::_1));
     }
     catch(const XInvalidData& ex)
     {

@@ -19,6 +19,12 @@ using namespace N_Data;
 namespace N_Models {
 
   //-------------------------------------------------------------------------------------------
+  QModelIndex parentIndex()
+  {
+    return QModelIndex();
+  }
+
+  //-------------------------------------------------------------------------------------------
   IntrantsList::IntrantsList(QObject* a_Parent)
     : QAbstractListModel(a_Parent)
     , m_IntrantListXsd(QStringLiteral("qrc:/xsd/IntrantList.xsd"))
@@ -29,21 +35,16 @@ namespace N_Models {
   { }
 
   //-------------------------------------------------------------------------------------------
-  int IntrantsList::getNbrOfIntrants() const
-  {
-    return m_Data->Intrant().size();
-  }
-
-  //-------------------------------------------------------------------------------------------
   void IntrantsList::setDate(int a_Idx, const QDate& a_Date)
   {
     m_Data->Intrant().at(a_Idx).deadlineDate(Intrant::deadlineDate_type(a_Date.year(), a_Date.month(), a_Date.day()));
-//    serialize([this, &a_Date, &a_Idx]() // TODO: why doesn't this work???? It actually works, but then the DataManager is not available any more
-//                { m_Data->Intrant().at(a_Idx).deadlineDate(Intrant::deadlineDate_type(a_Date.year(), a_Date.month(), a_Date.day())); });
+
+    QModelIndex currentIdx(index(a_Idx, columnCount() - 1));
+    emit dataChanged(currentIdx, currentIdx);
   }
 
   //-------------------------------------------------------------------------------------------
-  void IntrantsList::store(const IntrantList& a_List)
+  void IntrantsList::save()
   {
     LOG_INF("Storing the data in the file <" << m_LoadedFilename.toStdString() << ">.");
 
@@ -52,29 +53,8 @@ namespace N_Models {
     map[""].schema = "";
 
     std::ofstream ofs(m_LoadedFilename.toStdString());
-    IntrantList_ (ofs, a_List, map);
+    IntrantList_ (ofs, *m_Data, map);
     ofs.close();
-  }
-
-  //-------------------------------------------------------------------------------------------
-  void IntrantsList::serialize(const std::function<void(void)>& a_CmdToBeSerialized)
-  {
-    LOG_INF("Serializing into file <" << m_LoadedFilename.toStdString() << "> following the XSD scheme <" << m_IntrantListXsd.toString().toStdString() << ">.");
-
-    auto dataCpy(*m_Data); // keep the original data just in case we have a problem serializing the data
-    a_CmdToBeSerialized();
-
-    try
-    {
-      store(*m_Data);
-      reload(m_LoadedFilename);
-    }
-    catch(const XInvalidData& ex)
-    {
-      LOG_ERR("Serialization failed. Restoring the data to their original state (" << ex.what() << ").");
-      store(dataCpy);
-      reload(m_LoadedFilename);
-    }
   }
 
   //-------------------------------------------------------------------------------------------
@@ -90,18 +70,23 @@ namespace N_Models {
   void IntrantsList::addIntrant(const Intrant& a_Intrant)
   {
     LOG_INF("Adding new intrant with title <" << a_Intrant.title() << ">.");
-    serialize([this, &a_Intrant](){ m_Data->Intrant().push_back(a_Intrant); });
+    int idx(static_cast<int>(m_Data->Intrant().size()));
+    beginInsertRows(QModelIndex(), idx, idx);
+    m_Data->Intrant().push_back(a_Intrant);
+    endInsertRows();
+    save();
   }
 
   //-------------------------------------------------------------------------------------------
   void IntrantsList::removeIntrant(int a_Idx)
   {
     LOG_INF("Deleting intrant with title <" << m_Data->Intrant().at(a_Idx).title() << ">...");
-    serialize([this, &a_Idx](){ m_Data->Intrant().erase(m_Data->Intrant().begin() + a_Idx); });
+    removeRow(a_Idx);
+    save();
   }
 
   //-------------------------------------------------------------------------------------------
-  void IntrantsList::loadData (const QString& a_FileName)
+  void IntrantsList::loadDataFromFile(const QString& a_FileName)
   {
     try
     {
@@ -111,44 +96,37 @@ namespace N_Models {
     catch(const XInexistentData& ex)
     {
       LOG_ERR("Caught exception: " << ex.what());
-      m_Data.reset(new IntrantList);
     }
     catch(const XInvalidData& ex)
     {
       LOG_ERR("Caught exception: " << ex.what());
-      m_Data.reset(new IntrantList);
       throw ex;
       // TODO: if the data does not exist, then automatically create the missing file in the same directory as the main Data.xml
     }
     // TODO: what happens if a_FileName is empty???? --> set default filename
     m_LoadedFilename = a_FileName;
-  }
 
-  //-------------------------------------------------------------------------------------------
-  void IntrantsList::reload()
-  {
     beginResetModel();
-
-    QModelIndex parentIndex = QModelIndex();
-    QModelIndex topLeft     = index(0, 0, parentIndex);
-    QModelIndex bottomRight = index(rowCount(parentIndex) - 1,
-                                    columnCount(parentIndex) - 1, parentIndex);
-
     if(m_Data->Intrant().size() > 0)
     {
-      beginInsertRows(parentIndex, 0, static_cast<int>(m_Data->Intrant().size()) - 1);
+      beginInsertRows(parentIndex(), 0, static_cast<int>(m_Data->Intrant().size()) - 1);
       endInsertRows();
-
-      emit dataChanged(topLeft, bottomRight);
-      endResetModel();
     }
+    endResetModel();
   }
 
   //-------------------------------------------------------------------------------------------
-  void IntrantsList::reload(const QString& a_FileName)
+  bool IntrantsList::removeRows(int a_Row, int a_Count, const QModelIndex& /*a_Parent*/)
   {
-    loadData(a_FileName);
-    reload();
+    int lowerIdx(a_Row);
+    int upperIdx(a_Row + a_Count - 1);
+
+    beginRemoveRows(QModelIndex(), lowerIdx, upperIdx);
+
+    m_Data->Intrant().erase(m_Data->Intrant().begin() + lowerIdx, m_Data->Intrant().begin() + upperIdx + 1);
+
+    endRemoveRows();
+    return true;
   }
 
   //-------------------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
-@INF : [18/11/2016 00:55:38][N_Models::IntrantsList::popIntrant] : Popping out intrant with title <A new reference>
-@INF : [18/11/2016 00:55:38][N_Models::IntrantsList::removeIntrant] : Deleting intrant with title <A new reference>...
-@INF : [18/11/2016 00:55:38][N_Models::IntrantsList::serialize] : Serializing into file <G:/workspace/BrainReliefer/config/NewIntrants.xml> following the XSD scheme <qrc:/xsd/IntrantList.xsd>.
-@INF : [18/11/2016 00:55:38][N_Models::IntrantsList::store] : Storing the data in the file <G:/workspace/BrainReliefer/config/NewIntrants.xml>.
-@INF : [18/11/2016 00:55:39][N_Models::IntrantsList::addIntrant] : Adding new intrant with title <A new reference>.
-@INF : [18/11/2016 00:55:39][N_Models::IntrantsList::serialize] : Serializing into file <G:/workspace/BrainReliefer/config/References.xml> following the XSD scheme <qrc:/xsd/IntrantList.xsd>.
-@INF : [18/11/2016 00:55:39][N_Models::IntrantsList::store] : Storing the data in the file <G:/workspace/BrainReliefer/config/References.xml>.
+@INF : [18/11/2016 16:15:47][N_Models::IntrantsList::addIntrant] : Adding new intrant with title <Learn Greek>.
+@INF : [18/11/2016 16:15:47][N_Models::IntrantsList::save] : Storing the data in the file <G:/workspace/BrainReliefer/config/NewIntrants.xml>.
+@INF : [18/11/2016 16:15:55][N_Models::IntrantsList::popIntrant] : Popping out intrant with title <Learn Greek>
+@INF : [18/11/2016 16:15:55][N_Models::IntrantsList::removeIntrant] : Deleting intrant with title <Learn Greek>...
+@INF : [18/11/2016 16:15:55][N_Models::IntrantsList::save] : Storing the data in the file <G:/workspace/BrainReliefer/config/NewIntrants.xml>.
+@INF : [18/11/2016 16:15:55][N_Models::IntrantsList::addIntrant] : Adding new intrant with title <Learn Greek>.
+@INF : [18/11/2016 16:15:55][N_Models::IntrantsList::save] : Storing the data in the file <G:/workspace/BrainReliefer/config/Incubation.xml>.

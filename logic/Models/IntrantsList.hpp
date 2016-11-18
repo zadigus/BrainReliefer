@@ -3,8 +3,6 @@
 
 #include "core/Global.hpp"
 
-//#include "Data/IntrantList.hpp"
-
 #include <QAbstractListModel>
 
 #include <QUrl>
@@ -36,28 +34,26 @@ namespace N_Models {
       ~IntrantsList();
 
       Q_INVOKABLE void setDate(int a_Idx, const QDate& a_Date);
-      Q_INVOKABLE int getNbrOfIntrants() const;
 
       std::unique_ptr<N_Data::Intrant> popIntrant(int a_Idx);
       void addIntrant(const N_Data::Intrant& a_Intrant);
       void removeIntrant(int a_Idx);
 
-      virtual int rowCount(const QModelIndex& a_Parent = QModelIndex()) const;
-      virtual int columnCount(const QModelIndex& a_Parent = QModelIndex()) const;
+      virtual int rowCount(const QModelIndex& a_Parent = QModelIndex()) const override;
+      virtual int columnCount(const QModelIndex& a_Parent = QModelIndex()) const override;
 
-      virtual QVariant data(const QModelIndex& a_Index, int a_Role = Qt::DisplayRole) const;
-      virtual QVariant headerData(int a_Section, Qt::Orientation a_Orientation, int a_Role = Qt::DisplayRole) const;
+      virtual QVariant data(const QModelIndex& a_Index, int a_Role = Qt::DisplayRole) const override;
+      virtual QVariant headerData(int a_Section, Qt::Orientation a_Orientation, int a_Role = Qt::DisplayRole) const override;
 
-      virtual QHash<int, QByteArray> roleNames() const;
+      virtual QHash<int, QByteArray> roleNames() const override;
+
+      virtual bool removeRows(int a_Row, int a_Count, const QModelIndex& a_Parent = QModelIndex()) override;
 
     private:
-      void loadData (const QString& a_FileName);
-      void reload();
-      void store(const N_Data::IntrantList& a_List);
-      void serialize(const std::function<void(void)>& a_CmdToBeSerialized);
+      void save();
 
     public slots:
-      void reload(const QString& a_FileName);
+      void loadDataFromFile(const QString& a_FileName);
 
     private:
       QUrl m_IntrantListXsd;
@@ -73,7 +69,7 @@ namespace N_Models {
   //----------------------------------------------------------------------------------
   // non-member method(s)
   //----------------------------------------------------------------------------------
-
+  QModelIndex parentIndex();
 }
 
 #endif // MODELS_NEWINTRANTS_HPP

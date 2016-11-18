@@ -17,6 +17,7 @@ EngineConfigurator::EngineConfigurator(QQmlApplicationEngine& a_Engine)
   , m_AppConfiguration(new AppConfiguration)
   , m_NewIntrantsModel(new N_Models::IntrantsList)
   , m_ReferencesModel(new N_Models::IntrantsList)
+  , m_IncubatedModel(new N_Models::IntrantsList)
   , m_DataManager(new N_Data::DataManager)
   , m_SharedIntrant(new N_Data::SharedIntrant)
 {
@@ -33,6 +34,7 @@ void EngineConfigurator::setupContext()
   context->setContextProperty("dataManager", m_DataManager);
   context->setContextProperty("newIntrantsModel", m_NewIntrantsModel);
   context->setContextProperty("referencesModel", m_ReferencesModel);
+  context->setContextProperty("incubatedModel", m_IncubatedModel);
   context->setContextProperty("sharedIntrant", m_SharedIntrant);
 }
 
@@ -53,6 +55,7 @@ void EngineConfigurator::loadQML(const QUrl& a_MainQml)
 //----------------------------------------------------------------------------------------------
 void EngineConfigurator::setupConnections()
 {
-  QObject::connect(m_DataManager, SIGNAL(newIntrantsLoaded(QString)), m_NewIntrantsModel, SLOT(reload(QString)));
-  QObject::connect(m_DataManager, SIGNAL(referencesLoaded(QString)), m_ReferencesModel, SLOT(reload(QString)));
+  QObject::connect(m_DataManager, SIGNAL(newIntrantsLoaded(QString)), m_NewIntrantsModel, SLOT(loadDataFromFile(QString)));
+  QObject::connect(m_DataManager, SIGNAL(referencesLoaded(QString)), m_ReferencesModel, SLOT(loadDataFromFile(QString)));
+  QObject::connect(m_DataManager, SIGNAL(incubatedLoaded(QString)), m_IncubatedModel, SLOT(loadDataFromFile(QString)));
 }

@@ -8,8 +8,4 @@ in the code and have a look at the example given by Qt's System Icon Tray exampl
 		</description>
     <url>http://doc.qt.io/qt-5/qtwidgets-desktop-systray-example.html</url>
   </Intrant>
-  <Intrant>
-    <title>A new reference</title>
-    <deadlineDate>2016-11-30</deadlineDate>
-  </Intrant>
 </IntrantList>
