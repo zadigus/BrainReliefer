@@ -78,6 +78,15 @@ Item {
           wrapMode: Text.Wrap
           opacity: detailsOpacity
         }
+
+        Text {
+          text: deadline
+          font.pixelSize: 15
+          x: 15
+          width: parent.width - 2 * x
+          wrapMode: Text.Wrap
+          opacity: detailsOpacity
+        }
       }
 
       states: [ State {
@@ -100,7 +109,6 @@ Item {
           NumberAnimation { duration: 300; properties: "detailsOpacity,x,contentY,height,width" }
         }
       }
-
     }
   }
 

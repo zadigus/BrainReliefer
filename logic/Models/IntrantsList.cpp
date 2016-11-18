@@ -158,6 +158,11 @@ namespace N_Models {
         Intrant::description_optional descr(m_Data->Intrant().at(a_Index.row()).description());
         return descr.present() ? QString::fromStdString(*descr) : QString();
       }
+      case DeadlineRole:
+      {
+        Intrant::deadlineDate_optional value(m_Data->Intrant().at(a_Index.row()).deadlineDate());
+        return value.present() ? QDate((*value).year(), (*value).month(), (*value).day()) : QDate();
+      }
       default:
         break;
     }
@@ -189,6 +194,7 @@ namespace N_Models {
     QHash<int, QByteArray> result;
     result[TitleRole] = "title";
     result[DescriptionRole] = "description";
+    result[DeadlineRole] = "deadline";
     return result;
   }
 

@@ -26,7 +26,8 @@ namespace N_Models {
     public:
       enum IntrantsListRoles {
         TitleRole = Qt::UserRole + 1,
-        DescriptionRole
+        DescriptionRole,
+        DeadlineRole
       };
 
     public:
