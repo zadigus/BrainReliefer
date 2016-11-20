@@ -14,6 +14,7 @@ namespace N_Models {
 namespace N_Data {
   class DataManager;
   class SharedIntrant;
+  class SharedAction;
 }
 
 class EngineConfigurator
@@ -36,6 +37,7 @@ class EngineConfigurator
     N_Models::IntrantsList* m_IncubatedModel;
     N_Data::DataManager* m_DataManager;
     N_Data::SharedIntrant* m_SharedIntrant;
+    N_Data::SharedAction* m_SharedAction;
 };
 
 #endif // ENGINECONFIGURATOR_HPP

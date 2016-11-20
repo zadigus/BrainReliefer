@@ -13,6 +13,7 @@
 class QDate;
 
 namespace N_Data {
+  class Action;
   class Intrant;
   class IntrantList;
 }
@@ -35,6 +36,8 @@ namespace N_Models {
       ~IntrantsList();
 
       Q_INVOKABLE void setDate(int a_Idx, const QDate& a_Date);
+
+      void addAction(const N_Data::Action& a_Action, int a_Idx);
 
       std::unique_ptr<N_Data::Intrant> popIntrant(int a_Idx);
       void addIntrant(const N_Data::Intrant& a_Intrant);

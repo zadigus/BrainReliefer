@@ -23,6 +23,7 @@ SOURCES += main.cpp \
     $${DATA_FOLDER}/DataManager.cpp \
     $${DATA_FOLDER}/DataExceptions.cpp \
     $${DATA_FOLDER}/SharedIntrant.cpp \
+    $${DATA_FOLDER}/SharedAction.cpp \
     EngineConfigurator.cpp \
     AppConfiguration.cpp \
     gui/InvalidData/FileSaveDialog.cpp
@@ -42,6 +43,7 @@ HEADERS += $${CORE_FOLDER}/Global.hpp \
     $${DATA_FOLDER}/DataExceptions.hpp \
     $${DATA_FOLDER}/DataConstants.hpp \
     $${DATA_FOLDER}/SharedIntrant.hpp \
+    $${DATA_FOLDER}/SharedAction.hpp \
     logic/Singleton.hpp \
     EngineConfigurator.hpp \
     AppConfiguration.hpp \

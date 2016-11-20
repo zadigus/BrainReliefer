@@ -254,7 +254,9 @@ namespace xml_schema
 //
 namespace N_Data
 {
+  class ActionList;
   class IntrantList;
+  class Action;
   class Intrant;
 }
 
@@ -275,6 +277,59 @@ namespace N_Data
 
 namespace N_Data
 {
+  class ActionList: public ::xml_schema::type
+  {
+    public:
+    // Action
+    //
+    typedef ::N_Data::Action Action_type;
+    typedef ::xsd::cxx::tree::sequence< Action_type > Action_sequence;
+    typedef Action_sequence::iterator Action_iterator;
+    typedef Action_sequence::const_iterator Action_const_iterator;
+    typedef ::xsd::cxx::tree::traits< Action_type, char > Action_traits;
+
+    const Action_sequence&
+    Action () const;
+
+    Action_sequence&
+    Action ();
+
+    void
+    Action (const Action_sequence& s);
+
+    // Constructors.
+    //
+    ActionList ();
+
+    ActionList (const ::xercesc::DOMElement& e,
+                ::xml_schema::flags f = 0,
+                ::xml_schema::container* c = 0);
+
+    ActionList (const ActionList& x,
+                ::xml_schema::flags f = 0,
+                ::xml_schema::container* c = 0);
+
+    virtual ActionList*
+    _clone (::xml_schema::flags f = 0,
+            ::xml_schema::container* c = 0) const;
+
+    ActionList&
+    operator= (const ActionList& x);
+
+    virtual 
+    ~ActionList ();
+
+    // Implementation.
+    //
+    protected:
+    void
+    parse (::xsd::cxx::xml::dom::parser< char >&,
+           ::xml_schema::flags);
+
+    protected:
+    Action_sequence Action_;
+  };
+
   class IntrantList: public ::xml_schema::type
   {
     public:
@@ -326,6 +381,103 @@ namespace N_Data
 
     protected:
     Intrant_sequence Intrant_;
+  };
+
+  class Action: public ::xml_schema::type
+  {
+    public:
+    // title
+    //
+    typedef ::xml_schema::string title_type;
+    typedef ::xsd::cxx::tree::traits< title_type, char > title_traits;
+
+    const title_type&
+    title () const;
+
+    title_type&
+    title ();
+
+    void
+    title (const title_type& x);
+
+    void
+    title (::std::unique_ptr< title_type > p);
+
+    // delegate
+    //
+    typedef ::xml_schema::string delegate_type;
+    typedef ::xsd::cxx::tree::optional< delegate_type > delegate_optional;
+    typedef ::xsd::cxx::tree::traits< delegate_type, char > delegate_traits;
+
+    const delegate_optional&
+    delegate () const;
+
+    delegate_optional&
+    delegate ();
+
+    void
+    delegate (const delegate_type& x);
+
+    void
+    delegate (const delegate_optional& x);
+
+    void
+    delegate (::std::unique_ptr< delegate_type > p);
+
+    // deadlineDate
+    //
+    typedef ::xml_schema::date deadlineDate_type;
+    typedef ::xsd::cxx::tree::optional< deadlineDate_type > deadlineDate_optional;
+    typedef ::xsd::cxx::tree::traits< deadlineDate_type, char > deadlineDate_traits;
+
+    const deadlineDate_optional&
+    deadlineDate () const;
+
+    deadlineDate_optional&
+    deadlineDate ();
+
+    void
+    deadlineDate (const deadlineDate_type& x);
+
+    void
+    deadlineDate (const deadlineDate_optional& x);
+
+    void
+    deadlineDate (::std::unique_ptr< deadlineDate_type > p);
+
+    // Constructors.
+    //
+    Action (const title_type&);
+
+    Action (const ::xercesc::DOMElement& e,
+            ::xml_schema::flags f = 0,
+            ::xml_schema::container* c = 0);
+
+    Action (const Action& x,
+            ::xml_schema::flags f = 0,
+            ::xml_schema::container* c = 0);
+
+    virtual Action*
+    _clone (::xml_schema::flags f = 0,
+            ::xml_schema::container* c = 0) const;
+
+    Action&
+    operator= (const Action& x);
+
+    virtual 
+    ~Action ();
+
+    // Implementation.
+    //
+    protected:
+    void
+    parse (::xsd::cxx::xml::dom::parser< char >&,
+           ::xml_schema::flags);
+
+    protected:
+    ::xsd::cxx::tree::one< title_type > title_;
+    delegate_optional delegate_;
+    deadlineDate_optional deadlineDate_;
   };
 
   class Intrant: public ::xml_schema::type
@@ -458,6 +610,27 @@ namespace N_Data
     void
     deadlineDate (::std::unique_ptr< deadlineDate_type > p);
 
+    // actions
+    //
+    typedef ::N_Data::ActionList actions_type;
+    typedef ::xsd::cxx::tree::optional< actions_type > actions_optional;
+    typedef ::xsd::cxx::tree::traits< actions_type, char > actions_traits;
+
+    const actions_optional&
+    actions () const;
+
+    actions_optional&
+    actions ();
+
+    void
+    actions (const actions_type& x);
+
+    void
+    actions (const actions_optional& x);
+
+    void
+    actions (::std::unique_ptr< actions_type > p);
+
     // Constructors.
     //
     Intrant (const title_type&);
@@ -495,6 +668,7 @@ namespace N_Data
     sound_sequence sound_;
     url_sequence url_;
     deadlineDate_optional deadlineDate_;
+    actions_optional actions_;
   };
 }
 
@@ -611,6 +785,9 @@ namespace N_Data
 namespace N_Data
 {
   void
+  operator<< (::xercesc::DOMElement&, const ActionList&);
+
+  void
   operator<< (::xercesc::DOMElement&, const IntrantList&);
 
   // Serialize to std::ostream.
@@ -680,6 +857,9 @@ namespace N_Data
   IntrantList_ (const ::N_Data::IntrantList& x, 
                 const ::xml_schema::namespace_infomap& m = ::xml_schema::namespace_infomap (),
                 ::xml_schema::flags f = 0);
+
+  void
+  operator<< (::xercesc::DOMElement&, const Action&);
 
   void
   operator<< (::xercesc::DOMElement&, const Intrant&);

@@ -13,6 +13,7 @@
 namespace N_Data {
   class IntrantList;
   class SharedIntrant;
+  class SharedAction;
 }
 
 namespace N_Models {
@@ -30,6 +31,8 @@ namespace N_Data {
       virtual ~DataManager();
 
       Q_INVOKABLE void load(const QUrl& a_PathToFile);
+
+      Q_INVOKABLE void addAction(N_Models::IntrantsList* a_SrcModel, N_Data::SharedAction* a_Action, int a_Idx);
 
       Q_INVOKABLE void addIntrant(N_Models::IntrantsList* a_SrcModel, N_Data::SharedIntrant* a_Intrant);
       Q_INVOKABLE void removeIntrant(N_Models::IntrantsList* a_SrcModel, int a_Idx);

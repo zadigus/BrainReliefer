@@ -4,6 +4,23 @@
 			xmlns:xhtml="http://www.w3.org/1999/xhtml"
 			elementFormDefault="qualified">
 	
+  <xsd:element name="Action">
+    <xsd:complexType>
+      <xsd:sequence>
+         <xsd:element name="title" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="delegate" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="deadlineDate" type="xsd:date" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+      <!--xsd:attribute name="ID" type="xsd:string" use="required"/-->
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:complexType name="ActionList">
+    <xsd:sequence>
+      <xsd:element ref="Action" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
 	<xsd:element name="Intrant">
 		<xsd:complexType>
 			<xsd:sequence>
@@ -14,6 +31,7 @@
 				 <xsd:element name="sound" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
 				 <xsd:element name="url" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
 				 <xsd:element name="deadlineDate" type="xsd:date" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="actions" type="ActionList" minOccurs="0" maxOccurs="1"/>
 			</xsd:sequence>
       <!--xsd:attribute name="ID" type="xsd:string" use="required"/-->
 		</xsd:complexType>

@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.5
 
 import "../Common"
 
@@ -6,10 +6,7 @@ Column {
   property string defaultText
   property var background
 
-//  property int leftMargin: 50
-
   spacing: 10
-  visible: false
 
   property var calendarComponent
   onVisibleChanged:

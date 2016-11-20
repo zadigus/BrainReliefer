@@ -42,6 +42,28 @@
 
 namespace N_Data
 {
+  // ActionList
+  // 
+
+  const ActionList::Action_sequence& ActionList::
+  Action () const
+  {
+    return this->Action_;
+  }
+
+  ActionList::Action_sequence& ActionList::
+  Action ()
+  {
+    return this->Action_;
+  }
+
+  void ActionList::
+  Action (const Action_sequence& s)
+  {
+    this->Action_ = s;
+  }
+
+
   // IntrantList
   // 
 
@@ -61,6 +83,94 @@ namespace N_Data
   Intrant (const Intrant_sequence& s)
   {
     this->Intrant_ = s;
+  }
+
+
+  // Action
+  // 
+
+  const Action::title_type& Action::
+  title () const
+  {
+    return this->title_.get ();
+  }
+
+  Action::title_type& Action::
+  title ()
+  {
+    return this->title_.get ();
+  }
+
+  void Action::
+  title (const title_type& x)
+  {
+    this->title_.set (x);
+  }
+
+  void Action::
+  title (::std::unique_ptr< title_type > x)
+  {
+    this->title_.set (std::move (x));
+  }
+
+  const Action::delegate_optional& Action::
+  delegate () const
+  {
+    return this->delegate_;
+  }
+
+  Action::delegate_optional& Action::
+  delegate ()
+  {
+    return this->delegate_;
+  }
+
+  void Action::
+  delegate (const delegate_type& x)
+  {
+    this->delegate_.set (x);
+  }
+
+  void Action::
+  delegate (const delegate_optional& x)
+  {
+    this->delegate_ = x;
+  }
+
+  void Action::
+  delegate (::std::unique_ptr< delegate_type > x)
+  {
+    this->delegate_.set (std::move (x));
+  }
+
+  const Action::deadlineDate_optional& Action::
+  deadlineDate () const
+  {
+    return this->deadlineDate_;
+  }
+
+  Action::deadlineDate_optional& Action::
+  deadlineDate ()
+  {
+    return this->deadlineDate_;
+  }
+
+  void Action::
+  deadlineDate (const deadlineDate_type& x)
+  {
+    this->deadlineDate_.set (x);
+  }
+
+  void Action::
+  deadlineDate (const deadlineDate_optional& x)
+  {
+    this->deadlineDate_ = x;
+  }
+
+  void Action::
+  deadlineDate (::std::unique_ptr< deadlineDate_type > x)
+  {
+    this->deadlineDate_.set (std::move (x));
   }
 
 
@@ -222,12 +332,124 @@ namespace N_Data
   {
     this->deadlineDate_.set (std::move (x));
   }
+
+  const Intrant::actions_optional& Intrant::
+  actions () const
+  {
+    return this->actions_;
+  }
+
+  Intrant::actions_optional& Intrant::
+  actions ()
+  {
+    return this->actions_;
+  }
+
+  void Intrant::
+  actions (const actions_type& x)
+  {
+    this->actions_.set (x);
+  }
+
+  void Intrant::
+  actions (const actions_optional& x)
+  {
+    this->actions_ = x;
+  }
+
+  void Intrant::
+  actions (::std::unique_ptr< actions_type > x)
+  {
+    this->actions_.set (std::move (x));
+  }
 }
 
 #include <xsd/cxx/xml/dom/parsing-source.hxx>
 
 namespace N_Data
 {
+  // ActionList
+  //
+
+  ActionList::
+  ActionList ()
+  : ::xml_schema::type (),
+    Action_ (this)
+  {
+  }
+
+  ActionList::
+  ActionList (const ActionList& x,
+              ::xml_schema::flags f,
+              ::xml_schema::container* c)
+  : ::xml_schema::type (x, f, c),
+    Action_ (x.Action_, f, this)
+  {
+  }
+
+  ActionList::
+  ActionList (const ::xercesc::DOMElement& e,
+              ::xml_schema::flags f,
+              ::xml_schema::container* c)
+  : ::xml_schema::type (e, f | ::xml_schema::flags::base, c),
+    Action_ (this)
+  {
+    if ((f & ::xml_schema::flags::base) == 0)
+    {
+      ::xsd::cxx::xml::dom::parser< char > p (e, true, false, false);
+      this->parse (p, f);
+    }
+  }
+
+  void ActionList::
+  parse (::xsd::cxx::xml::dom::parser< char >& p,
+         ::xml_schema::flags f)
+  {
+    for (; p.more_content (); p.next_content (false))
+    {
+      const ::xercesc::DOMElement& i (p.cur_element ());
+      const ::xsd::cxx::xml::qualified_name< char > n (
+        ::xsd::cxx::xml::dom::name< char > (i));
+
+      // Action
+      //
+      if (n.name () == "Action" && n.namespace_ ().empty ())
+      {
+        ::std::unique_ptr< Action_type > r (
+          Action_traits::create (i, f, this));
+
+        this->Action_.push_back (::std::move (r));
+        continue;
+      }
+
+      break;
+    }
+  }
+
+  ActionList* ActionList::
+  _clone (::xml_schema::flags f,
+          ::xml_schema::container* c) const
+  {
+    return new class ActionList (*this, f, c);
+  }
+
+  ActionList& ActionList::
+  operator= (const ActionList& x)
+  {
+    if (this != &x)
+    {
+      static_cast< ::xml_schema::type& > (*this) = x;
+      this->Action_ = x.Action_;
+    }
+
+    return *this;
+  }
+
+  ActionList::
+  ~ActionList ()
+  {
+  }
+
   // IntrantList
   //
 
@@ -310,6 +532,134 @@ namespace N_Data
   {
   }
 
+  // Action
+  //
+
+  Action::
+  Action (const title_type& title)
+  : ::xml_schema::type (),
+    title_ (title, this),
+    delegate_ (this),
+    deadlineDate_ (this)
+  {
+  }
+
+  Action::
+  Action (const Action& x,
+          ::xml_schema::flags f,
+          ::xml_schema::container* c)
+  : ::xml_schema::type (x, f, c),
+    title_ (x.title_, f, this),
+    delegate_ (x.delegate_, f, this),
+    deadlineDate_ (x.deadlineDate_, f, this)
+  {
+  }
+
+  Action::
+  Action (const ::xercesc::DOMElement& e,
+          ::xml_schema::flags f,
+          ::xml_schema::container* c)
+  : ::xml_schema::type (e, f | ::xml_schema::flags::base, c),
+    title_ (this),
+    delegate_ (this),
+    deadlineDate_ (this)
+  {
+    if ((f & ::xml_schema::flags::base) == 0)
+    {
+      ::xsd::cxx::xml::dom::parser< char > p (e, true, false, false);
+      this->parse (p, f);
+    }
+  }
+
+  void Action::
+  parse (::xsd::cxx::xml::dom::parser< char >& p,
+         ::xml_schema::flags f)
+  {
+    for (; p.more_content (); p.next_content (false))
+    {
+      const ::xercesc::DOMElement& i (p.cur_element ());
+      const ::xsd::cxx::xml::qualified_name< char > n (
+        ::xsd::cxx::xml::dom::name< char > (i));
+
+      // title
+      //
+      if (n.name () == "title" && n.namespace_ ().empty ())
+      {
+        ::std::unique_ptr< title_type > r (
+          title_traits::create (i, f, this));
+
+        if (!title_.present ())
+        {
+          this->title_.set (::std::move (r));
+          continue;
+        }
+      }
+
+      // delegate
+      //
+      if (n.name () == "delegate" && n.namespace_ ().empty ())
+      {
+        ::std::unique_ptr< delegate_type > r (
+          delegate_traits::create (i, f, this));
+
+        if (!this->delegate_)
+        {
+          this->delegate_.set (::std::move (r));
+          continue;
+        }
+      }
+
+      // deadlineDate
+      //
+      if (n.name () == "deadlineDate" && n.namespace_ ().empty ())
+      {
+        ::std::unique_ptr< deadlineDate_type > r (
+          deadlineDate_traits::create (i, f, this));
+
+        if (!this->deadlineDate_)
+        {
+          this->deadlineDate_.set (::std::move (r));
+          continue;
+        }
+      }
+
+      break;
+    }
+
+    if (!title_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "title",
+        "");
+    }
+  }
+
+  Action* Action::
+  _clone (::xml_schema::flags f,
+          ::xml_schema::container* c) const
+  {
+    return new class Action (*this, f, c);
+  }
+
+  Action& Action::
+  operator= (const Action& x)
+  {
+    if (this != &x)
+    {
+      static_cast< ::xml_schema::type& > (*this) = x;
+      this->title_ = x.title_;
+      this->delegate_ = x.delegate_;
+      this->deadlineDate_ = x.deadlineDate_;
+    }
+
+    return *this;
+  }
+
+  Action::
+  ~Action ()
+  {
+  }
+
   // Intrant
   //
 
@@ -322,7 +672,8 @@ namespace N_Data
     pdf_ (this),
     sound_ (this),
     url_ (this),
-    deadlineDate_ (this)
+    deadlineDate_ (this),
+    actions_ (this)
   {
   }
 
@@ -337,7 +688,8 @@ namespace N_Data
     pdf_ (x.pdf_, f, this),
     sound_ (x.sound_, f, this),
     url_ (x.url_, f, this),
-    deadlineDate_ (x.deadlineDate_, f, this)
+    deadlineDate_ (x.deadlineDate_, f, this),
+    actions_ (x.actions_, f, this)
   {
   }
 
@@ -352,7 +704,8 @@ namespace N_Data
     pdf_ (this),
     sound_ (this),
     url_ (this),
-    deadlineDate_ (this)
+    deadlineDate_ (this),
+    actions_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
     {
@@ -457,6 +810,20 @@ namespace N_Data
         }
       }
 
+      // actions
+      //
+      if (n.name () == "actions" && n.namespace_ ().empty ())
+      {
+        ::std::unique_ptr< actions_type > r (
+          actions_traits::create (i, f, this));
+
+        if (!this->actions_)
+        {
+          this->actions_.set (::std::move (r));
+          continue;
+        }
+      }
+
       break;
     }
 
@@ -488,6 +855,7 @@ namespace N_Data
       this->sound_ = x.sound_;
       this->url_ = x.url_;
       this->deadlineDate_ = x.deadlineDate_;
+      this->actions_ = x.actions_;
     }
 
     return *this;
@@ -779,6 +1147,26 @@ namespace N_Data
 namespace N_Data
 {
   void
+  operator<< (::xercesc::DOMElement& e, const ActionList& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // Action
+    //
+    for (ActionList::Action_const_iterator
+         b (i.Action ().begin ()), n (i.Action ().end ());
+         b != n; ++b)
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "Action",
+          e));
+
+      s << *b;
+    }
+  }
+
+  void
   operator<< (::xercesc::DOMElement& e, const IntrantList& i)
   {
     e << static_cast< const ::xml_schema::type& > (i);
@@ -947,6 +1335,47 @@ namespace N_Data
   }
 
   void
+  operator<< (::xercesc::DOMElement& e, const Action& i)
+  {
+    e << static_cast< const ::xml_schema::type& > (i);
+
+    // title
+    //
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "title",
+          e));
+
+      s << i.title ();
+    }
+
+    // delegate
+    //
+    if (i.delegate ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "delegate",
+          e));
+
+      s << *i.delegate ();
+    }
+
+    // deadlineDate
+    //
+    if (i.deadlineDate ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "deadlineDate",
+          e));
+
+      s << *i.deadlineDate ();
+    }
+  }
+
+  void
   operator<< (::xercesc::DOMElement& e, const Intrant& i)
   {
     e << static_cast< const ::xml_schema::type& > (i);
@@ -1040,6 +1469,18 @@ namespace N_Data
           e));
 
       s << *i.deadlineDate ();
+    }
+
+    // actions
+    //
+    if (i.actions ())
+    {
+      ::xercesc::DOMElement& s (
+        ::xsd::cxx::xml::dom::create_element (
+          "actions",
+          e));
+
+      s << *i.actions ();
     }
   }
 }

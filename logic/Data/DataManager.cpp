@@ -6,6 +6,7 @@
 #include "Data/Data.hpp"
 #include "Data/IntrantList.hpp"
 #include "Data/SharedIntrant.hpp"
+#include "Data/SharedAction.hpp"
 
 #include "Models/IntrantsList.hpp"
 
@@ -25,6 +26,12 @@ namespace N_Data {
   //----------------------------------------------------------------------------------------------
   DataManager::~DataManager()
   { }
+
+  //----------------------------------------------------------------------------------------------
+  void DataManager::addAction(N_Models::IntrantsList* a_SrcModel, N_Data::SharedAction* a_Action, int a_Idx)
+  {
+    a_SrcModel->addAction(a_Action->getAction(), a_Idx);
+  }
 
   //----------------------------------------------------------------------------------------------
   void DataManager::addIntrant(N_Models::IntrantsList* a_SrcModel, SharedIntrant* a_Intrant)

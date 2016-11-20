@@ -7,4 +7,9 @@
     <title>Go to Dijon</title>
     <deadlineDate>2016-11-19</deadlineDate>
   </Intrant>
+  <Intrant>
+    <title>Péter la gueule à Thomas</title>
+    <description>C'est vraiment un bel empafé.</description>
+    <deadlineDate>2016-11-19</deadlineDate>
+  </Intrant>
 </IntrantList>

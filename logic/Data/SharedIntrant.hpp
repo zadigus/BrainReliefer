@@ -34,7 +34,6 @@ namespace N_Data {
       void descriptionChanged();
 
     private:
-      static const Intrant::title_type DEFAULT_TITLE;
       std::unique_ptr<Intrant> m_Data;
   };
 

@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.5
 import QtQuick.Controls 2.0
 
 import MyDataManagement 1.0
@@ -64,7 +64,6 @@ Rectangle
 
     function onClicked()
     {
-//      newIntrantsModel.addIntrant(sharedIntrant)
       dataManager.addIntrant(newIntrantsModel, sharedIntrant)
       windowFooter.goBack()
     }

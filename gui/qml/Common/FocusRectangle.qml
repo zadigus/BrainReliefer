@@ -4,5 +4,5 @@ import "/js/Global.js" as Global
 
 Rectangle {
   property var textField
-  border.color: textField.focus ? "red" : "transparent"
+  border.color: textField.activeFocus ? "red" : "transparent"
 }

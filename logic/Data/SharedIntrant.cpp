@@ -2,8 +2,6 @@
 
 namespace N_Data {
 
-  const N_Data::Intrant::title_type SharedIntrant::DEFAULT_TITLE = "DefaultTitle";
-
   //---------------------------------------------------------------------------------------------------
   SharedIntrant::SharedIntrant(QObject* a_Parent)
     : QObject(a_Parent)
@@ -14,7 +12,7 @@ namespace N_Data {
   //---------------------------------------------------------------------------------------------------
   void SharedIntrant::reset()
   {
-    m_Data.reset(new Intrant(DEFAULT_TITLE));
+    m_Data.reset(new Intrant(""));
   }
 
   //---------------------------------------------------------------------------------------------------

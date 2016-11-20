@@ -58,6 +58,33 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
+  void IntrantsList::addAction(const N_Data::Action& a_Action, int a_Idx)
+  {
+    LOG_INF("Adding action <" << a_Action.title() << "> to intrant <" << m_Data->Intrant().at(a_Idx).title() << ">");
+
+    Intrant& intrant(m_Data->Intrant().at(a_Idx));
+
+    if(intrant.actions().present())
+    {
+      qDebug() << "Actions present";
+      ActionList& actionList(*(intrant.actions()));
+      actionList.Action().push_back(a_Action);
+    }
+    else
+    {
+      qDebug() << "Actions not present";
+      ActionList actionList;
+      actionList.Action().push_back(a_Action);
+      intrant.actions().set(actionList);
+    }
+
+    QModelIndex currentIdx(index(a_Idx, columnCount() - 1));
+    emit dataChanged(currentIdx, currentIdx);
+
+    save();
+  }
+
+  //-------------------------------------------------------------------------------------------
   std::unique_ptr<Intrant> IntrantsList::popIntrant(int a_Idx)
   {
     std::unique_ptr<Intrant> result(new Intrant(m_Data->Intrant().at(a_Idx)));
