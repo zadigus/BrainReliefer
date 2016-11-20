@@ -20,7 +20,7 @@ Item
 
         "references.browse"     : "/References/BrowseReferences.qml",
 
-        "projects"              : "/Projects/Projects.qml",
+        "projects.browse"       : "/Projects/BrowseProjects.qml",
         "nextActions"           : "/NextActions/NextActions.qml",
 
         "agenda"                : "/Agenda/Agenda.qml"

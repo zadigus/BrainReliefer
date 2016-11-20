@@ -47,6 +47,7 @@ namespace N_Data {
       void newIntrantsLoaded(const QString& a_FileName);
       void referencesLoaded(const QString& a_FileName);
       void incubatedLoaded(const QString& a_FileName);
+      void projectsLoaded(const QString& a_FileName);
 
     private:
       QUrl m_DataXsd;

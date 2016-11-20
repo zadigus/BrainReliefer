@@ -35,6 +35,7 @@ class EngineConfigurator
     N_Models::IntrantsList* m_NewIntrantsModel;
     N_Models::IntrantsList* m_ReferencesModel;
     N_Models::IntrantsList* m_IncubatedModel;
+    N_Models::IntrantsList* m_ProjectsModel;
     N_Data::DataManager* m_DataManager;
     N_Data::SharedIntrant* m_SharedIntrant;
     N_Data::SharedAction* m_SharedAction;

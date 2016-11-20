@@ -47,6 +47,9 @@ Item {
     id: actionDelegate
     Text {
       text: title
+      elide: Text.ElideRight
+      width: parent.parent.width
+      horizontalAlignment: Text.AlignHCenter
     }
   }
 
@@ -142,6 +145,7 @@ Item {
           function onClicked()
           {
             intrant.state = 'Doable'
+            // TODO: clear listview model
           }
         }
         ActionButton {
@@ -261,22 +265,6 @@ Item {
         property int buttonWidth: backgroundRectangle.width
         property int buttonHeight: 25
 
-        ListView
-        {
-          id: actionList
-          width: backgroundRectangle.width
-          height: 250
-
-          orientation: ListView.Vertical
-          header: Text {
-            text: "Action list"
-          }
-
-          model: actionModel
-          delegate: actionDelegate
-
-        }
-
         ActionButton {
           id: addNextActionBtn
           buttonText: qsTr("Define next action")
@@ -299,9 +287,8 @@ Item {
           radius: 5
           function onClicked()
           {
-//            intrant.state = 'DefineNextAction'
-//            sharedAction.reset()
             console.log("Define the project!")
+            dataManager.transferIntrant(newIntrantsModel, projectsModel, index)
             actionModel.clear()
           }
         }
@@ -353,7 +340,6 @@ Item {
             radius: 5
             function onClicked()
             {
-              console.log("Set to agenda")
               intrant.state = 'PostponeAction'
             }
           }
@@ -371,7 +357,6 @@ Item {
             visible: false
             function onDateValidated(pickedDate)
             {
-              console.log("Validate the date " + pickedDate)
               sharedAction.deadline = pickedDate
               parent.finalizeAction()
             }
@@ -385,7 +370,35 @@ Item {
             radius: 5
             function onClicked()
             {
-              console.log("Ask for delegate's name and deadline")
+              intrant.state = 'DelegateAction'
+            }
+          }
+
+          TextField {
+            id: delegateField
+            visible: false
+            focus: true
+            placeholderText: qsTr("Enter delegate name")
+            width: backgroundRectangle.width - 2 * defineNextActionLayout.sideMargin
+            height: 50
+            background: FocusRectangle {
+              textField: delegateField
+            }
+            Binding {
+              target: sharedAction
+              property: "delegate"
+              value: delegateField.text
+            }
+          }
+
+          SimpleDatePicker {
+            id: delegatedActionDatePicker
+            background: backgroundRectangle
+            visible: false
+            function onDateValidated(pickedDate)
+            {
+              sharedAction.deadline = pickedDate
+              parent.finalizeAction()
             }
           }
 
@@ -402,8 +415,41 @@ Item {
           }
 
         }
+      }
 
-        // TODO: when finished, go back to doable state
+      // List of defined actions
+      ListView
+      {
+        id: actionList
+
+        visible: false
+
+        width: backgroundRectangle.width
+        height: 250
+
+        anchors {
+          top: doableLayout.bottom /*defineNextActionLayout.bottom*/; topMargin: 1
+          horizontalCenter: backgroundRectangle.horizontalCenter
+        }
+
+//        Rectangle {
+//          anchors.fill: parent
+//          border.color: "red"
+//          border.width: 3
+//          color: "transparent"
+//        }
+
+        orientation: ListView.Vertical
+        header: Text {
+          text: "Action list"
+          font { pointSize: 18; bold: true }
+          width: parent.width
+          horizontalAlignment: Text.AlignHCenter
+        }
+
+        model: actionModel
+        delegate: actionDelegate
+
       }
 
       /*
@@ -490,6 +536,7 @@ Item {
           PropertyChanges { target: closeButton; visible: true }
           // Show doable page layout
           PropertyChanges { target: doableLayout; visible: true }
+          PropertyChanges { target: actionList; visible: true }
         }, State {
           name: "DefineNextAction"
           PropertyChanges { target: backgroundRectangle; color: "white" }
@@ -522,6 +569,25 @@ Item {
           PropertyChanges { target: delegateBtn; visible: false}
           PropertyChanges { target: validateActionBtn; visible: false}
           StateChangeScript { script: postponedActionDatePicker.displayCalendar() }
+        }, State {
+          name: "DelegateAction"
+          PropertyChanges { target: backgroundRectangle; color: "white" }
+          PropertyChanges { target: intrant; x: 0; }
+          // Fill the entire list area with the state's view
+          PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
+          // Move the list so that this item is at the top.
+          PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
+          // Disallow flicking while we're in detailed view
+          PropertyChanges { target: intrant.ListView.view; interactive: false }
+          // Show close button
+          PropertyChanges { target: closeButton; visible: true }
+          // Show state page layout
+          PropertyChanges { target: defineNextActionLayout; visible: true }
+          PropertyChanges { target: delegatedActionDatePicker; visible: true }
+          PropertyChanges { target: postponeBtn; visible: false}
+          PropertyChanges { target: validateActionBtn; visible: false}
+          PropertyChanges { target: delegateField; visible: true }
+          StateChangeScript { script: delegatedActionDatePicker.displayCalendar() }
         }
       ]
 

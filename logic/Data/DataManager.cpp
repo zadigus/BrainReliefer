@@ -62,6 +62,7 @@ namespace N_Data {
       emitLoaded(NEW_INTRANTS_ITEMS, std::bind(&DataManager::newIntrantsLoaded, this, std::placeholders::_1));
       emitLoaded(REFERENCE_ITEMS, std::bind(&DataManager::referencesLoaded, this, std::placeholders::_1));
       emitLoaded(INCUBATION_ITEMS, std::bind(&DataManager::incubatedLoaded, this, std::placeholders::_1));
+      emitLoaded(PROJECT_ITEMS, std::bind(&DataManager::projectsLoaded, this, std::placeholders::_1));
     }
     catch(const XInvalidData& ex)
     {

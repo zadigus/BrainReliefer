@@ -24,7 +24,7 @@ Rectangle
     width: parent.width
     height: 50
     background: FocusRectangle {
-      textField: titleField
+//      textField: titleField
     }
     Binding {
       target: sharedIntrant

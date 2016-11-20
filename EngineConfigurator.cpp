@@ -19,11 +19,12 @@ EngineConfigurator::EngineConfigurator(QQmlApplicationEngine& a_Engine)
   , m_NewIntrantsModel(new N_Models::IntrantsList)
   , m_ReferencesModel(new N_Models::IntrantsList)
   , m_IncubatedModel(new N_Models::IntrantsList)
+  , m_ProjectsModel(new N_Models::IntrantsList)
   , m_DataManager(new N_Data::DataManager)
   , m_SharedIntrant(new N_Data::SharedIntrant)
   , m_SharedAction(new N_Data::SharedAction)
 {
-
+  // TODO: create a NextActionsModel
 }
 
 //----------------------------------------------------------------------------------------------
@@ -37,6 +38,7 @@ void EngineConfigurator::setupContext()
   context->setContextProperty("newIntrantsModel", m_NewIntrantsModel);
   context->setContextProperty("referencesModel", m_ReferencesModel);
   context->setContextProperty("incubatedModel", m_IncubatedModel);
+  context->setContextProperty("projectsModel", m_ProjectsModel);
   context->setContextProperty("sharedIntrant", m_SharedIntrant);
   context->setContextProperty("sharedAction", m_SharedAction);
 }
@@ -62,4 +64,5 @@ void EngineConfigurator::setupConnections()
   QObject::connect(m_DataManager, SIGNAL(newIntrantsLoaded(QString)), m_NewIntrantsModel, SLOT(loadDataFromFile(QString)));
   QObject::connect(m_DataManager, SIGNAL(referencesLoaded(QString)), m_ReferencesModel, SLOT(loadDataFromFile(QString)));
   QObject::connect(m_DataManager, SIGNAL(incubatedLoaded(QString)), m_IncubatedModel, SLOT(loadDataFromFile(QString)));
+  QObject::connect(m_DataManager, SIGNAL(projectsLoaded(QString)), m_ProjectsModel, SLOT(loadDataFromFile(QString)));
 }
