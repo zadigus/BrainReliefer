@@ -3,8 +3,9 @@
 
 #include "core/Global.hpp"
 
-#include <QAbstractListModel>
+#include "Models/Action.hpp"
 
+#include <QAbstractListModel>
 #include <QUrl>
 
 namespace N_Models {
@@ -23,10 +24,6 @@ namespace N_Models {
     public:
       ActionsList(QObject* a_Parent = Q_NULLPTR);
       ~ActionsList();
-
-//      void addActions(const std::vector<Action>& a_Actions); // this is used after we add a new intrant's actions
-//      void addAction(const Action& a_Action); // Action is a decorated N_Data::Action
-//      void removeAction(int a_Idx);
 
       virtual int rowCount(const QModelIndex& a_Parent = QModelIndex()) const override;
       virtual int columnCount(const QModelIndex& a_Parent = QModelIndex()) const override;
@@ -53,7 +50,7 @@ namespace N_Models {
       QUrl m_IntrantListXsd;
       QString m_LoadedFilename;
 
-//      std::unique_ptr<N_Data::IntrantList> m_Data;
+      std::vector<Action> m_Data;
   };
 
   //----------------------------------------------------------------------------------

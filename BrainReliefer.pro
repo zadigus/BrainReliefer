@@ -27,7 +27,8 @@ SOURCES += main.cpp \
     $${DATA_FOLDER}/SharedAction.cpp \
     EngineConfigurator.cpp \
     AppConfiguration.cpp \
-    gui/InvalidData/FileSaveDialog.cpp
+    gui/InvalidData/FileSaveDialog.cpp \
+    logic/Models/Action.cpp
 
 HEADERS += $${CORE_FOLDER}/Global.hpp \
     $${DATA_FOLDER}/Application.hpp \
@@ -49,7 +50,8 @@ HEADERS += $${CORE_FOLDER}/Global.hpp \
     logic/Singleton.hpp \
     EngineConfigurator.hpp \
     AppConfiguration.hpp \
-    gui/InvalidData/FileSaveDialog.hpp
+    gui/InvalidData/FileSaveDialog.hpp \
+    logic/Models/Action.hpp
 
 RESOURCES += gui/qml/qml.qrc \
       $${DATA_FOLDER}/data.qrc

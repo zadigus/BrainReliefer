@@ -10,7 +10,6 @@
 #include "Data/SharedIntrant.hpp"
 #include "Data/IntrantList.hpp"
 
-#include <QDebug>
 #include <QFile>
 #include <QDate>
 
@@ -33,24 +32,6 @@ namespace N_Models {
 //  //-------------------------------------------------------------------------------------------
 //  void ActionsList::save()
 //  {
-//  }
-
-//  //-------------------------------------------------------------------------------------------
-//  void ActionsList::addActions(const std::vector<Action>& a_Actions)
-//  {
-//    LOG_INF("Not implemented yet");
-//  }
-
-//  //-------------------------------------------------------------------------------------------
-//  void ActionsList::addAction(const Action& a_Action)
-//  {
-//    LOG_INF("Not implemented yet");
-//  }
-
-//  //-------------------------------------------------------------------------------------------
-//  void ActionsList::removeAction(int a_Idx)
-//  {
-//    LOG_INF("Not implemented yet");
 //  }
 
   //-------------------------------------------------------------------------------------------
