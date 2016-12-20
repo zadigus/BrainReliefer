@@ -1,2 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<IntrantList/>
+<IntrantList>
+  <Intrant>
+    <title>Test project</title>
+    <description>This project is only intended to be tested and then deleted.</description>
+    <actions>
+      <Action>
+        <title>First action</title>
+      </Action>
+      <Action>
+        <title>Second action</title>
+      </Action>
+    </actions>
+  </Intrant>
+</IntrantList>

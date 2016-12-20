@@ -19,6 +19,7 @@ SOURCES += main.cpp \
     $${DATA_FOLDER}/IntrantList.cpp \
     $${DATA_FOLDER}/DataValidator.cpp \
     $${MODELS_FOLDER}/IntrantsList.cpp \
+    $${MODELS_FOLDER}/ActionsList.cpp \
     $${MODELS_FOLDER}/ModelsHelper.cpp \
     $${DATA_FOLDER}/DataManager.cpp \
     $${DATA_FOLDER}/DataExceptions.cpp \
@@ -37,6 +38,7 @@ HEADERS += $${CORE_FOLDER}/Global.hpp \
     $${DATA_FOLDER}/IntrantList.hpp \
     $${DATA_FOLDER}/DataValidator.hpp \
     $${MODELS_FOLDER}/IntrantsList.hpp \
+    $${MODELS_FOLDER}/ActionsList.hpp \
     $${MODELS_FOLDER}/ModelsHelper.hpp \
     $${DATA_FOLDER}/DataManagerHelper.hpp \
     $${DATA_FOLDER}/DataManager.hpp \

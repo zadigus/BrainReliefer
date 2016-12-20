@@ -1,5 +1,5 @@
-#ifndef MODELS_INTRANTSLIST_HPP
-#define MODELS_INTRANTSLIST_HPP
+#ifndef MODELS_ACTIONSLIST_HPP
+#define MODELS_ACTIONSLIST_HPP
 
 #include "core/Global.hpp"
 
@@ -7,41 +7,26 @@
 
 #include <QUrl>
 
-#include <memory>
-#include <functional>
-
-class QDate;
-
-namespace N_Data {
-  class Action;
-  class Intrant;
-  class IntrantList;
-}
-
 namespace N_Models {
 
-  class IntrantsList : public QAbstractListModel
+  class ActionsList : public QAbstractListModel
   {
       Q_OBJECT
 
     public:
-      enum IntrantsListRoles {
+      enum ActionsListRoles {
         TitleRole = Qt::UserRole + 1,
-        DescriptionRole,
+        DelegateRole,
         DeadlineRole
       };
 
     public:
-      IntrantsList(QObject* a_Parent = Q_NULLPTR);
-      ~IntrantsList();
+      ActionsList(QObject* a_Parent = Q_NULLPTR);
+      ~ActionsList();
 
-      Q_INVOKABLE void setDate(int a_Idx, const QDate& a_Date);
-
-      void addAction(const N_Data::Action& a_Action, int a_Idx);
-
-      std::unique_ptr<N_Data::Intrant> popIntrant(int a_Idx);
-      void addIntrant(const N_Data::Intrant& a_Intrant);
-      void removeIntrant(int a_Idx);
+//      void addActions(const std::vector<Action>& a_Actions); // this is used after we add a new intrant's actions
+//      void addAction(const Action& a_Action); // Action is a decorated N_Data::Action
+//      void removeAction(int a_Idx);
 
       virtual int rowCount(const QModelIndex& a_Parent = QModelIndex()) const override;
       virtual int columnCount(const QModelIndex& a_Parent = QModelIndex()) const override;
@@ -54,7 +39,12 @@ namespace N_Models {
       virtual bool removeRows(int a_Row, int a_Count, const QModelIndex& a_Parent = QModelIndex()) override;
 
     private:
-      void save();
+      // probably nothing to do
+      // when I add an action, I do it either when I process a new intrant (add actions to new intrant)
+      // or when I add an action to an existing project ==> the projects list is updated automatically
+      // when I remove an action, I do it from the next actions or the projects list
+      // ==> when I call removeAction, I am supposed to update the corresponding list
+//      void save();
 
     public slots:
       void loadDataFromFile(const QString& a_FileName);
@@ -63,7 +53,7 @@ namespace N_Models {
       QUrl m_IntrantListXsd;
       QString m_LoadedFilename;
 
-      std::unique_ptr<N_Data::IntrantList> m_Data;
+//      std::unique_ptr<N_Data::IntrantList> m_Data;
   };
 
   //----------------------------------------------------------------------------------
@@ -73,6 +63,7 @@ namespace N_Models {
   //----------------------------------------------------------------------------------
   // non-member method(s)
   //----------------------------------------------------------------------------------
+  QModelIndex parentIndex();
 }
 
 #endif // MODELS_NEWINTRANTS_HPP

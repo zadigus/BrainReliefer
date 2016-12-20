@@ -12,6 +12,12 @@ namespace N_Models {
       return QFileInfo(a_XmlFile).absoluteFilePath().toStdString();
     }
 
+    //-------------------------------------------------------------------------------------------
+    QModelIndex invalidIndex()
+    {
+      return QModelIndex();
+    }
+
   }
 
 

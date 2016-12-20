@@ -1,14 +1,14 @@
 #include "Models/IntrantsList.hpp"
 
+#include "Models/ModelsHelper.hpp"
+
 #include "Data/DataManagerHelper.hpp"
 #include "Data/DataValidator.hpp"
 #include "Data/DataManager.hpp"
 #include "Data/DataExceptions.hpp"
 
-#include "Data/SharedIntrant.hpp"
 #include "Data/IntrantList.hpp"
 
-#include <QDebug>
 #include <QFile>
 #include <QDate>
 
@@ -17,12 +17,6 @@
 using namespace N_Data;
 
 namespace N_Models {
-
-  //-------------------------------------------------------------------------------------------
-  QModelIndex parentIndex()
-  {
-    return QModelIndex();
-  }
 
   //-------------------------------------------------------------------------------------------
   IntrantsList::IntrantsList(QObject* a_Parent)
@@ -134,10 +128,11 @@ namespace N_Models {
     // TODO: what happens if a_FileName is empty???? --> set default filename
     m_LoadedFilename = a_FileName;
 
+    auto size(static_cast<int>(m_Data->Intrant().size()));
     beginResetModel();
-    if(m_Data->Intrant().size() > 0)
+    if(size > 0)
     {
-      beginInsertRows(parentIndex(), 0, static_cast<int>(m_Data->Intrant().size()) - 1);
+      beginInsertRows(N_ModelsHelper::invalidIndex(), 0, size - 1);
       endInsertRows();
     }
     endResetModel();
