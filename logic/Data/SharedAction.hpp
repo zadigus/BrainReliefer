@@ -1,6 +1,8 @@
 #ifndef DATA_SHAREDACTION_HPP
 #define DATA_SHAREDACTION_HPP
 
+#include "core/Global.hpp"
+
 #include "Data/IntrantList.hpp"
 
 #include <QDate>
@@ -21,7 +23,7 @@ namespace N_Data {
 
       Q_INVOKABLE void reset();
 
-      Action getAction() const;
+      N_Data::Action getAction() const;
 
       QString title() const;
       void setTitle(const QString& a_Value);
@@ -45,7 +47,7 @@ namespace N_Data {
   // inline / template method(s) implementation
   //----------------------------------------------------------------------------------
 
-  inline Action SharedAction::getAction() const
+  inline N_Data::Action SharedAction::getAction() const
   {
     return *m_Data;
   }

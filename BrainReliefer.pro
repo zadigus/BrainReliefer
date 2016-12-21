@@ -28,7 +28,7 @@ SOURCES += main.cpp \
     EngineConfigurator.cpp \
     AppConfiguration.cpp \
     gui/InvalidData/FileSaveDialog.cpp \
-    logic/Models/Action.cpp
+    $${MODELS_FOLDER}/Action.cpp
 
 HEADERS += $${CORE_FOLDER}/Global.hpp \
     $${DATA_FOLDER}/Application.hpp \
@@ -51,14 +51,14 @@ HEADERS += $${CORE_FOLDER}/Global.hpp \
     EngineConfigurator.hpp \
     AppConfiguration.hpp \
     gui/InvalidData/FileSaveDialog.hpp \
-    logic/Models/Action.hpp
+    $${MODELS_FOLDER}/Action.hpp
 
 RESOURCES += gui/qml/qml.qrc \
       $${DATA_FOLDER}/data.qrc
 
 INCLUDEPATH += $${XSD_BASE_DIR}/include \
 		gui \
-		logic
+    logic
 
 win32-msvc2013 {
     ## Windows common build here

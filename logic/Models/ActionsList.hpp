@@ -35,20 +35,14 @@ namespace N_Models {
 
       virtual bool removeRows(int a_Row, int a_Count, const QModelIndex& a_Parent = QModelIndex()) override;
 
-    private:
-      // probably nothing to do
-      // when I add an action, I do it either when I process a new intrant (add actions to new intrant)
-      // or when I add an action to an existing project ==> the projects list is updated automatically
-      // when I remove an action, I do it from the next actions or the projects list
-      // ==> when I call removeAction, I am supposed to update the corresponding list
-//      void save();
-
     public slots:
       void loadDataFromFile(const QString& a_FileName);
 
     private:
+
+
+    private:
       QUrl m_IntrantListXsd;
-      QString m_LoadedFilename;
 
       std::vector<Action> m_Data;
   };

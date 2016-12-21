@@ -110,6 +110,8 @@ namespace N_Models {
   //-------------------------------------------------------------------------------------------
   void IntrantsList::loadDataFromFile(const QString& a_FileName)
   {
+    beginResetModel();
+
     try
     {
       auto DataBuilder = [] (const std::string& a_FileName) { return IntrantList_(a_FileName, xml_schema::flags::dont_validate); };
@@ -128,13 +130,6 @@ namespace N_Models {
     // TODO: what happens if a_FileName is empty???? --> set default filename
     m_LoadedFilename = a_FileName;
 
-    auto size(static_cast<int>(m_Data->Intrant().size()));
-    beginResetModel();
-    if(size > 0)
-    {
-      beginInsertRows(N_ModelsHelper::invalidIndex(), 0, size - 1);
-      endInsertRows();
-    }
     endResetModel();
   }
 

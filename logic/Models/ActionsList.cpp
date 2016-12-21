@@ -29,19 +29,14 @@ namespace N_Models {
   ActionsList::~ActionsList()
   { }
 
-//  //-------------------------------------------------------------------------------------------
-//  void ActionsList::save()
-//  {
-//  }
-
   //-------------------------------------------------------------------------------------------
   void ActionsList::loadDataFromFile(const QString& a_FileName)
   {
-    LOG_INF("Not implemented yet");
-    /*try
+    std::unique_ptr<IntrantList> intrantList;
+    try
     {
       auto DataBuilder = [] (const std::string& a_FileName) { return IntrantList_(a_FileName, xml_schema::flags::dont_validate); };
-      m_Data = N_DataManagerHelper::getParsedXML<IntrantList>(a_FileName, m_IntrantListXsd, DataBuilder);
+      intrantList = N_DataManagerHelper::getParsedXML<IntrantList>(a_FileName, m_IntrantListXsd, DataBuilder);
     }
     catch(const XInexistentData& ex)
     {
@@ -53,17 +48,23 @@ namespace N_Models {
       throw ex;
       // TODO: if the data does not exist, then automatically create the missing file in the same directory as the main Data.xml
     }
-    // TODO: what happens if a_FileName is empty???? --> set default filename
-    m_LoadedFilename = a_FileName;
 
-    auto size(static_cast<int>(m_Data->Intrant().size()));
     beginResetModel();
-    if(size > 0)
+
+    std::for_each(intrantList->Intrant().begin(), intrantList->Intrant().end(),
+                  [this](const N_Data::Intrant& a_Item)
     {
-      beginInsertRows(N_ModelsHelper::invalidIndex(), 0, size - 1);
-      endInsertRows();
-    }
-    endResetModel();*/
+      if(a_Item.actions().present())
+      {
+        std::string projectTitle(a_Item.title());
+
+        auto& actionList(*(a_Item.actions()));
+        std::transform(actionList.Action().begin(), actionList.Action().end(), std::back_inserter(m_Data),
+                       [&projectTitle](const N_Data::Action& a_Action) -> N_Models::Action { return N_Models::Action(a_Action, projectTitle); });
+      }
+    });
+
+    endResetModel();
   }
 
   //-------------------------------------------------------------------------------------------
@@ -73,23 +74,16 @@ namespace N_Models {
     int upperIdx(a_Row + a_Count - 1);
 
     beginRemoveRows(QModelIndex(), lowerIdx, upperIdx);
-
-//    m_Data->Intrant().erase(m_Data->Intrant().begin() + lowerIdx, m_Data->Intrant().begin() + upperIdx + 1);
-    LOG_INF("Not implemented yet");
-
+    m_Data.erase(m_Data.begin() + lowerIdx, m_Data.begin() + upperIdx + 1);
     endRemoveRows();
+
     return true;
   }
 
   //-------------------------------------------------------------------------------------------
   int ActionsList::rowCount(const QModelIndex& /*parent*/) const
   {
-//    if(m_Data)
-//    {
-//      return static_cast<int>(m_Data->Intrant().size());
-//    }
-
-    return 0;
+    return static_cast<int>(m_Data.size());
   }
 
   //-------------------------------------------------------------------------------------------
@@ -101,10 +95,11 @@ namespace N_Models {
   //-------------------------------------------------------------------------------------------
   QVariant ActionsList::data(const QModelIndex& a_Index, int a_Role) const
   {
-//    switch(a_Role)
-//    {
-//      case TitleRole:
-//        return QString::fromStdString(m_Data->Intrant().at(a_Index.row()).title());
+    switch(a_Role)
+    {
+      case TitleRole:
+        return m_Data.at(a_Index.row()).title();
+
 //      case DescriptionRole:
 //      {
 //        Intrant::description_optional descr(m_Data->Intrant().at(a_Index.row()).description());
@@ -115,9 +110,9 @@ namespace N_Models {
 //        Intrant::deadlineDate_optional value(m_Data->Intrant().at(a_Index.row()).deadlineDate());
 //        return value.present() ? QDate((*value).year(), (*value).month(), (*value).day()) : QDate();
 //      }
-//      default:
-//        break;
-//    }
+      default:
+        break;
+    }
     return QVariant();
   }
 

@@ -3,8 +3,9 @@
 namespace N_Models {
 
   //---------------------------------------------------------------------------------------------------
-  Action::Action(const N_Data::Action& a_Action)
+  Action::Action(const N_Data::Action& a_Action, const std::string& a_ProjectTitle)
     : m_Action(a_Action)
+    , m_ProjectTitle(QString::fromStdString(a_ProjectTitle))
   {
 
   }

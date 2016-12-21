@@ -5,12 +5,16 @@
 
 #include "Data/IntrantList.hpp"
 
+#include <QDate>
+
 namespace N_Models {
+
+  // TODO: use this code in the SharedAction code
 
   class Action
   {
     public:
-      Action(const N_Data::Action& a_Action);
+      Action(const N_Data::Action& a_Action, const std::string& a_ProjectTitle);
 
       QString title() const;
       QString delegate() const;
@@ -20,7 +24,7 @@ namespace N_Models {
       void setProjectTitle(const QString& a_Value);
 
     private:
-      N_Data::Action& m_Action;
+      N_Data::Action m_Action;
       QString m_ProjectTitle;
   };
 

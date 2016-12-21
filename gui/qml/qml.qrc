@@ -24,17 +24,20 @@
         <file alias="ManageNewIntrants.qml">NewIntrants/ManageNewIntrants.qml</file>
 		<file alias="NewIntrantCalendar.qml">NewIntrants/NewIntrantCalendar.qml</file>
 		<file alias="DatePicker.qml">NewIntrants/DatePicker.qml</file>
-		<file alias="SimpleDatePicker.qml">NewIntrants/SimpleDatePicker.qml</file>
-    </qresource>
+    <file alias="SimpleDatePicker.qml">NewIntrants/SimpleDatePicker.qml</file>
+  </qresource>
 	<qresource prefix="/References">
-        <file alias="BrowseReferences.qml">References/BrowseReferences.qml</file>
-    </qresource>
-		<qresource prefix="/IncubatedIntrants">
-        <file alias="BrowseIncubation.qml">IncubatedIntrants/BrowseIncubation.qml</file>
-    </qresource>
+    <file alias="BrowseReferences.qml">References/BrowseReferences.qml</file>
+  </qresource>
+	<qresource prefix="/IncubatedIntrants">
+    <file alias="BrowseIncubation.qml">IncubatedIntrants/BrowseIncubation.qml</file>
+  </qresource>
 	<qresource prefix="/Projects">
-        <file alias="BrowseProjects.qml">Projects/BrowseProjects.qml</file>
-    </qresource>
+    <file alias="BrowseProjects.qml">Projects/BrowseProjects.qml</file>
+  </qresource>
+  <qresource prefix="/NextActions">
+    <file alias="BrowseNextActions.qml">NextActions/BrowseNextActions.qml</file>
+  </qresource>
 	<qresource prefix="/Common">
 		<file alias="FocusRectangle.qml">Common/FocusRectangle.qml</file>
 		<file alias="PlaceHolderText.qml">Common/PlaceHolderText.qml</file>

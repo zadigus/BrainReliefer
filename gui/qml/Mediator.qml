@@ -21,7 +21,7 @@ Item
         "references.browse"     : "/References/BrowseReferences.qml",
 
         "projects.browse"       : "/Projects/BrowseProjects.qml",
-        "nextActions"           : "/NextActions/NextActions.qml",
+        "nextActions.browse"    : "/NextActions/BrowseNextActions.qml",
 
         "agenda"                : "/Agenda/Agenda.qml"
     }

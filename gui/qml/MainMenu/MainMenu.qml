@@ -16,7 +16,7 @@ Menu
                 {text: qsTr("Incubated Intrants"),    link: "incubation.browse"},
                 {text: qsTr("References"),            link: "references.browse"},
                 {text: qsTr("Projects"),              link: "projects.browse"},
-                {text: qsTr("Next Actions"),          link: "nextActions"},
+                {text: qsTr("Next Actions"),          link: "nextActions.browse"},
                 {text: qsTr("Agenda"),                link: "agenda"}
             ]
 
