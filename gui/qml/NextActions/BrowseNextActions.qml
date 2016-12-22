@@ -35,6 +35,16 @@ Item {
         height: parent.height;
         width: parent.width
         spacing: 10
+
+        Text {
+          text: title
+          elide: Text.ElideRight
+          wrapMode: Text.NoWrap
+          x: 10
+          width: parent.width - 2 * x
+          font.pixelSize: 24
+        }
+
       }
     }
   }
