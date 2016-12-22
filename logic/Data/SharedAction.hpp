@@ -5,12 +5,14 @@
 
 #include "Data/IntrantList.hpp"
 
+#include "common/Data/Action.hpp"
+
 #include <QDate>
 #include <QObject>
 
 namespace N_Data {
 
-  class SharedAction : public QObject
+  class SharedAction : public QObject, public N_CommonData::Action
   {
       Q_OBJECT
 
@@ -23,34 +25,17 @@ namespace N_Data {
 
       Q_INVOKABLE void reset();
 
-      N_Data::Action getAction() const;
-
-      QString title() const;
-      void setTitle(const QString& a_Value);
-
-      QDate deadline() const;
-      void setDeadline(const QDate& a_Value);
-
-      QString delegate() const;
-      void setDelegate(const QString& a_Value);
-
     signals:
       void titleChanged();
       void deadlineChanged();
       void delegateChanged();
 
     private:
-      std::unique_ptr<Action> m_Data;
   };
 
   //----------------------------------------------------------------------------------
   // inline / template method(s) implementation
   //----------------------------------------------------------------------------------
-
-  inline N_Data::Action SharedAction::getAction() const
-  {
-    return *m_Data;
-  }
 
 }
 

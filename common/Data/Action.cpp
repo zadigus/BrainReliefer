@@ -1,14 +1,6 @@
-#include "Action.hpp"
+#include "common/Data/Action.hpp"
 
-namespace N_Models {
-
-  //---------------------------------------------------------------------------------------------------
-  Action::Action(const N_Data::Action& a_Action, const std::string& a_ProjectTitle)
-    : m_Action(a_Action)
-    , m_ProjectTitle(QString::fromStdString(a_ProjectTitle))
-  {
-
-  }
+namespace N_CommonData {
 
   //---------------------------------------------------------------------------------------------------
   QString Action::title() const
@@ -17,9 +9,9 @@ namespace N_Models {
   }
 
   //---------------------------------------------------------------------------------------------------
-  QString Action::delegate() const
+  void Action::setTitle(const QString& a_Value)
   {
-    return m_Action.delegate().present() ? QString::fromStdString(*(m_Action.delegate())) : QString();
+    m_Action.title(a_Value.toStdString());
   }
 
   //---------------------------------------------------------------------------------------------------
@@ -30,15 +22,21 @@ namespace N_Models {
   }
 
   //---------------------------------------------------------------------------------------------------
-  QString Action::projectTitle() const
+  void Action::setDeadline(const QDate& a_Value)
   {
-    return m_ProjectTitle;
+    m_Action.deadlineDate(N_Data::Action::deadlineDate_type(a_Value.year(), a_Value.month(), a_Value.day()));
   }
 
   //---------------------------------------------------------------------------------------------------
-  void Action::setProjectTitle(const QString& a_Value)
+  QString Action::delegate() const
   {
-    m_ProjectTitle = a_Value;
+    return m_Action.delegate().present() ? QString::fromStdString(*(m_Action.delegate())) : QString();
+  }
+
+  //---------------------------------------------------------------------------------------------------
+  void Action::setDelegate(const QString& a_Value)
+  {
+    m_Action.delegate(a_Value.toStdString());
   }
 
 }

@@ -3,7 +3,7 @@
 
 #include "core/Global.hpp"
 
-#include "Models/Action.hpp"
+#include "ProjectAction.hpp"
 
 #include <QAbstractListModel>
 #include <QUrl>
@@ -44,7 +44,7 @@ namespace N_Models {
     private:
       QUrl m_IntrantListXsd;
 
-      std::vector<Action> m_Data;
+      std::vector<ProjectAction> m_Data;
   };
 
   //----------------------------------------------------------------------------------

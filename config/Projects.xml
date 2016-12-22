@@ -12,4 +12,43 @@
       </Action>
     </actions>
   </Intrant>
+  <Intrant>
+    <title>My second project</title>
+    <description>Blablabla my second is so nice ... blablabla bla ... you really want to know everything about it ... blablbala</description>
+    <actions>
+      <Action>
+        <title>My first action of the second project</title>
+      </Action>
+      <Action>
+        <title>Yet another action of the second project</title>
+      </Action>
+    </actions>
+  </Intrant>
+  <Intrant>
+    <title>My 3rd project</title>
+    <description>hey hey here we go</description>
+    <actions>
+      <Action>
+        <title>tell your mother Im the best</title>
+      </Action>
+    </actions>
+  </Intrant>
+  <Intrant>
+    <title>4th project already???</title>
+    <actions>
+      <Action>
+        <title>do me</title>
+        <delegate/>
+      </Action>
+    </actions>
+  </Intrant>
+  <Intrant>
+    <title>5th project</title>
+    <description>here we go again</description>
+    <actions>
+      <Action>
+        <title>Faire des bisous à ma Choupinette</title>
+      </Action>
+    </actions>
+  </Intrant>
 </IntrantList>

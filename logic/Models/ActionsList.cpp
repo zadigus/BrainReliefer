@@ -51,6 +51,7 @@ namespace N_Models {
 
     beginResetModel();
 
+    m_Data.clear();
     std::for_each(intrantList->Intrant().begin(), intrantList->Intrant().end(),
                   [this](const N_Data::Intrant& a_Item)
     {
@@ -60,7 +61,7 @@ namespace N_Models {
 
         auto& actionList(*(a_Item.actions()));
         std::transform(actionList.Action().begin(), actionList.Action().end(), std::back_inserter(m_Data),
-                       [&projectTitle](const N_Data::Action& a_Action) -> N_Models::Action { return N_Models::Action(a_Action, projectTitle); });
+                       [&projectTitle](const N_Data::Action& a_Action) -> ProjectAction { return ProjectAction(a_Action, projectTitle); });
       }
     });
 
@@ -117,7 +118,7 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  QVariant ActionsList::headerData(int a_Section, Qt::Orientation a_Orientation, int a_Role) const
+  QVariant ActionsList::headerData(int /*a_Section*/, Qt::Orientation /*a_Orientation*/, int a_Role) const
   {
     if(a_Role != TitleRole)
     {
