@@ -11,26 +11,6 @@ Item {
 
   signal handle(string name)
 
-  /*Component
-    {
-        id: bannerComponent
-
-        Rectangle
-        {
-            id: banner
-            width: parent.width
-            height: 50
-            gradient: clubcolors
-            border {color: "#9EDDF2"; width: 2}
-            Text
-            {
-                anchors.centerIn: parent
-                text: "New Intrants"
-                font.pixelSize: 32
-            }
-        }
-    }*/
-
   Gradient
   {
     id: clubcolors
@@ -62,7 +42,7 @@ Item {
 
       property int initialIntrantHeight: 40
 
-      width: list.width
+      width: parent.width
       height: initialIntrantHeight
 
       // A simple rounded rectangle for the background
@@ -449,141 +429,23 @@ Item {
       /*
        * State machine
        */
-      states: [ State {
+      states: [ DetailsState {
           name: "Details"
-          PropertyChanges { target: backgroundRectangle; color: "red" }
-          // Make details visible
-          PropertyChanges { target: intrant; x: 0 }
-          // Fill the entire list area with the detailed view
-          PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
-          // Move the list so that this item is at the top.
-          PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
-          // Disallow flicking while we're in detailed view
-          PropertyChanges { target: intrant.ListView.view; interactive: false }
-          // Show close button
-          PropertyChanges { target: closeButton; visible: true }
-          // Show doable / not doable buttons
-          PropertyChanges { target: doableBtnsLayout; visible: true }
-          // Show description
-          PropertyChanges { target: descriptionData; visible: true }
-        }, State {
+        }, NotDoableState {
           name: "NotDoable"
-          PropertyChanges { target: backgroundRectangle; color: "green" }
-          PropertyChanges { target: intrant; x: 0; }
-          // Fill the entire list area with the "not doable" view
-          PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
-          // Move the list so that this item is at the top.
-          PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
-          // Disallow flicking while we're in detailed view
-          PropertyChanges { target: intrant.ListView.view; interactive: false }
-          // Show close button
-          PropertyChanges { target: closeButton; visible: true }
-          // Show not doable buttons: delete, incubate, keep as reference
-          PropertyChanges { target: notDoableLayout; visible: true }
-        }, State {
-          name: "Incubate"
-          PropertyChanges { target: backgroundRectangle; color: "blue" }
-          PropertyChanges { target: intrant; x: 0; }
-          // Fill the entire list area with the "not doable" view
-          PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
-          // Move the list so that this item is at the top.
-          PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
-          // Disallow flicking while we're in detailed view
-          PropertyChanges { target: intrant.ListView.view; interactive: false }
-          // Show close button
-          PropertyChanges { target: closeButton; visible: true }
-          // Show not doable buttons: delete, incubate, keep as reference
-          PropertyChanges { target: notDoableLayout; visible: true }
-          // Show Calendar settings
-          PropertyChanges { target: incubationDatePicker; visible: true }
-          PropertyChanges { target: deleteBtn; visible: false }
-          PropertyChanges { target: referenceBtn; visible: false }
-        }, State {
+        }, IncubateState {
+         name: "Incubate"
+        }, SetAsReferenceState {
           name: "SetAsReference"
-          PropertyChanges { target: backgroundRectangle; color: "blue" }
-          PropertyChanges { target: intrant; x: 0; }
-          // Fill the entire list area with the "not doable" view
-          PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
-          // Move the list so that this item is at the top.
-          PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
-          // Disallow flicking while we're in detailed view
-          PropertyChanges { target: intrant.ListView.view; interactive: false }
-          // Show close button
-          PropertyChanges { target: closeButton; visible: true }
-          // Show not doable buttons: delete, incubate, keep as reference
-          PropertyChanges { target: notDoableLayout; visible: true }
-          // Show Calendar settings
-          PropertyChanges { target: referenceDatePicker; visible: true }
-          PropertyChanges { target: deleteBtn; visible: false }
-          PropertyChanges { target: incubateBtn; visible: false }
-        }, State {
-          name: "Doable"
-          PropertyChanges { target: backgroundRectangle; color: "white" }
-          PropertyChanges { target: intrant; x: 0; }
-          // Fill the entire list area with the "doable" view
-          PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
-          // Move the list so that this item is at the top.
-          PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
-          // Disallow flicking while we're in detailed view
-          PropertyChanges { target: intrant.ListView.view; interactive: false }
-          // Show close button
-          PropertyChanges { target: closeButton; visible: true }
-          // Show doable page layout
-          PropertyChanges { target: doableLayout; visible: true }
-          PropertyChanges { target: actionList; visible: true }
-        }, State {
+        }, DoableState {
+            name: "Doable"
+        }, DefineNextActionState {
           name: "DefineNextAction"
-          PropertyChanges { target: backgroundRectangle; color: "white" }
-          PropertyChanges { target: intrant; x: 0; }
-          // Fill the entire list area with the state's view
-          PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
-          // Move the list so that this item is at the top.
-          PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
-          // Disallow flicking while we're in detailed view
-          PropertyChanges { target: intrant.ListView.view; interactive: false }
-          // Show close button
-          PropertyChanges { target: closeButton; visible: true }
-          // Show state page layout
-          PropertyChanges { target: defineNextActionLayout; visible: true }
-        }, State {
+        }, PostponeActionState {
           name: "PostponeAction"
-          PropertyChanges { target: backgroundRectangle; color: "white" }
-          PropertyChanges { target: intrant; x: 0; }
-          // Fill the entire list area with the state's view
-          PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
-          // Move the list so that this item is at the top.
-          PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
-          // Disallow flicking while we're in detailed view
-          PropertyChanges { target: intrant.ListView.view; interactive: false }
-          // Show close button
-          PropertyChanges { target: closeButton; visible: true }
-          // Show state page layout
-          PropertyChanges { target: defineNextActionLayout; visible: true }
-          PropertyChanges { target: postponedActionDatePicker; visible: true }
-          PropertyChanges { target: delegateBtn; visible: false}
-          PropertyChanges { target: validateActionBtn; visible: false}
-          StateChangeScript { script: postponedActionDatePicker.displayCalendar() }
-        }, State {
+        }, DelegateActionState {
           name: "DelegateAction"
-          PropertyChanges { target: backgroundRectangle; color: "white" }
-          PropertyChanges { target: intrant; x: 0; }
-          // Fill the entire list area with the state's view
-          PropertyChanges { target: intrant; height: list.height + intrant.initialIntrantHeight / 2 }
-          // Move the list so that this item is at the top.
-          PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
-          // Disallow flicking while we're in detailed view
-          PropertyChanges { target: intrant.ListView.view; interactive: false }
-          // Show close button
-          PropertyChanges { target: closeButton; visible: true }
-          // Show state page layout
-          PropertyChanges { target: defineNextActionLayout; visible: true }
-          PropertyChanges { target: delegatedActionDatePicker; visible: true }
-          PropertyChanges { target: postponeBtn; visible: false}
-          PropertyChanges { target: validateActionBtn; visible: false}
-          PropertyChanges { target: delegateField; visible: true }
-          StateChangeScript { script: delegatedActionDatePicker.displayCalendar() }
-        }
-      ]
+        }]
 
       transitions: Transition {
         // Make the state changes smooth
@@ -598,8 +460,8 @@ Item {
 
   ListView
   {
-    id: list
-    //        anchors.fill: parent
+    id: newIntrantsList
+
     width: mediator.width
     height: mediator.height
 
@@ -609,12 +471,6 @@ Item {
 
     model: newIntrantsModel
     delegate: intrantDelegate
-
-    //    highlight: Rectangle {
-    //      width: parent.width
-    //      color: "lightgray"
-    //      y: list.currentItem.y
-    //    }
   }
 
   Component.onCompleted:

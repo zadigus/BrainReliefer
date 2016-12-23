@@ -51,4 +51,34 @@
       </Action>
     </actions>
   </Intrant>
+  <Intrant>
+    <title>voilà</title>
+    <description>caca</description>
+    <actions>
+      <Action>
+        <title>hihi</title>
+        <delegate>Florian</delegate>
+        <deadlineDate>2016-12-30</deadlineDate>
+      </Action>
+      <Action>
+        <title>hahaha</title>
+        <deadlineDate>2016-12-31</deadlineDate>
+      </Action>
+      <Action>
+        <title>huhu</title>
+      </Action>
+    </actions>
+  </Intrant>
+  <Intrant>
+    <title>Acheter wireless repeater</title>
+    <description>Commander chez Amazon.</description>
+    <actions>
+      <Action>
+        <title>Go to the web page</title>
+      </Action>
+      <Action>
+        <title>Gather information about repeaters</title>
+      </Action>
+    </actions>
+  </Intrant>
 </IntrantList>
