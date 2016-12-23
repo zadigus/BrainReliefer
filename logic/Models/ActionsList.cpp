@@ -46,7 +46,7 @@ namespace N_Models {
     {
       LOG_ERR("Caught exception: " << ex.what());
       throw ex;
-      // TODO: if the data does not exist, then automatically create the missing file in the same directory as the main Data.xml
+      // TODO: if the data do not exist, then automatically create the missing file in the same directory as the main Data.xml
     }
 
     beginResetModel();
@@ -100,6 +100,8 @@ namespace N_Models {
     {
       case TitleRole:
         return m_Data.at(a_Index.row()).title();
+      case ProjectRole:
+        return m_Data.at(a_Index.row()).projectTitle();
 
 //      case DescriptionRole:
 //      {
@@ -143,6 +145,7 @@ namespace N_Models {
     result[TitleRole] = "title";
     result[DelegateRole] = "delegate";
     result[DeadlineRole] = "deadline";
+    result[ProjectRole] = "projectTitle";
     return result;
   }
 

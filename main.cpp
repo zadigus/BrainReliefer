@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
 
   EngineConfigurator ec(engine);
   ec.setupContext();
+  ec.setupProxyModels();
   ec.registerMetaTypes();
   ec.setupConnections();
   ec.loadQML(QUrl(QStringLiteral("qrc:/qml/main.qml")));

@@ -124,13 +124,12 @@ Item {
 
     model: referencesModel
     delegate: intrantDelegate
+  }
 
-    Component.onCompleted:
-    {
-      windowFooter.activateHome(true)
-      windowFooter.activateBackArrow(Global.history.length >= 2)
-      windowHeader.text = qsTr("References")
-    }
-
+  Component.onCompleted:
+  {
+    windowFooter.activateHome(true)
+    windowFooter.activateBackArrow(Global.history.length >= 2)
+    windowHeader.text = qsTr("References")
   }
 }

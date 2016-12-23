@@ -12,6 +12,7 @@
 #include "InvalidData/FileSaveDialog.hpp"
 
 #include <QQmlContext>
+#include <QSortFilterProxyModel>
 
 //----------------------------------------------------------------------------------------------
 EngineConfigurator::EngineConfigurator(QQmlApplicationEngine& a_Engine)
@@ -21,12 +22,20 @@ EngineConfigurator::EngineConfigurator(QQmlApplicationEngine& a_Engine)
   , m_ReferencesModel(new N_Models::IntrantsList)
   , m_IncubatedModel(new N_Models::IntrantsList)
   , m_ProjectsModel(new N_Models::IntrantsList)
-  , m_ActionsModel(new N_Models::ActionsList)
+  , m_ActionsModel(new QSortFilterProxyModel)
   , m_DataManager(new N_Data::DataManager)
   , m_SharedIntrant(new N_Data::SharedIntrant)
   , m_SharedAction(new N_Data::SharedAction)
 {
 
+}
+
+//----------------------------------------------------------------------------------------------
+void EngineConfigurator::setupProxyModels()
+{
+  N_Models::ActionsList* model(new N_Models::ActionsList);
+  m_ActionsModel->setSourceModel(model);
+  m_ActionsModel->setFilterRole(N_Models::ActionsList::ProjectRole);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -69,5 +78,5 @@ void EngineConfigurator::setupConnections()
   QObject::connect(m_DataManager, SIGNAL(referencesLoaded(QString)), m_ReferencesModel, SLOT(loadDataFromFile(QString)));
   QObject::connect(m_DataManager, SIGNAL(incubatedLoaded(QString)), m_IncubatedModel, SLOT(loadDataFromFile(QString)));
   QObject::connect(m_DataManager, SIGNAL(projectsLoaded(QString)), m_ProjectsModel, SLOT(loadDataFromFile(QString)));
-  QObject::connect(m_DataManager, SIGNAL(projectsLoaded(QString)), m_ActionsModel, SLOT(loadDataFromFile(QString)));
+  QObject::connect(m_DataManager, SIGNAL(projectsLoaded(QString)), m_ActionsModel->sourceModel(), SLOT(loadDataFromFile(QString)));
 }

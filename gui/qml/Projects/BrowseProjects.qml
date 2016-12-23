@@ -10,6 +10,17 @@ Item {
 
   Component
   {
+    id: actionDelegate
+    Text {
+      text: title
+      elide: Text.ElideRight
+      width: parent.parent.width
+      horizontalAlignment: Text.AlignHCenter
+    }
+  }
+
+  Component
+  {
     id: intrantDelegate
     Item
     {
@@ -87,6 +98,22 @@ Item {
           wrapMode: Text.Wrap
           opacity: detailsOpacity
         }
+
+        ListView
+        {
+          id: actionsList
+
+          width: parent.width
+          height: 250
+
+          orientation: ListView.Vertical
+
+          model: actionsModel
+          delegate: actionDelegate
+
+          opacity: detailsOpacity
+        }
+
       }
 
       states: [ State {
@@ -100,6 +127,7 @@ Item {
         PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
         // Disallow flicking while we're in detailed view
         PropertyChanges { target: intrant.ListView.view; interactive: false }
+        StateChangeScript { script: actionsModel.setFilterFixedString(title) }
       }]
 
       transitions: Transition {
@@ -124,13 +152,12 @@ Item {
 
     model: projectsModel
     delegate: intrantDelegate
+  }
 
-    Component.onCompleted:
-    {
-      windowFooter.activateHome(true)
-      windowFooter.activateBackArrow(Global.history.length >= 2)
-      windowHeader.text = qsTr("Projects")
-    }
-
+  Component.onCompleted:
+  {
+    windowFooter.activateHome(true)
+    windowFooter.activateBackArrow(Global.history.length >= 2)
+    windowHeader.text = qsTr("Projects")
   }
 }

@@ -9,7 +9,6 @@ class AppConfiguration;
 
 namespace N_Models {
   class IntrantsList;
-  class ActionsList;
 }
 
 namespace N_Data {
@@ -18,12 +17,15 @@ namespace N_Data {
   class SharedAction;
 }
 
+class QSortFilterProxyModel;
+
 class EngineConfigurator
 {
   public:
     EngineConfigurator(QQmlApplicationEngine& a_Engine);
 
     void setupContext();
+    void setupProxyModels();
     void registerMetaTypes();
     void loadQML(const QUrl& a_MainQml);
     void setupConnections();
@@ -37,7 +39,7 @@ class EngineConfigurator
     N_Models::IntrantsList* m_ReferencesModel;
     N_Models::IntrantsList* m_IncubatedModel;
     N_Models::IntrantsList* m_ProjectsModel;
-    N_Models::ActionsList* m_ActionsModel;
+    QSortFilterProxyModel* m_ActionsModel;
     N_Data::DataManager* m_DataManager;
     N_Data::SharedIntrant* m_SharedIntrant;
     N_Data::SharedAction* m_SharedAction;

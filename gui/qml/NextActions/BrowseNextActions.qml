@@ -59,13 +59,15 @@ Item {
 
     model: actionsModel
     delegate: myDelegate
-
-    Component.onCompleted:
-    {
-      windowFooter.activateHome(true)
-      windowFooter.activateBackArrow(Global.history.length >= 2)
-      windowHeader.text = qsTr("Next actions")
-    }
-
   }
+
+  Component.onCompleted:
+  {
+    windowFooter.activateHome(true)
+    windowFooter.activateBackArrow(Global.history.length >= 2)
+    windowHeader.text = qsTr("Next actions")
+
+//      actionsModel.setFilterFixedString("Test project")
+  }
+
 }

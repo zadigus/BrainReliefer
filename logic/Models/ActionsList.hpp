@@ -18,7 +18,8 @@ namespace N_Models {
       enum ActionsListRoles {
         TitleRole = Qt::UserRole + 1,
         DelegateRole,
-        DeadlineRole
+        DeadlineRole,
+        ProjectRole
       };
 
     public:

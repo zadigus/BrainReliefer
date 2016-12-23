@@ -428,18 +428,12 @@ Item {
         height: 250
 
         anchors {
-          top: doableLayout.bottom /*defineNextActionLayout.bottom*/; topMargin: 1
+          top: doableLayout.bottom; topMargin: 1
           horizontalCenter: backgroundRectangle.horizontalCenter
         }
 
-//        Rectangle {
-//          anchors.fill: parent
-//          border.color: "red"
-//          border.width: 3
-//          color: "transparent"
-//        }
-
         orientation: ListView.Vertical
+
         header: Text {
           text: "Action list"
           font { pointSize: 18; bold: true }
@@ -621,13 +615,13 @@ Item {
     //      color: "lightgray"
     //      y: list.currentItem.y
     //    }
-
-    Component.onCompleted:
-    {
-      windowFooter.activateHome(true)
-      windowFooter.activateBackArrow(Global.history.length >= 2)
-      windowHeader.text = qsTr("New Intrants List")
-    }
-
   }
+
+  Component.onCompleted:
+  {
+    windowFooter.activateHome(true)
+    windowFooter.activateBackArrow(Global.history.length >= 2)
+    windowHeader.text = qsTr("New Intrants List")
+  }
+
 }
