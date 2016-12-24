@@ -2,7 +2,7 @@ import QtQuick 2.5
 
 import "/js/Global.js" as Global
 import "../Common" as Common
-import "../References/states" as States
+import "states" as States
 
 Component
 {
