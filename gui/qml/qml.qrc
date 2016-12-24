@@ -25,30 +25,30 @@
 		<file alias="NewIntrantCalendar.qml">NewIntrants/NewIntrantCalendar.qml</file>
 		<file alias="DatePicker.qml">NewIntrants/DatePicker.qml</file>
     <file alias="SimpleDatePicker.qml">NewIntrants/SimpleDatePicker.qml</file>
-    <file alias="DelegateActionState.qml">NewIntrants/states/DelegateActionState.qml</file>
-    <file alias="PostponeActionState.qml">NewIntrants/states/PostponeActionState.qml</file>
-    <file alias="DefineNextActionState.qml">NewIntrants/states/DefineNextActionState.qml</file>
-    <file alias="DoableState.qml">NewIntrants/states/DoableState.qml</file>
-    <file alias="SetAsReferenceState.qml">NewIntrants/states/SetAsReferenceState.qml</file>
-    <file alias="IncubateState.qml">NewIntrants/states/IncubateState.qml</file>
-    <file alias="NotDoableState.qml">NewIntrants/states/NotDoableState.qml</file>
-    <file alias="DetailsState.qml">NewIntrants/states/DetailsState.qml</file>
+    <file alias="states/DelegateActionState.qml">NewIntrants/states/DelegateActionState.qml</file>
+    <file alias="states/PostponeActionState.qml">NewIntrants/states/PostponeActionState.qml</file>
+    <file alias="states/DefineNextActionState.qml">NewIntrants/states/DefineNextActionState.qml</file>
+    <file alias="states/DoableState.qml">NewIntrants/states/DoableState.qml</file>
+    <file alias="states/SetAsReferenceState.qml">NewIntrants/states/SetAsReferenceState.qml</file>
+    <file alias="states/IncubateState.qml">NewIntrants/states/IncubateState.qml</file>
+    <file alias="states/NotDoableState.qml">NewIntrants/states/NotDoableState.qml</file>
+    <file alias="states/DetailsState.qml">NewIntrants/states/DetailsState.qml</file>
   </qresource>
 	<qresource prefix="/References">
     <file alias="BrowseReferences.qml">References/BrowseReferences.qml</file>
     <file alias="ReferenceDelegate.qml">References/ReferenceDelegate.qml</file>
-    <file alias="DetailsState.qml">References/states/DetailsState.qml</file>
+    <file alias="states/DetailsState.qml">References/states/DetailsState.qml</file>
   </qresource>
 	<qresource prefix="/IncubatedIntrants">
     <file alias="BrowseIncubation.qml">IncubatedIntrants/BrowseIncubation.qml</file>
     <file alias="IncubationDelegate.qml">IncubatedIntrants/IncubationDelegate.qml</file>
-    <file alias="DetailsState.qml">IncubatedIntrants/states/DetailsState.qml</file>
+    <file alias="states/DetailsState.qml">IncubatedIntrants/states/DetailsState.qml</file>
   </qresource>
 	<qresource prefix="/Projects">
     <file alias="BrowseProjects.qml">Projects/BrowseProjects.qml</file>
     <file alias="ActionDelegate.qml">Projects/ActionDelegate.qml</file>
     <file alias="ProjectDelegate.qml">Projects/ProjectDelegate.qml</file>
-    <file alias="DetailsState.qml">Projects/states/DetailsState.qml</file>
+    <file alias="states/DetailsState.qml">Projects/states/DetailsState.qml</file>
   </qresource>
   <qresource prefix="/NextActions">
     <file alias="BrowseNextActions.qml">NextActions/BrowseNextActions.qml</file>

@@ -1,9 +1,5 @@
 import QtQuick 2.5
 
-import "/js/Global.js" as Global
-import ".."
-import "../Common"
-
 State {
   property var mySubject
 

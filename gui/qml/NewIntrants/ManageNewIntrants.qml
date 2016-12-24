@@ -5,7 +5,8 @@ import MyDataManagement 1.0
 
 import "/js/Global.js" as Global
 import ".."
-import "../Common"
+import "../Common" as Common
+import "../NewIntrants/states" as States
 
 Item {
 
@@ -60,7 +61,7 @@ Item {
       }
 
       // A button to close the detailed view, i.e. set the state back to default ('').
-      TextButton {
+      Common.TextButton {
         id: closeButton
         y: 10
         anchors { right: backgroundRectangle.right; rightMargin: 10 }
@@ -117,7 +118,7 @@ Item {
         property int buttonWidth: (backgroundRectangle.width - 2 * leftMargin) / 2
         property int buttonHeight: 25
 
-        ActionButton {
+        Common.ActionButton {
           buttonText: qsTr("Doable")
           width: parent.buttonWidth
           height: parent.buttonHeight
@@ -128,7 +129,7 @@ Item {
             // TODO: clear listview model
           }
         }
-        ActionButton {
+        Common.ActionButton {
           buttonText: qsTr("Not doable")
           width: parent.buttonWidth
           height: parent.buttonHeight
@@ -156,7 +157,7 @@ Item {
         property int buttonWidth: backgroundRectangle.width
         property int buttonHeight: 25
 
-        ActionButton {
+        Common.ActionButton {
           id: deleteBtn
           buttonText: qsTr("Delete")
           width: parent.buttonWidth
@@ -168,7 +169,7 @@ Item {
             dataManager.removeIntrant(newIntrantsModel, index)
           }
         }
-        ActionButton {
+        Common.ActionButton {
           id: incubateBtn
           buttonText: qsTr("Incubate")
           width: parent.buttonWidth
@@ -198,7 +199,7 @@ Item {
           }
         }
 
-        ActionButton {
+        Common.ActionButton {
           id: referenceBtn
           buttonText: qsTr("Keep as reference")
           width: parent.buttonWidth
@@ -245,7 +246,7 @@ Item {
         property int buttonWidth: backgroundRectangle.width
         property int buttonHeight: 25
 
-        ActionButton {
+        Common.ActionButton {
           id: addNextActionBtn
           buttonText: qsTr("Define next action")
           width: parent.buttonWidth
@@ -258,7 +259,7 @@ Item {
           }
         }
 
-        ActionButton {
+        Common.ActionButton {
           id: addProjectBtn
           buttonText: qsTr("Done")
           width: parent.buttonWidth
@@ -312,7 +313,7 @@ Item {
           property int buttonWidth: backgroundRectangle.width
           property int buttonHeight: 25
 
-          ActionButton {
+          Common.ActionButton {
             id: postponeBtn
             buttonText: qsTr("Post-pone")
             width: parent.buttonWidth - 2 * defineNextActionLayout.sideMargin
@@ -342,7 +343,7 @@ Item {
             }
           }
 
-          ActionButton {
+          Common.ActionButton {
             id: delegateBtn
             buttonText: qsTr("Delegate")
             width: parent.buttonWidth - 2 * defineNextActionLayout.sideMargin
@@ -382,7 +383,7 @@ Item {
             }
           }
 
-          ActionButton {
+          Common.ActionButton {
             id: validateActionBtn
             buttonText: qsTr("Done")
             width: parent.buttonWidth - 2 * defineNextActionLayout.sideMargin
@@ -429,21 +430,21 @@ Item {
       /*
        * State machine
        */
-      states: [ DetailsState {
+      states: [ States.DetailsState {
           name: "Details"
-        }, NotDoableState {
+        }, States.NotDoableState {
           name: "NotDoable"
-        }, IncubateState {
+        }, States.IncubateState {
          name: "Incubate"
-        }, SetAsReferenceState {
+        }, States.SetAsReferenceState {
           name: "SetAsReference"
-        }, DoableState {
+        }, States.DoableState {
             name: "Doable"
-        }, DefineNextActionState {
+        }, States.DefineNextActionState {
           name: "DefineNextAction"
-        }, PostponeActionState {
+        }, States.PostponeActionState {
           name: "PostponeAction"
-        }, DelegateActionState {
+        }, States.DelegateActionState {
           name: "DelegateAction"
         }]
 

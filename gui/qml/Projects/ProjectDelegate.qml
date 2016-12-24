@@ -2,7 +2,8 @@ import QtQuick 2.5
 
 import "/js/Global.js" as Global
 import ".."
-import "../Common"
+import "../Common" as Common
+import "../Projects/states" as States
 
 Component
 {
@@ -35,7 +36,7 @@ Component
     }
 
     // A button to close the detailed view, i.e. set the state back to default ('').
-    TextButton {
+    Common.TextButton {
       id: closeButton
       y: 10
       anchors { right: background.right; rightMargin: 10 }
@@ -101,7 +102,7 @@ Component
     }
 
     states: [
-      DetailsState {
+      States.DetailsState {
         name: "Details"
         mySubject: intrant
       }]
