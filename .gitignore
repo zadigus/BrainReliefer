@@ -1,10 +1,5 @@
 *.obj
 *.exe
 build/
-config/NewIntrants - Copie.xml
 log/*.log
-log/BrainReliefer.log
-BrainReliefer.pro.user
-*.user
-*.user
 *.user
