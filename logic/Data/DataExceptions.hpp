@@ -1,6 +1,8 @@
 #ifndef DATA_DATAEXCEPTIONS_HPP
 #define DATA_DATAEXCEPTIONS_HPP
 
+#include "core/Global.hpp"
+
 #include <QUrl>
 #include <QFile>
 
@@ -14,7 +16,7 @@ namespace N_Data {
       XInvalidData(const QString& a_Xml, const QUrl& a_Xsd) : m_Xml(a_Xml), m_Xsd(a_Xsd) { }
       virtual ~XInvalidData() { }
 
-      virtual const char* what() const noexcept override;
+      virtual const char* what() const NOEXCEPT override;
 
     private:
       QString m_Xml;

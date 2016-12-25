@@ -1,7 +1,0 @@
-@INF : [24/12/2016 14:58:33][N_Models::IntrantsList::addIntrant] : Adding new intrant with title <Google Calendar>.
-@INF : [24/12/2016 14:58:33][N_Models::IntrantsList::save] : Storing the data in the file <G:/workspace/BrainReliefer/config/NewIntrants.xml>.
-@INF : [24/12/2016 14:58:54][N_Models::IntrantsList::popIntrant] : Popping out intrant with title <Google Calendar>
-@INF : [24/12/2016 14:58:54][N_Models::IntrantsList::removeIntrant] : Deleting intrant with title <Google Calendar>...
-@INF : [24/12/2016 14:58:54][N_Models::IntrantsList::save] : Storing the data in the file <G:/workspace/BrainReliefer/config/NewIntrants.xml>.
-@INF : [24/12/2016 14:58:54][N_Models::IntrantsList::addIntrant] : Adding new intrant with title <Google Calendar>.
-@INF : [24/12/2016 14:58:54][N_Models::IntrantsList::save] : Storing the data in the file <G:/workspace/BrainReliefer/config/References.xml>.
