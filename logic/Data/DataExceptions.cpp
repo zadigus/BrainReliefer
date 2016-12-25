@@ -6,7 +6,7 @@
 namespace N_Data {
 
   //-------------------------------------------------------------------------------
-  const char* XInvalidData::what() const
+  const char* XInvalidData::what() const noexcept
   {
     QFile xmlFile(m_Xml);
     if(!xmlFile.exists())

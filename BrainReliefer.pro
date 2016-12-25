@@ -4,8 +4,6 @@ QT += qml quick xmlpatterns widgets
 
 CONFIG += c++11
 
-XSD_BASE_DIR = "G:/CodeSynthesis XSD 4.0/"
-
 DATA_FOLDER   = logic/Data
 MODELS_FOLDER = logic/Models
 LOGGER_FOLDER = logic/Logger
@@ -59,22 +57,30 @@ HEADERS += $${CORE_FOLDER}/Global.hpp \
 RESOURCES += gui/qml/qml.qrc \
       $${DATA_FOLDER}/data.qrc
 
-INCLUDEPATH += $${XSD_BASE_DIR}/include \
-		gui \
+INCLUDEPATH += gui \
     logic \
     common 
 
 win32-msvc2013 {
-    ## Windows common build here
-    !contains(QMAKE_TARGET.arch, x86_64){
-      ## Windows x86 (32bit) specific build here
-      message("adding msvc2013 32bits Xerces lib")
-      LIBS        += $${XSD_BASE_DIR}\lib\vc-12.0\xerces-c_3.lib
-    } else {
-      ## Windows x64 (64bit) specific build here
-      message("adding msvc2013 64bits Xerces lib")
-      LIBS        += $${XSD_BASE_DIR}\lib64\vc-12.0\xerces-c_3.lib
-    }
+
+  XSD_BASE_DIR = "G:/CodeSynthesis XSD 4.0/"
+
+  INCLUDEPATH += $${XSD_BASE_DIR}/include
+
+  ## Windows common build here
+  !contains(QMAKE_TARGET.arch, x86_64){
+    ## Windows x86 (32bit) specific build here
+    message("adding msvc2013 32bits Xerces lib")
+    LIBS        += $${XSD_BASE_DIR}\lib\vc-12.0\xerces-c_3.lib
+  } else {
+    ## Windows x64 (64bit) specific build here
+    message("adding msvc2013 64bits Xerces lib")
+    LIBS        += $${XSD_BASE_DIR}\lib64\vc-12.0\xerces-c_3.lib
+  }
+}
+
+linux {
+  LIBS += -L/usr/lib/x86_64-linux-gnu/ -lxerces-c
 }
 
 # Additional import path used to resolve QML modules in Qt Creator's code model

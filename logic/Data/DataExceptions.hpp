@@ -14,7 +14,7 @@ namespace N_Data {
       XInvalidData(const QString& a_Xml, const QUrl& a_Xsd) : m_Xml(a_Xml), m_Xsd(a_Xsd) { }
       virtual ~XInvalidData() { }
 
-      virtual const char* what() const;
+      virtual const char* what() const noexcept override;
 
     private:
       QString m_Xml;
