@@ -8,4 +8,9 @@ in the code and have a look at the example given by Qt's System Icon Tray exampl
 		</description>
     <url>http://doc.qt.io/qt-5/qtwidgets-desktop-systray-example.html</url>
   </Intrant>
+  <Intrant>
+    <title>Google Calendar</title>
+    <description>https://github.com/tranter/qt-google-calendar/
+https://developers.google.com/google-apps/calendar/</description>
+  </Intrant>
 </IntrantList>
