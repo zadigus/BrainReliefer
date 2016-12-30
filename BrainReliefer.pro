@@ -2,7 +2,7 @@ TEMPLATE = app
 
 QT += qml quick xmlpatterns widgets
 
-CONFIG += c++11 staticlib
+CONFIG += c++11
 
 DATA_FOLDER   = logic/Data
 MODELS_FOLDER = logic/Models
@@ -88,10 +88,7 @@ linux {
   INCLUDEPATH += $${XSD_INCLUDE_DIR} \
     $${XERCES_DIR}/include
 
-#-Wl,-Bstatic
-  LIBS += $${XERCES_DIR}/lib/libxerces-c.a #-L/usr/lib/x86_64-linux-gnu/ -lxerces-c
-
-#  LIBS += -Wl, -Bdynamic
+  LIBS += $${XERCES_DIR}/lib/libxerces-c.a
 }
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
