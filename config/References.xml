@@ -11,6 +11,13 @@ in the code and have a look at the example given by Qt's System Icon Tray exampl
   <Intrant>
     <title>Google Calendar</title>
     <description>https://github.com/tranter/qt-google-calendar/
+
 https://developers.google.com/google-apps/calendar/</description>
+  </Intrant>
+  <Intrant>
+    <title>Font handling during deployment on Android</title>
+    <description>When I deploy to android, I should embed the font files into the Qt applications's resource system:
+    http://stackoverflow.com/questions/20751604/static-qt5-build-on-linux-how-to-handle-fonts-when-deploying
+    </description>
   </Intrant>
 </IntrantList>
