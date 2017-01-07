@@ -5,12 +5,16 @@ function getBin()
   SEARCH_DIR=$1
   SEARCH_BIN=$2
 
-  for path_to_bin in `ls $SEARCH_DIR/*-$SEARCH_BIN`; do
-    if [ ${path_to_bin%gcc*} == $path_to_bin ] ; then 
-      echo $path_to_bin
-      break
-    fi 
-  done
+  if [ $SEARCH_BIN != "gcc" ] ; then
+    for path_to_bin in `ls $SEARCH_DIR/*-$SEARCH_BIN`; do
+      if [ ${path_to_bin%gcc*} == $path_to_bin ] ; then 
+        echo $path_to_bin
+        break
+      fi 
+    done
+  else
+    echo $(ls $SEARCH_DIR/*-$SEARCH_BIN)
+  fi
 }
 
 function getPlatformDir()
@@ -55,6 +59,7 @@ TARGET_LIB_DIR=$LIBRARIES_DIR/icu
 ANDROID_PLATFORM="android-21"
 
 ROOT_DIR=$DOWNLOADS_DIR/icu
+SRC_DIR=$ROOT_DIR/source
 
 if [ -d $ROOT_DIR ] ; then
   echo "Folder $ROOT_DIR already exists."
@@ -69,7 +74,7 @@ tar xvfz icu4c-58_2-src.tgz
 BUILD_LINUX=$ROOT_DIR/linux
 mkdir $BUILD_LINUX
 cd $BUILD_LINUX
-../source/configure --prefix=$TARGET_LIB_DIR/linux-x86_64 --enable-static
+$SRC_DIR/configure --prefix=$TARGET_LIB_DIR/linux-x86_64 --enable-static
 make
 make install
 
@@ -78,9 +83,6 @@ for ARCH in `ls $NDK_ROOT/toolchains/`; do
   ARCH_DIR=${ARCH%-*}
 
   if [ $ARCH_DIR != "llvm" ] ; then
-
-    # TODO: test this; it doesn't seem to work
-
 
     BUILD_DIR=$ROOT_DIR/$ARCH_DIR
     mkdir $BUILD_DIR
@@ -93,19 +95,15 @@ for ARCH in `ls $NDK_ROOT/toolchains/`; do
 
     SYSROOT="$NDK_ROOT/platforms/$ANDROID_PLATFORM/"$(getPlatformDir $ARCH)
 
-    LDFLAGS="--sysroot $SYSROOT -L$NDK_ROOT/sources/cxx-stl/stlport/libs/"$(getSTLPortLibDir $ARCH)" -lstlport_shared"
+    LDFLAGS="--sysroot $SYSROOT"
     CFLAGS="--sysroot $SYSROOT -I$NDK_ROOT/sources/cxx-stl/stlport/stlport/"
     CPPFLAGS="--sysroot $SYSROOT -I$NDK_ROOT/sources/cxx-stl/stlport/stlport/"
 
-    ../source/configure --enable-static --prefix=$TARGET_LIB_DIR/$ARCH_DIR --host=$ARCH_DIR CXX=$CXX CC=$CC CPPFLAGS=$CPPFLAGS CFLAGS=$CFLAGS LDFLAGS=$LDFLAGS RANLIB=$RANLIB AR=$AR --enable-extras=no --enable-tools=no --enable-tests=no --enable-samples=no --with-cross-build=$BUILD_LINUX
+    echo "###########################################################"
+    echo "ARCH = $ARCH_DIR"
+    echo "###########################################################"
 
-
-    #BUILD_DIR=$ROOT_DIR/arm-linux-androideabi
-    #mkdir $BUILD_DIR
-    #cd $BUILD_DIR
-    #../source/configure --enable-static --prefix=$LIBRARIES/icu/arm-linux-androideabi --host=arm-linux-androideabi CXX="$NDK_ROOT/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/arm-linux-androideabi-g++" CC="$NDK_ROOT/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/arm-linux-androideabi-gcc" CPPFLAGS="--sysroot $NDK_ROOT/platforms/$ANDROID_PLATFORM/arch-arm -I$NDK_ROOT/sources/cxx-stl/stlport/stlport/" CFLAGS="--sysroot $NDK_ROOT/platforms/$ANDROID_PLATFORM/arch-arm -I$NDK_ROOT/sources/cxx-stl/stlport/stlport/" LDFLAGS="--sysroot $NDK_ROOT/platforms/$ANDROID_PLATFORM/arch-arm -L$NDK_ROOT/sources/cxx-stl/stlport/libs/armeabi/ -lstlport_shared" RANLIB=$NDK_ROOT/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/arm-linux-androideabi/bin/ranlib AR=$NDK_ROOT/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/arm-linux-androideabi/bin/ar --enable-extras=no --enable-tools=no --enable-tests=no --enable-samples=no --with-cross-build=$BUILD_LINUX
-
-    #../source/configure --enable-static --prefix=$LIBRARIES_DIR/icu/arm-linux-androideabi --host=arm-linux-androideabi CXX="$NDK_ROOT/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/arm-linux-androideabi-g++" CC="$NDK_ROOT/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/arm-linux-androideabi-gcc" CPPFLAGS="--sysroot $NDK_ROOT/platforms/$ANDROID_PLATFORM/arch-arm -I$NDK_ROOT/sources/cxx-stl/stlport/stlport/" CFLAGS="--sysroot $NDK_ROOT/platforms/$ANDROID_PLATFORM/arch-arm -I$NDK_ROOT/sources/cxx-stl/stlport/stlport/" LDFLAGS="--sysroot $NDK_ROOT/platforms/$ANDROID_PLATFORM/arch-arm -L$NDK_ROOT/sources/cxx-stl/stlport/libs/armeabi/ -lstlport_shared" RANLIB=$NDK_ROOT/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/arm-linux-androideabi-ranlib AR=$NDK_ROOT/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/arm-linux-androideabi-ar --enable-extras=no --enable-tools=no --enable-tests=no --enable-samples=no --with-cross-build=$BUILD_LINUX
+    $SRC_DIR/configure --enable-static --prefix=$TARGET_LIB_DIR/$ARCH_DIR --host=$ARCH_DIR CXX=$CXX CC=$CC CPPFLAGS="$CPPFLAGS" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" RANLIB=$RANLIB AR=$AR --enable-extras=no --enable-tools=no --enable-tests=no --enable-samples=no --with-cross-build=$BUILD_LINUX
 
     make
     make install
