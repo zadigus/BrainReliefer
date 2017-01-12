@@ -50,7 +50,15 @@ for ARCH in `ls $NDK_ROOT/toolchains/`; do
     echo "ARCH = $ARCH_DIR"
     echo "###########################################################"
 
-    $SRC_DIR/configure --enable-static --prefix=$TARGET_LIB_DIR/$ARCH_DIR --host=$ARCH_DIR CXX=$CXX CC=$CC CPPFLAGS="$CPPFLAGS" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" RANLIB=$RANLIB AR=$AR --enable-extras=no --enable-tools=no --enable-tests=no --enable-samples=no --with-cross-build=$BUILD_LINUX
+    if [ $ARCH_DIR == "x86" ] ; then
+      HOST="i686-linux-android"
+    elif [ $ARCH_DIR == "x86_64" ] ; then 
+      HOST="x86_64-linux-android"
+    else
+      HOST=$ARCH_DIR
+    fi
+
+    echo $SRC_DIR/configure --enable-static --prefix=$TARGET_LIB_DIR/$ARCH_DIR --host=$HOST CXX=$CXX CC=$CC CPPFLAGS="$CPPFLAGS" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" RANLIB=$RANLIB AR=$AR --enable-extras=no --enable-tools=no --enable-tests=no --enable-samples=no --with-cross-build=$BUILD_LINUX
 
     make -j 4
     make install
