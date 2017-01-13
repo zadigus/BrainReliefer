@@ -2,7 +2,7 @@ TEMPLATE = app
 
 QT += qml quick xmlpatterns widgets
 
-CONFIG += c++11
+CONFIG += c++14
 
 DATA_FOLDER   = logic/Data
 MODELS_FOLDER = logic/Models
@@ -83,12 +83,16 @@ linux {
   LIB_DIR = "/home/mihl/Libraries"
 
   XSD_INCLUDE_DIR = $${LIB_DIR}/xsd/libxsd
-  XERCES_DIR = $${LIB_DIR}/xerces-c
+  XERCES_DIR = $${LIB_DIR}/xerces-c/x86_64
 
   INCLUDEPATH += $${XSD_INCLUDE_DIR} \
     $${XERCES_DIR}/include
 
   LIBS += $${XERCES_DIR}/lib/libxerces-c.a
+
+  QMAKE_CXXFLAGS += -D_GLIBCXX_USE_C99
+
+  #QMAKE_LFLAGS += -D_GLIBCXX_USE_C99
 }
 
 # Additional import path used to resolve QML modules in Qt Creator's code model

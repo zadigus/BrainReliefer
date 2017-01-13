@@ -71,6 +71,9 @@ function compileQt()
 
   make -j 4
   make install
+
+  # if you don't do that, then Qt doesn't find the -lqtforandroid
+  ln -s $TARGET_LIB_DIR/static/$MY_COMPILATION_MODE/$MY_ARCH_DIR/plugins/platforms/android/libqtforandroid.a $TARGET_LIB_DIR/static/$MY_COMPILATION_MODE/$MY_ARCH_DIR/plugins/platforms/libqtforandroid.a
 }
 
 compileQt $ARCH_DIR $COMPILATION_MODE $API_LVL $CONFIGURE_ONLY
