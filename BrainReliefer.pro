@@ -2,7 +2,7 @@ TEMPLATE = app
 
 QT += qml quick xmlpatterns widgets
 
-CONFIG += c++14
+CONFIG += c++11
 
 DATA_FOLDER   = logic/Data
 MODELS_FOLDER = logic/Models
@@ -84,15 +84,17 @@ linux {
 
   XSD_INCLUDE_DIR = $${LIB_DIR}/xsd/libxsd
   XERCES_DIR = $${LIB_DIR}/xerces-c/x86_64
+  ICU_DIR = $${LIB_DIR}/icu/x86_64
+
 
   INCLUDEPATH += $${XSD_INCLUDE_DIR} \
-    $${XERCES_DIR}/include
+    $${XERCES_DIR}/include \
+    $${ICU_DIR}/include
 
-  LIBS += $${XERCES_DIR}/lib/libxerces-c.a
+  LIBS += -L$${XERCES_DIR}/lib -lxerces-c \ #$${XERCES_DIR}/lib/libxerces-c.a
+    -L$${ICU_DIR}/lib -licudata -licui18n -licuio -licuuc
 
   QMAKE_CXXFLAGS += -D_GLIBCXX_USE_C99
-
-  #QMAKE_LFLAGS += -D_GLIBCXX_USE_C99
 }
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
@@ -100,4 +102,15 @@ QML_IMPORT_PATH =
 
 # Default rules for deployment.
 include(deployment.pri)
+
+DISTFILES += \
+    android/AndroidManifest.xml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
