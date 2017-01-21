@@ -12,31 +12,33 @@ namespace N_Data {
   //---------------------------------------------------------------------------------------------------
   void SharedIntrant::reset()
   {
-    m_Data.reset(new Intrant(""));
+//    m_Data.reset(new Intrant(""));
   }
 
   //---------------------------------------------------------------------------------------------------
   QString SharedIntrant::title() const
   {
-    return QString::fromStdString(m_Data->title());
+//    return QString::fromStdString(m_Data->title());
+      return QString();
   }
 
   //---------------------------------------------------------------------------------------------------
   void SharedIntrant::setTitle(const QString& a_Value)
   {
-    m_Data->title(a_Value.toStdString());
+//    m_Data->title(a_Value.toStdString());
   }
 
   //---------------------------------------------------------------------------------------------------
   QString SharedIntrant::description() const
   {
-    return m_Data->description().present() ? QString::fromStdString(*m_Data->description()) : QString();
+//    return m_Data->description().present() ? QString::fromStdString(*m_Data->description()) : QString();
+      return QString();
   }
 
   //---------------------------------------------------------------------------------------------------
   void SharedIntrant::setDescription(const QString& a_Value)
   {
-    m_Data->description(a_Value.toStdString());
+//    m_Data->description(a_Value.toStdString());
   }
 
 }

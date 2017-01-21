@@ -14,9 +14,9 @@ namespace N_Data {
   //---------------------------------------------------------------------------------------------------
   void SharedAction::reset()
   {
-    m_Action.title().clear();
-    m_Action.delegate().reset();
-    m_Action.deadlineDate().reset();
+//    m_Action.title().clear();
+//    m_Action.delegate().reset();
+//    m_Action.deadlineDate().reset();
   }
 
 }

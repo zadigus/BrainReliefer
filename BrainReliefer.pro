@@ -12,10 +12,10 @@ CORE_FOLDER   = core
 
 
 SOURCES += main.cpp \
-    $${DATA_FOLDER}/Application.cpp \
     $${LOGGER_FOLDER}/Logger.cpp \
-    $${DATA_FOLDER}/Data.cpp \
-    $${DATA_FOLDER}/IntrantList.cpp \
+    #$${DATA_FOLDER}/Application.cpp \
+    #$${DATA_FOLDER}/Data.cpp \
+    #$${DATA_FOLDER}/IntrantList.cpp \
     $${DATA_FOLDER}/DataValidator.cpp \
     $${MODELS_FOLDER}/IntrantsList.cpp \
     $${MODELS_FOLDER}/ActionsList.cpp \
@@ -27,16 +27,16 @@ SOURCES += main.cpp \
     $${COMMONDATA_FOLDER}/Action.cpp \
     EngineConfigurator.cpp \
     AppConfiguration.cpp \
-    gui/InvalidData/FileSaveDialog.cpp \
+#    gui/InvalidData/FileSaveDialog.cpp \
     $${MODELS_FOLDER}/ProjectAction.cpp
 
 HEADERS += $${CORE_FOLDER}/Global.hpp \
-    $${DATA_FOLDER}/Application.hpp \
     $${LOGGER_FOLDER}/Logger.hpp \
     $${LOGGER_FOLDER}/Log.hpp \
     $${LOGGER_FOLDER}/LoggerExceptions.hpp \
-    $${DATA_FOLDER}/Data.hpp \
-    $${DATA_FOLDER}/IntrantList.hpp \
+    #$${DATA_FOLDER}/Application.hpp \
+    #$${DATA_FOLDER}/Data.hpp \
+    #$${DATA_FOLDER}/IntrantList.hpp \
     $${DATA_FOLDER}/DataValidator.hpp \
     $${MODELS_FOLDER}/IntrantsList.hpp \
     $${MODELS_FOLDER}/ActionsList.hpp \
@@ -51,7 +51,7 @@ HEADERS += $${CORE_FOLDER}/Global.hpp \
     logic/Singleton.hpp \
     EngineConfigurator.hpp \
     AppConfiguration.hpp \
-    gui/InvalidData/FileSaveDialog.hpp \
+#    gui/InvalidData/FileSaveDialog.hpp \
     $${MODELS_FOLDER}/ProjectAction.hpp
 
 RESOURCES += gui/qml/qml.qrc \
@@ -59,13 +59,13 @@ RESOURCES += gui/qml/qml.qrc \
 
 INCLUDEPATH += gui \
     logic \
-    common 
+    common
 
 win32-msvc2013 {
 
-  XSD_BASE_DIR = "G:/CodeSynthesis XSD 4.0/"
+  XSD_INCLUDE_DIR = "G:/CodeSynthesis XSD 4.0/include"
 
-  INCLUDEPATH += $${XSD_BASE_DIR}/include
+  INCLUDEPATH += XSD_INCLUDE_DIR
 
   ## Windows common build here
   !contains(QMAKE_TARGET.arch, x86_64){
@@ -79,31 +79,48 @@ win32-msvc2013 {
   }
 }
 
-linux {
+linux:!android {
   LIB_DIR = "/home/mihl/Libraries"
 
   XSD_INCLUDE_DIR = $${LIB_DIR}/xsd/libxsd
-  XERCES_DIR = $${LIB_DIR}/xerces-c/x86_64
-  ICU_DIR = $${LIB_DIR}/icu/x86_64
-
+  XERCES_DIR = $${LIB_DIR}/xerces-c/linux-x86_64
+  ICU_DIR = $${LIB_DIR}/icu/linux-x86_64
 
   INCLUDEPATH += $${XSD_INCLUDE_DIR} \
     $${XERCES_DIR}/include \
     $${ICU_DIR}/include
 
-  LIBS += -L$${XERCES_DIR}/lib -lxerces-c \ #$${XERCES_DIR}/lib/libxerces-c.a
+  LIBS += -L$${XERCES_DIR}/lib -lxerces-c \
     -L$${ICU_DIR}/lib -licudata -licui18n -licuio -licuuc
-
-  QMAKE_CXXFLAGS += -D_GLIBCXX_USE_C99
 }
 
-# Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
+android {
+  LIB_DIR = "/home/mihl/Libraries"
 
-# Default rules for deployment.
-include(deployment.pri)
+  XSD_INCLUDE_DIR = $${LIB_DIR}/xsd/libxsd
 
-DISTFILES += \
+  equals(ANDROID_TARGET_ARCH, arm64-v8a) {
+    XERCES_DIR = $${LIB_DIR}/xerces-c/android-23/aarch64-linux-android
+    ICU_DIR = $${LIB_DIR}/icu/android-23/aarch64-linux-android
+  }
+
+  #QMAKE_CXXFLAGS += -D_GLIBCXX_USE_C99 # for x86_64
+
+  INCLUDEPATH += $${XSD_INCLUDE_DIR} \
+    $${XERCES_DIR}/include \
+    $${ICU_DIR}/include
+
+#  LIBS += -L$${XERCES_DIR}/lib -lxerces-c \
+#    -L$${ICU_DIR}/lib -licudata -licui18n -licuio -licuuc
+
+  DISTFILES += \
+    android/AndroidManifest.xml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat \
     android/AndroidManifest.xml \
     android/gradle/wrapper/gradle-wrapper.jar \
     android/gradlew \
@@ -112,5 +129,23 @@ DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew.bat
 
-ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+  ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
+#  contains(ANDROID_TARGET_ARCH, arm64-v8a) {
+#    ANDROID_EXTRA_LIBS = \
+#        /home/mihl/Libraries/icu/android-23/aarch64-linux-android/lib/libicudata.so \
+#        /home/mihl/Libraries/icu/android-23/aarch64-linux-android/lib/libicui18n.so \
+#        /home/mihl/Libraries/icu/android-23/aarch64-linux-android/lib/libicuio.so \
+#        /home/mihl/Libraries/icu/android-23/aarch64-linux-android/lib/libicuuc.so \
+#        /home/mihl/Libraries/xerces-c/android-23/aarch64-linux-android/lib/libxerces-c-3.1.so \
+#        /home/mihl/Libraries/xerces-c/android-23/aarch64-linux-android/lib/libxerces-c.so
+#  }
+}
+
+# Additional import path used to resolve QML modules in Qt Creator's code model
+QML_IMPORT_PATH =
+
+# Default rules for deployment.
+include(deployment.pri)
+
 

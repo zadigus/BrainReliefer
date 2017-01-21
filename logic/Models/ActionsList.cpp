@@ -32,51 +32,51 @@ namespace N_Models {
   //-------------------------------------------------------------------------------------------
   void ActionsList::loadDataFromFile(const QString& a_FileName)
   {
-    std::unique_ptr<IntrantList> intrantList;
-    try
-    {
-      auto DataBuilder = [] (const std::string& a_FileName) { return IntrantList_(a_FileName, xml_schema::flags::dont_validate); };
-      intrantList = N_DataManagerHelper::getParsedXML<IntrantList>(a_FileName, m_IntrantListXsd, DataBuilder);
-    }
-    catch(const XInexistentData& ex)
-    {
-      LOG_ERR("Caught exception: " << ex.what());
-    }
-    catch(const XInvalidData& ex)
-    {
-      LOG_ERR("Caught exception: " << ex.what());
-      throw ex;
-      // TODO: if the data do not exist, then automatically create the missing file in the same directory as the main Data.xml
-    }
+//    std::unique_ptr<IntrantList> intrantList;
+//    try
+//    {
+//      auto DataBuilder = [] (const std::string& a_FileName) { return IntrantList_(a_FileName, xml_schema::flags::dont_validate); };
+//      intrantList = N_DataManagerHelper::getParsedXML<IntrantList>(a_FileName, m_IntrantListXsd, DataBuilder);
+//    }
+//    catch(const XInexistentData& ex)
+//    {
+//      LOG_ERR("Caught exception: " << ex.what());
+//    }
+//    catch(const XInvalidData& ex)
+//    {
+//      LOG_ERR("Caught exception: " << ex.what());
+//      throw ex;
+//      // TODO: if the data do not exist, then automatically create the missing file in the same directory as the main Data.xml
+//    }
 
-    beginResetModel();
+//    beginResetModel();
 
-    m_Data.clear();
-    std::for_each(intrantList->Intrant().begin(), intrantList->Intrant().end(),
-                  [this](const N_Data::Intrant& a_Item)
-    {
-      if(a_Item.actions().present())
-      {
-        std::string projectTitle(a_Item.title());
+//    m_Data.clear();
+//    std::for_each(intrantList->Intrant().begin(), intrantList->Intrant().end(),
+//                  [this](const N_Data::Intrant& a_Item)
+//    {
+//      if(a_Item.actions().present())
+//      {
+//        std::string projectTitle(a_Item.title());
 
-        auto& actionList(*(a_Item.actions()));
-        std::transform(actionList.Action().begin(), actionList.Action().end(), std::back_inserter(m_Data),
-                       [&projectTitle](const N_Data::Action& a_Action) -> ProjectAction { return ProjectAction(a_Action, projectTitle); });
-      }
-    });
+//        auto& actionList(*(a_Item.actions()));
+//        std::transform(actionList.Action().begin(), actionList.Action().end(), std::back_inserter(m_Data),
+//                       [&projectTitle](const N_Data::Action& a_Action) -> ProjectAction { return ProjectAction(a_Action, projectTitle); });
+//      }
+//    });
 
-    endResetModel();
+//    endResetModel();
   }
 
   //-------------------------------------------------------------------------------------------
   bool ActionsList::removeRows(int a_Row, int a_Count, const QModelIndex& /*a_Parent*/)
   {
-    int lowerIdx(a_Row);
-    int upperIdx(a_Row + a_Count - 1);
+//    int lowerIdx(a_Row);
+//    int upperIdx(a_Row + a_Count - 1);
 
-    beginRemoveRows(QModelIndex(), lowerIdx, upperIdx);
-    m_Data.erase(m_Data.begin() + lowerIdx, m_Data.begin() + upperIdx + 1);
-    endRemoveRows();
+//    beginRemoveRows(QModelIndex(), lowerIdx, upperIdx);
+//    m_Data.erase(m_Data.begin() + lowerIdx, m_Data.begin() + upperIdx + 1);
+//    endRemoveRows();
 
     return true;
   }

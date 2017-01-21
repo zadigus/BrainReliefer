@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <functional>
 
+#include <sstream>
 #include <iostream>
 
 using namespace std::placeholders;
@@ -33,20 +34,20 @@ namespace N_Logger {
   //----------------------------------------------------------------------------------------------
   void Logger::init(const N_ApplicationData::Log& a_LogParams)
   {
-    m_Stream.open(a_LogParams.Filename(), std::ios::out);
+//    m_Stream.open(a_LogParams.Filename(), std::ios::out);
 
-    switch (m_VerboseLevels[a_LogParams.Mode() ? *(a_LogParams.Mode()) : "INF"])
-    {
-      case 1:
-        m_INFLog.reset(new INFLog);
-      case 2:
-        m_WRNLog.reset(new WRNLog);
-      case 3:
-        m_ERRLog.reset(new ERRLog);
-        break;
-      default:
-        throw XUnknownLogMode("Unknown log mode");
-    }
+//    switch (m_VerboseLevels[a_LogParams.Mode() ? *(a_LogParams.Mode()) : "INF"])
+//    {
+//      case 1:
+//        m_INFLog.reset(new INFLog);
+//      case 2:
+//        m_WRNLog.reset(new WRNLog);
+//      case 3:
+//        m_ERRLog.reset(new ERRLog);
+//        break;
+//      default:
+//        throw XUnknownLogMode("Unknown log mode");
+//    }
   }
 
   //----------------------------------------------------------------------------------------------
@@ -58,7 +59,11 @@ namespace N_Logger {
     if (!aFileName.empty())
       tmp += "[" + aFileName + "]";
     if (aLineNb)
-      tmp += "[" + std::to_string(aLineNb) + "]";
+    {
+      std::stringstream s;
+      s << aLineNb;
+      tmp += "[" + s.str() + "]";
+    }
     return tmp;
   }
 

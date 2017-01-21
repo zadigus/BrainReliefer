@@ -23,25 +23,25 @@ AppConfiguration::AppConfiguration(QObject* a_Parent)
 //----------------------------------------------------------------------------------------------
 void AppConfiguration::setup()
 {
-  try
-  {
-    auto DataBuilder = [] (const std::string& a_FileName) { return N_ApplicationData::Application_(a_FileName, xml_schema::flags::dont_validate); };
-    std::unique_ptr<N_ApplicationData::Application> appData(N_DataManagerHelper::getParsedXML<N_ApplicationData::Application>(m_ConfXmlUrl.toLocalFile(), m_ConfXsdUrl, DataBuilder));
+//  try
+//  {
+//    auto DataBuilder = [] (const std::string& a_FileName) { return N_ApplicationData::Application_(a_FileName, xml_schema::flags::dont_validate); };
+//    std::unique_ptr<N_ApplicationData::Application> appData(N_DataManagerHelper::getParsedXML<N_ApplicationData::Application>(m_ConfXmlUrl.toLocalFile(), m_ConfXsdUrl, DataBuilder));
 
-    N_Logger::Logger::getInstance().init(appData->Log());
+//    N_Logger::Logger::getInstance().init(appData->Log());
 
-    if(appData->Settings().Filename())
-    {
-      std::string filename(*(appData->Settings().Filename()));
-      m_DataFileUrl = QUrl::fromLocalFile(QString::fromStdString(filename));
-    }
-  }
-  catch(const XInvalidData& ex)
-  {
-    LOG_WRN("Caught XInvalidData exception: " << ex.what());
-    LOG_WRN("I should use default settings, which is not implemented yet.");
-    // TODO: use default settings
-  }
+//    if(appData->Settings().Filename())
+//    {
+//      std::string filename(*(appData->Settings().Filename()));
+//      m_DataFileUrl = QUrl::fromLocalFile(QString::fromStdString(filename));
+//    }
+//  }
+//  catch(const XInvalidData& ex)
+//  {
+//    LOG_WRN("Caught XInvalidData exception: " << ex.what());
+//    LOG_WRN("I should use default settings, which is not implemented yet.");
+//    // TODO: use default settings
+//  }
 }
 
 //----------------------------------------------------------------------------------------------

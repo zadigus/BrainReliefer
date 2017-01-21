@@ -4,7 +4,6 @@
 
 #include "EngineConfigurator.hpp"
 
-// a comment to test git
 int main(int argc, char *argv[])
 {
   QApplication app(argc, argv);

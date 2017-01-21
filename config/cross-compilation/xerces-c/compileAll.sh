@@ -19,6 +19,14 @@ cd $DOWNLOADS_DIR
 wget http://www.pirbot.com/mirrors/apache//xerces/c/3/sources/xerces-c-3.1.4.tar.gz
 tar xvfz xerces-c-3.1.4.tar.gz
 
+# Compile for Ubuntu 16.04 LTS
+BUILD_DIR=$ROOT_DIR/linux-x86_64
+mkdir $BUILD_DIR
+cd $BUILD_DIR
+$ROOT_DIR/configure --prefix=$TARGET_LIB_DIR/linux-x86_64 --enable-static --enable-shared --enable-transcoder-icu --with-icu=$ICU_DIR/linux-x86_64 --enable-msgloader-inmemory --disable-threads
+make -j 4
+make install
+
 # Cross-compile
 for ARCH in `ls $NDK_ROOT/toolchains/`; do
   ARCH_DIR=${ARCH%-*}
@@ -44,14 +52,10 @@ for ARCH in `ls $NDK_ROOT/toolchains/`; do
     echo "ARCH = $ARCH_DIR"
     echo "###########################################################"
 
-    $ROOT_DIR/configure --prefix=$TARGET_LIB_DIR/$ARCH_DIR --host=$ARCH_DIR --target=$ARCH_DIR CXX=$CXX CC=$CC CPPFLAGS="$CPPFLAGS" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" RANLIB=$RANLIB AR=$AR --enable-static --enable-transcoder-icu --with-icu=$ICU_DIR/$ARCH_DIR --enable-msgloader-inmemory --disable-threads
-
-    echo "Looking for libs in folder $NDK_ROOT/platforms/$ANDROID_PLATFORM/$(getPlatformDir $ARCH)/usr/lib/"
+    $ROOT_DIR/configure --prefix=$TARGET_LIB_DIR/$ANDROID_PLATFORM/$ARCH_DIR --host=$ARCH_DIR --target=$ARCH_DIR CXX=$CXX CC=$CC CPPFLAGS="$CPPFLAGS" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" RANLIB=$RANLIB AR=$AR --enable-static --enable-shared --enable-transcoder-icu --with-icu=$ICU_DIR/$ANDROID_PLATFORM/$ARCH_DIR --enable-msgloader-inmemory --disable-threads
 
     # find crtbegin_so.o and crtend_so.o; it can be that we need to have a look in the lib64 folder 
     PLATFORM_DIR=$(getPlatformDir $ARCH)
-
-    echo "PLATFORM_DIR = $PLATFORM_DIR"
 
     if [ ${PLATFORM_DIR%64} != $PLATFORM_DIR ] ; then
       LIB=$NDK_ROOT/platforms/$ANDROID_PLATFORM/$(getPlatformDir $ARCH)/usr/lib64

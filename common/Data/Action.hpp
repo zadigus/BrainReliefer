@@ -16,7 +16,7 @@ namespace N_CommonData {
       Action();
       Action(const N_Data::Action& a_Action);
 
-      N_Data::Action getAction() const;
+//      N_Data::Action getAction() const;
 
       QString title() const;
       void setTitle(const QString& a_Value);
@@ -28,7 +28,7 @@ namespace N_CommonData {
       void setDelegate(const QString& a_Value);
 
     protected:
-      N_Data::Action m_Action;
+//      N_Data::Action m_Action;
 
     private:
 
@@ -40,18 +40,18 @@ namespace N_CommonData {
 
   //---------------------------------------------------------------------------------------------------
   inline Action::Action()
-    : m_Action("")
+//    : m_Action("")
   { }
 
   //---------------------------------------------------------------------------------------------------
   inline Action::Action(const N_Data::Action& a_Action)
-    : m_Action(a_Action)
+//    : m_Action(a_Action)
   { }
 
-  inline N_Data::Action Action::getAction() const
-  {
-    return m_Action;
-  }
+//  inline N_Data::Action Action::getAction() const
+//  {
+//    return m_Action;
+//  }
 
 }
 
