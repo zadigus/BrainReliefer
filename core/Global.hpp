@@ -13,5 +13,6 @@
 
 #include <memory>
 #include <functional>
+#include <stdexcept>
 
 #endif
