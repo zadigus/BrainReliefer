@@ -23,7 +23,7 @@ tar xvfz xerces-c-3.1.4.tar.gz
 BUILD_DIR=$ROOT_DIR/linux-x86_64
 mkdir $BUILD_DIR
 cd $BUILD_DIR
-$ROOT_DIR/configure --prefix=$TARGET_LIB_DIR/linux-x86_64 --enable-static --enable-shared --enable-transcoder-icu --with-icu=$ICU_DIR/linux-x86_64 --enable-msgloader-inmemory --disable-threads
+$ROOT_DIR/configure --prefix=$TARGET_LIB_DIR/linux-x86_64 --enable-static=yes --enable-shared=no --enable-transcoder-icu --with-icu=$ICU_DIR/linux-x86_64 --enable-msgloader-inmemory --disable-threads
 make -j 4
 make install
 
@@ -52,7 +52,7 @@ for ARCH in `ls $NDK_ROOT/toolchains/`; do
     echo "ARCH = $ARCH_DIR"
     echo "###########################################################"
 
-    $ROOT_DIR/configure --prefix=$TARGET_LIB_DIR/$ANDROID_PLATFORM/$ARCH_DIR --host=$ARCH_DIR --target=$ARCH_DIR CXX=$CXX CC=$CC CPPFLAGS="$CPPFLAGS" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" RANLIB=$RANLIB AR=$AR --enable-static --enable-shared --enable-transcoder-icu --with-icu=$ICU_DIR/$ANDROID_PLATFORM/$ARCH_DIR --enable-msgloader-inmemory --disable-threads
+    $ROOT_DIR/configure --prefix=$TARGET_LIB_DIR/$ANDROID_PLATFORM/$ARCH_DIR --host=$ARCH_DIR --target=$ARCH_DIR CXX=$CXX CC=$CC CPPFLAGS="$CPPFLAGS" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" RANLIB=$RANLIB AR=$AR --enable-static=yes --enable-shared=no --enable-transcoder-icu --with-icu=$ICU_DIR/$ANDROID_PLATFORM/$ARCH_DIR --enable-msgloader-inmemory --disable-threads
 
     # find crtbegin_so.o and crtend_so.o; it can be that we need to have a look in the lib64 folder 
     PLATFORM_DIR=$(getPlatformDir $ARCH)

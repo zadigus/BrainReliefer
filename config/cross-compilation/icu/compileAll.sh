@@ -21,7 +21,7 @@ tar xvfz icu4c-58_2-src.tgz
 BUILD_LINUX=$ROOT_DIR/linux
 mkdir $BUILD_LINUX
 cd $BUILD_LINUX
-$SRC_DIR/configure --prefix=$TARGET_LIB_DIR/linux-x86_64 --enable-static --enable-shared
+$SRC_DIR/configure --prefix=$TARGET_LIB_DIR/linux-x86_64 --enable-static=yes --enable-shared=no
 make -j 4
 make install
 
@@ -58,7 +58,7 @@ for ARCH in `ls $NDK_ROOT/toolchains/`; do
       HOST=$ARCH_DIR
     fi
 
-    $SRC_DIR/configure --enable-static --enable-shared --prefix=$TARGET_LIB_DIR/$ANDROID_PLATFORM/$ARCH_DIR --host=$HOST CXX=$CXX CC=$CC CPPFLAGS="$CPPFLAGS" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" RANLIB=$RANLIB AR=$AR --enable-extras=no --enable-tools=no --enable-tests=no --enable-samples=no --with-cross-build=$BUILD_LINUX
+    $SRC_DIR/configure --enable-static=yes --enable-shared=no --prefix=$TARGET_LIB_DIR/$ANDROID_PLATFORM/$ARCH_DIR --host=$HOST CXX=$CXX CC=$CC CPPFLAGS="$CPPFLAGS" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" RANLIB=$RANLIB AR=$AR --enable-extras=no --enable-tools=no --enable-tests=no --enable-samples=no --with-cross-build=$BUILD_LINUX
 
     make -j 4
     make install

@@ -66,26 +66,36 @@ function compileQt()
   if [ $MY_ARCH_DIR == "mips64el-linux-android" ] ; then
 
     # well, on my Ubuntu 16.04 LTS, it doesn't compile either in this case
-    $SRC_DIR/configure -prefix $TARGET_LIB_DIR/$MY_ANDROID_PLATFORM/$MY_COMPILATION_MODE/$MY_ARCH_DIR -$MY_LIB_MODE -$MY_COMPILATION_MODE -developer-build -make libs -skip qttranslations -skip qtwebkit -skip qtserialport -skip qtwebkit-examples -skip qtconnectivity -skip qttools -skip qtscript -no-warnings-are-errors -opensource -confirm-license -xplatform android-g++ -android-ndk /home/mihl/Libraries/android-sdk/ndk-bundle -android-sdk /home/mihl/Libraries/android-sdk -android-ndk-host linux-x86_64 -android-toolchain-version $ANDROID_TOOLCHAIN_VERSION -android-ndk-platform $MY_ANDROID_PLATFORM -android-arch $(getSTLPortLibDir "$MY_ARCH_DIR-$ANDROID_TOOLCHAIN_VERSION") -c++std c++11 -no-opengl -sysroot $MY_SYSROOT
+    $SRC_DIR/configure -prefix $TARGET_LIB_DIR/$MY_ANDROID_PLATFORM/$MY_COMPILATION_MODE/$MY_ARCH_DIR -extprefix $TARGET_LIB_DIR/$MY_ANDROID_PLATFORM/$MY_COMPILATION_MODE/$MY_ARCH_DIR -$MY_LIB_MODE -$MY_COMPILATION_MODE -developer-build -make libs -skip qttranslations -skip qtwebkit -skip qtserialport -skip qtwebkit-examples -skip qtconnectivity -skip qttools -skip qtscript -no-warnings-are-errors -opensource -confirm-license -xplatform android-g++ -android-ndk /home/mihl/Libraries/android-sdk/ndk-bundle -android-sdk /home/mihl/Libraries/android-sdk -android-ndk-host linux-x86_64 -android-toolchain-version $ANDROID_TOOLCHAIN_VERSION -android-ndk-platform $MY_ANDROID_PLATFORM -android-arch $(getSTLPortLibDir "$MY_ARCH_DIR-$ANDROID_TOOLCHAIN_VERSION") -c++std c++11 -no-opengl -force-debug-info -sysroot $MY_SYSROOT
 
   elif [ $MY_ARCH_DIR == "mipsel-linux-android" ] ; then
 
-    $SRC_DIR/configure -prefix $TARGET_LIB_DIR/$MY_ANDROID_PLATFORM/$MY_COMPILATION_MODE/$MY_ARCH_DIR -$MY_LIB_MODE -$MY_COMPILATION_MODE -developer-build -make libs -skip qttranslations -skip qtwebkit -skip qtserialport -skip qtwebkit-examples -skip qtconnectivity -skip qttools -skip qtscript -no-warnings-are-errors -opensource -confirm-license -xplatform android-g++ -android-ndk /home/mihl/Libraries/android-sdk/ndk-bundle -android-sdk /home/mihl/Libraries/android-sdk -android-ndk-host linux-x86_64 -android-toolchain-version $ANDROID_TOOLCHAIN_VERSION -android-ndk-platform $MY_ANDROID_PLATFORM -android-arch $(getSTLPortLibDir "$MY_ARCH_DIR-$ANDROID_TOOLCHAIN_VERSION") -c++std c++11 -no-opengl -sysroot $MY_SYSROOT
+    $SRC_DIR/configure -prefix $TARGET_LIB_DIR/$MY_ANDROID_PLATFORM/$MY_COMPILATION_MODE/$MY_ARCH_DIR -extprefix $TARGET_LIB_DIR/$MY_ANDROID_PLATFORM/$MY_COMPILATION_MODE/$MY_ARCH_DIR -$MY_LIB_MODE -$MY_COMPILATION_MODE -developer-build -make libs -skip qttranslations -skip qtwebkit -skip qtserialport -skip qtwebkit-examples -skip qtconnectivity -skip qttools -skip qtscript -no-warnings-are-errors -opensource -confirm-license -xplatform android-g++ -android-ndk /home/mihl/Libraries/android-sdk/ndk-bundle -android-sdk /home/mihl/Libraries/android-sdk -android-ndk-host linux-x86_64 -android-toolchain-version $ANDROID_TOOLCHAIN_VERSION -android-ndk-platform $MY_ANDROID_PLATFORM -android-arch $(getSTLPortLibDir "$MY_ARCH_DIR-$ANDROID_TOOLCHAIN_VERSION") -c++std c++11 -no-opengl -force-debug-info -sysroot $MY_SYSROOT
 
   elif [ $MY_ARCH_DIR == "arm-linux-androideabi" ] ; then
 
     # cannot compile qtscript because needs asm/procinfo.h which is only present in old API_LEVELS (i.e. <= 19)
 
-    $SRC_DIR/configure -prefix $TARGET_LIB_DIR/$MY_ANDROID_PLATFORM/$MY_COMPILATION_MODE/$MY_ARCH_DIR -$MY_LIB_MODE -$MY_COMPILATION_MODE -developer-build -skip qttranslations -skip qtwebengine -skip qtwebkit -skip qtserialport -skip qtwebkit-examples -skip qtconnectivity -no-warnings-are-errors -opensource -confirm-license -xplatform android-g++ -android-ndk /home/mihl/Libraries/android-sdk/ndk-bundle -android-sdk /home/mihl/Libraries/android-sdk -android-ndk-host linux-x86_64 -android-toolchain-version $ANDROID_TOOLCHAIN_VERSION -android-ndk-platform $MY_ANDROID_PLATFORM -android-arch $(getSTLPortLibDir "$MY_ARCH_DIR-$ANDROID_TOOLCHAIN_VERSION") -c++std c++11 -nomake examples -nomake tests -skip qtscript -sysroot $MY_SYSROOT
+    $SRC_DIR/configure -prefix $TARGET_LIB_DIR/$MY_ANDROID_PLATFORM/$MY_COMPILATION_MODE/$MY_ARCH_DIR -extprefix $TARGET_LIB_DIR/$MY_ANDROID_PLATFORM/$MY_COMPILATION_MODE/$MY_ARCH_DIR -$MY_LIB_MODE -$MY_COMPILATION_MODE -developer-build -skip qttranslations -skip qtwebengine -skip qtwebkit -skip qtserialport -skip qtwebkit-examples -skip qtconnectivity -no-warnings-are-errors -opensource -confirm-license -xplatform android-g++ -android-ndk /home/mihl/Libraries/android-sdk/ndk-bundle -android-sdk /home/mihl/Libraries/android-sdk -android-ndk-host linux-x86_64 -android-toolchain-version $ANDROID_TOOLCHAIN_VERSION -android-ndk-platform $MY_ANDROID_PLATFORM -android-arch $(getSTLPortLibDir "$MY_ARCH_DIR-$ANDROID_TOOLCHAIN_VERSION") -c++std c++11 -nomake examples -nomake tests -skip qtscript -force-debug-info -sysroot $MY_SYSROOT
 
   else
 
-    # replace $MY_LIB_MODE with static in prefix
-   $SRC_DIR/configure -prefix $TARGET_LIB_DIR/$MY_ANDROID_PLATFORM/$MY_COMPILATION_MODE/$MY_ARCH_DIR -$MY_LIB_MODE -$MY_COMPILATION_MODE -developer-build -skip qttranslations -skip qtwebengine -skip qtwebkit -skip qtserialport -skip qtwebkit-examples -skip qtconnectivity -no-warnings-are-errors -opensource -confirm-license -xplatform android-g++ -android-ndk /home/mihl/Libraries/android-sdk/ndk-bundle -android-sdk /home/mihl/Libraries/android-sdk -android-ndk-host linux-x86_64 -android-toolchain-version $ANDROID_TOOLCHAIN_VERSION -android-ndk-platform $MY_ANDROID_PLATFORM -android-arch $(getSTLPortLibDir "$MY_ARCH_DIR-$ANDROID_TOOLCHAIN_VERSION") -c++std c++11 -nomake examples -nomake tests -sysroot $MY_SYSROOT
+  # static: -make libs
+
+    if [ $MY_LIB_MODE == "static" ] ; then
+
+      $SRC_DIR/configure -prefix $TARGET_LIB_DIR/$MY_ANDROID_PLATFORM/$MY_COMPILATION_MODE/$MY_ARCH_DIR -extprefix $TARGET_LIB_DIR/$MY_ANDROID_PLATFORM/$MY_COMPILATION_MODE/$MY_ARCH_DIR -$MY_LIB_MODE -$MY_COMPILATION_MODE -developer-build -skip qttranslations -skip qtwebengine -skip qtwebkit -skip qtserialport -skip qtwebkit-examples -skip qtconnectivity -no-warnings-are-errors -opensource -confirm-license -xplatform android-g++ -android-ndk /home/mihl/Libraries/android-sdk/ndk-bundle -android-sdk /home/mihl/Libraries/android-sdk -android-ndk-host linux-x86_64 -android-toolchain-version $ANDROID_TOOLCHAIN_VERSION -android-ndk-platform $MY_ANDROID_PLATFORM -android-arch $(getSTLPortLibDir "$MY_ARCH_DIR-$ANDROID_TOOLCHAIN_VERSION") -c++std c++11 -make libs -force-debug-info -sysroot $MY_SYSROOT
+    
+    else
+
+      $SRC_DIR/configure -prefix $TARGET_LIB_DIR/$MY_ANDROID_PLATFORM/$MY_COMPILATION_MODE/$MY_ARCH_DIR -extprefix $TARGET_LIB_DIR/$MY_ANDROID_PLATFORM/$MY_COMPILATION_MODE/$MY_ARCH_DIR -$MY_LIB_MODE -$MY_COMPILATION_MODE -developer-build -skip qttranslations -skip qtwebengine -skip qtwebkit -skip qtserialport -skip qtwebkit-examples -skip qtconnectivity -no-warnings-are-errors -opensource -confirm-license -xplatform android-g++ -android-ndk /home/mihl/Libraries/android-sdk/ndk-bundle -android-sdk /home/mihl/Libraries/android-sdk -android-ndk-host linux-x86_64 -android-toolchain-version $ANDROID_TOOLCHAIN_VERSION -android-ndk-platform $MY_ANDROID_PLATFORM -android-arch $(getSTLPortLibDir "$MY_ARCH_DIR-$ANDROID_TOOLCHAIN_VERSION") -c++std c++11 -force-debug-info -sysroot $MY_SYSROOT -make tools
+
+    fi
+
 
   fi
 
-  make -j 2
+  make -j 4
   make install
 
   if [ $MY_LIB_MODE == "static" ] ; then
