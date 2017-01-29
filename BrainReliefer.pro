@@ -13,9 +13,9 @@ CORE_FOLDER   = core
 
 SOURCES += main.cpp \
     $${LOGGER_FOLDER}/Logger.cpp \
-    #$${DATA_FOLDER}/Application.cpp \
-    #$${DATA_FOLDER}/Data.cpp \
-    #$${DATA_FOLDER}/IntrantList.cpp \
+    $${DATA_FOLDER}/Application.cpp \
+    $${DATA_FOLDER}/Data.cpp \
+    $${DATA_FOLDER}/IntrantList.cpp \
     $${DATA_FOLDER}/DataValidator.cpp \
     $${MODELS_FOLDER}/IntrantsList.cpp \
     $${MODELS_FOLDER}/ActionsList.cpp \
@@ -27,16 +27,16 @@ SOURCES += main.cpp \
     $${COMMONDATA_FOLDER}/Action.cpp \
     EngineConfigurator.cpp \
     AppConfiguration.cpp \
-#    gui/InvalidData/FileSaveDialog.cpp \
+    gui/InvalidData/FileSaveDialog.cpp \
     $${MODELS_FOLDER}/ProjectAction.cpp
 
 HEADERS += $${CORE_FOLDER}/Global.hpp \
     $${LOGGER_FOLDER}/Logger.hpp \
     $${LOGGER_FOLDER}/Log.hpp \
     $${LOGGER_FOLDER}/LoggerExceptions.hpp \
-    #$${DATA_FOLDER}/Application.hpp \
-    #$${DATA_FOLDER}/Data.hpp \
-    #$${DATA_FOLDER}/IntrantList.hpp \
+    $${DATA_FOLDER}/Application.hpp \
+    $${DATA_FOLDER}/Data.hpp \
+    $${DATA_FOLDER}/IntrantList.hpp \
     $${DATA_FOLDER}/DataValidator.hpp \
     $${MODELS_FOLDER}/IntrantsList.hpp \
     $${MODELS_FOLDER}/ActionsList.hpp \
@@ -51,7 +51,7 @@ HEADERS += $${CORE_FOLDER}/Global.hpp \
     logic/Singleton.hpp \
     EngineConfigurator.hpp \
     AppConfiguration.hpp \
-#    gui/InvalidData/FileSaveDialog.hpp \
+    gui/InvalidData/FileSaveDialog.hpp \
     $${MODELS_FOLDER}/ProjectAction.hpp
 
 RESOURCES += gui/qml/qml.qrc \
@@ -110,8 +110,9 @@ android {
     $${XERCES_DIR}/include \
     $${ICU_DIR}/include
 
-#  LIBS += -L$${XERCES_DIR}/lib -lxerces-c \
-#    -L$${ICU_DIR}/lib -licudata -licui18n -licuio -licuuc
+  LIBS += -L$${XERCES_DIR}/lib -lxerces-c \
+    -L$${ICU_DIR}/lib -licuuc -licudata -licui18n -licuio \
+    -L$$(NDK_ROOT)/sources/cxx-stl/stlport/libs/$${ANDROID_TARGET_ARCH} -lstlport_static
 
   DISTFILES += \
     android/AndroidManifest.xml \
@@ -130,16 +131,6 @@ android {
     android/gradlew.bat
 
   ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
-
-#  contains(ANDROID_TARGET_ARCH, arm64-v8a) {
-#    ANDROID_EXTRA_LIBS = \
-#        /home/mihl/Libraries/icu/android-23/aarch64-linux-android/lib/libicudata.so \
-#        /home/mihl/Libraries/icu/android-23/aarch64-linux-android/lib/libicui18n.so \
-#        /home/mihl/Libraries/icu/android-23/aarch64-linux-android/lib/libicuio.so \
-#        /home/mihl/Libraries/icu/android-23/aarch64-linux-android/lib/libicuuc.so \
-#        /home/mihl/Libraries/xerces-c/android-23/aarch64-linux-android/lib/libxerces-c-3.1.so \
-#        /home/mihl/Libraries/xerces-c/android-23/aarch64-linux-android/lib/libxerces-c.so
-#  }
 }
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
@@ -147,5 +138,3 @@ QML_IMPORT_PATH =
 
 # Default rules for deployment.
 include(deployment.pri)
-
-
