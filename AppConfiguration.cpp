@@ -14,7 +14,7 @@ using namespace N_Data;
 //----------------------------------------------------------------------------------------------
 AppConfiguration::AppConfiguration(QObject* a_Parent)
   : QObject(a_Parent)
-  , m_ConfXmlUrl("file:///G:/workspace/BrainReliefer/config/Application.xml")
+  , m_ConfXmlUrl(QUrl::fromLocalFile("/home/mihl/workspace/BrainReliefer/config/Application.xml")) //file:///G:/workspace/BrainReliefer/config/Application.xml")
   , m_ConfXsdUrl("qrc:/xsd/Application.xsd")
 {
 

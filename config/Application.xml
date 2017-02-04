@@ -2,11 +2,11 @@
 
 <Application>
 	<Log>
-		<Filename>G:/workspace/BrainReliefer/log/BrainReliefer.log</Filename>
+		<Filename>/home/mihl/workspace/BrainReliefer/log/BrainReliefer.log</Filename>
 		<Mode>INF</Mode>
 	</Log>
 	
 	<Settings>
-		<Filename>G:/workspace/BrainReliefer/config/RootData.xml</Filename>
+		<Filename>/home/mihl/workspace/BrainReliefer/config/RootData.xml</Filename>
 	</Settings>
 </Application>

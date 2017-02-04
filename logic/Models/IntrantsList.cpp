@@ -40,7 +40,7 @@ namespace N_Models {
   //-------------------------------------------------------------------------------------------
   void IntrantsList::save()
   {
-    LOG_INF("Storing the data in the file <" << m_LoadedFilename.toStdString() << ">.");
+//    LOG_INF("Storing the data in the file <" << m_LoadedFilename.toStdString() << ">.");
 
 //    xml_schema::namespace_infomap map;
 //    map[""].name = "";
@@ -86,7 +86,7 @@ namespace N_Models {
 //    LOG_INF("Popping out intrant with title <" << result->title() << ">");
 //    removeIntrant(a_Idx);
 //    return result;
-      return std::unique_ptr<Intrant>();
+    return std::unique_ptr<Intrant>();
   }
 
   //-------------------------------------------------------------------------------------------

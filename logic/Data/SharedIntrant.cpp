@@ -19,7 +19,7 @@ namespace N_Data {
   QString SharedIntrant::title() const
   {
 //    return QString::fromStdString(m_Data->title());
-      return QString();
+    return QString();
   }
 
   //---------------------------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ namespace N_Data {
   QString SharedIntrant::description() const
   {
 //    return m_Data->description().present() ? QString::fromStdString(*m_Data->description()) : QString();
-      return QString();
+    return QString();
   }
 
   //---------------------------------------------------------------------------------------------------

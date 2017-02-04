@@ -71,12 +71,12 @@ namespace N_Models {
   //-------------------------------------------------------------------------------------------
   bool ActionsList::removeRows(int a_Row, int a_Count, const QModelIndex& /*a_Parent*/)
   {
-//    int lowerIdx(a_Row);
-//    int upperIdx(a_Row + a_Count - 1);
+    int lowerIdx(a_Row);
+    int upperIdx(a_Row + a_Count - 1);
 
-//    beginRemoveRows(QModelIndex(), lowerIdx, upperIdx);
-//    m_Data.erase(m_Data.begin() + lowerIdx, m_Data.begin() + upperIdx + 1);
-//    endRemoveRows();
+    beginRemoveRows(QModelIndex(), lowerIdx, upperIdx);
+    m_Data.erase(m_Data.begin() + lowerIdx, m_Data.begin() + upperIdx + 1);
+    endRemoveRows();
 
     return true;
   }
@@ -96,13 +96,12 @@ namespace N_Models {
   //-------------------------------------------------------------------------------------------
   QVariant ActionsList::data(const QModelIndex& a_Index, int a_Role) const
   {
-    switch(a_Role)
+/*    switch(a_Role)
     {
       case TitleRole:
         return m_Data.at(a_Index.row()).title();
       case ProjectRole:
         return m_Data.at(a_Index.row()).projectTitle();
-
 //      case DescriptionRole:
 //      {
 //        Intrant::description_optional descr(m_Data->Intrant().at(a_Index.row()).description());
@@ -115,25 +114,25 @@ namespace N_Models {
 //      }
       default:
         break;
-    }
+    }*/
     return QVariant();
   }
 
   //-------------------------------------------------------------------------------------------
-  QVariant ActionsList::headerData(int /*a_Section*/, Qt::Orientation /*a_Orientation*/, int a_Role) const
+  QVariant ActionsList::headerData(int a_Section, Qt::Orientation a_Orientation, int a_Role) const
   {
     if(a_Role != TitleRole)
     {
       return QVariant();
     }
 
-//    if(a_Orientation == Qt::Horizontal)
-//    {
-//      if(a_Section == 0)
-//      {
-//        return tr("Title");
-//      }
-//    }
+    if(a_Orientation == Qt::Horizontal)
+    {
+      if(a_Section == 0)
+      {
+        return tr("Title");
+      }
+    }
 
     return QVariant();
   }

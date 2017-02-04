@@ -9,10 +9,6 @@
 #include <QUrl>
 #include <QFileInfo>
 
-#include <functional>
-#include <memory>
-#include <stdexcept>
-
 namespace N_Data {
 
   namespace N_DataManagerHelper {
