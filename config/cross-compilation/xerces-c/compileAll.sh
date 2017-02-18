@@ -12,7 +12,7 @@ SRC_DIR=$ROOT_DIR/src
 
 if [ -d $ROOT_DIR ] ; then
   echo "Folder $ROOT_DIR already exists." # the folder is created after lib archive untar
-  exit
+  #exit
 fi
 
 cd $DOWNLOADS_DIR
@@ -25,7 +25,7 @@ mkdir $BUILD_DIR
 cd $BUILD_DIR
 $ROOT_DIR/configure --prefix=$TARGET_LIB_DIR/linux-x86_64 --enable-static=yes --enable-shared=no --enable-transcoder-icu --with-icu=$ICU_DIR/linux-x86_64 --enable-msgloader-inmemory --disable-threads
 make -j 4
-make install
+#make install
 
 # Cross-compile
 for ARCH in `ls $NDK_ROOT/toolchains/`; do
@@ -72,8 +72,8 @@ for ARCH in `ls $NDK_ROOT/toolchains/`; do
     ln -s $LIB/crtend_so.o
     cd ..
 
-    make -j 4
-    make install
+    make -j 4 verbose=1
+#    make install
 
   fi
 
