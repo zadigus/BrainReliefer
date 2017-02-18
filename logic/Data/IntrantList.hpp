@@ -383,7 +383,7 @@ namespace N_Data
     Intrant_sequence Intrant_;
   };
 
-  class Action: public ::xml_schema::type
+  class Action : public ::xml_schema::type
   {
     public:
     // title

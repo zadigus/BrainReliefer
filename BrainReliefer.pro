@@ -100,9 +100,15 @@ android {
   XSD_INCLUDE_DIR = $${LIB_DIR}/xsd/libxsd
 
   equals(ANDROID_TARGET_ARCH, arm64-v8a) {
-    XERCES_DIR = $${LIB_DIR}/xerces-c/android-23/aarch64-linux-android
-    ICU_DIR = $${LIB_DIR}/icu/android-23/aarch64-linux-android
+    ARCH_DIR = aarch64-linux-android
   }
+
+  equals(ANDROID_TARGET_ARCH, x86) {
+    ARCH_DIR = x86
+  }
+
+  XERCES_DIR = $${LIB_DIR}/xerces-c/android-23/$${ARCH_DIR}
+  ICU_DIR = $${LIB_DIR}/icu/android-23/$${ARCH_DIR}
 
   #QMAKE_CXXFLAGS += -D_GLIBCXX_USE_C99 # for x86_64
 
