@@ -3,8 +3,6 @@
 
 #include "core/Global.hpp"
 
-#include "Data/IntrantList.hpp"
-
 #include "common/Data/Action.hpp"
 
 #include <QDate>
@@ -36,6 +34,11 @@ namespace N_Data {
   //----------------------------------------------------------------------------------
   // inline / template method(s) implementation
   //----------------------------------------------------------------------------------
+
+  //---------------------------------------------------------------------------------------------------
+  inline SharedAction::SharedAction(QObject* a_Parent)
+    : QObject(a_Parent)
+  { }
 
 }
 

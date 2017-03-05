@@ -16,7 +16,7 @@ namespace N_CommonData {
       Action();
       Action(const N_Data::Action& a_Action);
 
-      N_Data::Action getAction() const;
+      N_Data::Action getData() const;
 
       QString title() const;
       void setTitle(const QString& a_Value);
@@ -28,7 +28,7 @@ namespace N_CommonData {
       void setDelegate(const QString& a_Value);
 
     protected:
-      N_Data::Action m_Action;
+      std::unique_ptr<N_Data::Action> m_Action;
 
     private:
 
@@ -38,20 +38,10 @@ namespace N_CommonData {
   // inline / template method(s) implementation
   //----------------------------------------------------------------------------------
 
-  //---------------------------------------------------------------------------------------------------
-  inline Action::Action()
-    : m_Action(N_Data::Action::title_type())
-  { }
-
-  //---------------------------------------------------------------------------------------------------
-  inline Action::Action(const N_Data::Action& a_Action)
-    : m_Action(a_Action)
-  { }
-
-  //---------------------------------------------------------------------------------------------------
-  inline N_Data::Action Action::getAction() const
+  //----------------------------------------------------------------------------------
+  inline N_Data::Action Action::getData() const
   {
-    return m_Action;
+    return *m_Action;
   }
 
 }

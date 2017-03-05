@@ -1,11 +1,13 @@
 #include "Models/ProjectAction.hpp"
 
+#include "Data/IntrantList.hpp"
+
 namespace N_Models {
 
   //---------------------------------------------------------------------------------------------------
-  ProjectAction::ProjectAction(const N_Data::Action& a_Action, const std::string& a_ProjectTitle)
+  ProjectAction::ProjectAction(const N_Data::Action& a_Action, const QString& a_ProjectTitle)
     : N_CommonData::Action(a_Action)
-    , m_ProjectTitle(QString::fromStdString(a_ProjectTitle))
+    , m_ProjectTitle(a_ProjectTitle)
   {
 
   }

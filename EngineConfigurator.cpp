@@ -9,7 +9,7 @@
 #include "Models/IntrantsList.hpp"
 #include "Models/ActionsList.hpp"
 
-//#include "InvalidData/FileSaveDialog.hpp"
+#include "InvalidData/FileSaveDialog.hpp"
 
 #include <QQmlContext>
 #include <QSortFilterProxyModel>
@@ -53,16 +53,6 @@ void EngineConfigurator::setupContext()
   context->setContextProperty("actionsModel", m_ActionsModel);
   context->setContextProperty("sharedIntrant", m_SharedIntrant);
   context->setContextProperty("sharedAction", m_SharedAction);
-}
-
-//----------------------------------------------------------------------------------------------
-void EngineConfigurator::registerMetaTypes ()
-{
-//  qmlRegisterType<FileSaveDialog>("InvalidData", 1, 0, "FileSaveDialog");
-  qmlRegisterType<N_Models::IntrantsList>("MyDataManagement", 1, 0, "IntrantsList");
-  qmlRegisterType<N_Models::ActionsList>("MyDataManagement", 1, 0, "ActionsList");
-  qmlRegisterType<N_Data::SharedIntrant>("MyDataManagement", 1, 0, "SharedIntrant");
-  qmlRegisterType<N_Data::SharedAction>("MyDataManagement", 1, 0, "SharedAction");
 }
 
 //----------------------------------------------------------------------------------------------

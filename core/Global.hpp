@@ -7,8 +7,6 @@
 #define NOEXCEPT
 #endif
 
-#include "logic/Logger/Logger.hpp"
-
 #include <QDebug>
 
 #include <memory>

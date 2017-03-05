@@ -13,9 +13,16 @@ CORE_FOLDER   = core
 
 SOURCES += main.cpp \
     $${LOGGER_FOLDER}/Logger.cpp \
-    $${DATA_FOLDER}/Application.cpp \
-    $${DATA_FOLDER}/Data.cpp \
     $${DATA_FOLDER}/IntrantList.cpp \
+    $${DATA_FOLDER}/IntrantList-pimpl.cpp \
+    $${DATA_FOLDER}/IntrantList-pskel.cpp \
+    $${DATA_FOLDER}/IntrantList-simpl.cpp \
+    $${DATA_FOLDER}/IntrantList-sskel.cpp \
+    $${DATA_FOLDER}/Data.cpp \
+    $${DATA_FOLDER}/Data-pimpl.cpp \
+    $${DATA_FOLDER}/Data-pskel.cpp \
+    $${DATA_FOLDER}/Data-simpl.cpp \
+    $${DATA_FOLDER}/Data-sskel.cpp \
     $${DATA_FOLDER}/DataValidator.cpp \
     $${MODELS_FOLDER}/IntrantsList.cpp \
     $${MODELS_FOLDER}/ActionsList.cpp \
@@ -32,11 +39,16 @@ SOURCES += main.cpp \
 
 HEADERS += $${CORE_FOLDER}/Global.hpp \
     $${LOGGER_FOLDER}/Logger.hpp \
-    $${LOGGER_FOLDER}/Log.hpp \
-    $${LOGGER_FOLDER}/LoggerExceptions.hpp \
-    $${DATA_FOLDER}/Application.hpp \
-    $${DATA_FOLDER}/Data.hpp \
     $${DATA_FOLDER}/IntrantList.hpp \
+    $${DATA_FOLDER}/IntrantList-pimpl.hpp \
+    $${DATA_FOLDER}/IntrantList-pskel.hpp \
+    $${DATA_FOLDER}/IntrantList-simpl.hpp \
+    $${DATA_FOLDER}/IntrantList-sskel.hpp \
+    $${DATA_FOLDER}/Data.hpp \
+    $${DATA_FOLDER}/Data-pimpl.hpp \
+    $${DATA_FOLDER}/Data-pskel.hpp \
+    $${DATA_FOLDER}/Data-simpl.hpp \
+    $${DATA_FOLDER}/Data-sskel.hpp \
     $${DATA_FOLDER}/DataValidator.hpp \
     $${MODELS_FOLDER}/IntrantsList.hpp \
     $${MODELS_FOLDER}/ActionsList.hpp \
@@ -82,22 +94,24 @@ win32-msvc2013 {
 linux:!android {
   LIB_DIR = "/home/mihl/Libraries"
 
-  XSD_INCLUDE_DIR = $${LIB_DIR}/xsd/libxsd
+#  XSD_INCLUDE_DIR = $${LIB_DIR}/xsd/libxsd
+  XSDE_DIR = $${LIB_DIR}/xsde/linux/libxsde/
   XERCES_DIR = $${LIB_DIR}/xerces-c/linux-x86_64
   ICU_DIR = $${LIB_DIR}/icu/linux-x86_64
 
-  INCLUDEPATH += $${XSD_INCLUDE_DIR} \
+  INCLUDEPATH += $${XSDE_DIR} \
     $${XERCES_DIR}/include \
     $${ICU_DIR}/include
 
   LIBS += -L$${XERCES_DIR}/lib -lxerces-c \
-    -L$${ICU_DIR}/lib -licudata -licui18n -licuio -licuuc
+    -L$${ICU_DIR}/lib -licudata -licui18n -licuio -licuuc \
+    -L$${XSDE_DIR}/xsde -lxsde
 }
 
 android {
   LIB_DIR = "/home/mihl/Libraries"
 
-  XSD_INCLUDE_DIR = $${LIB_DIR}/xsd/libxsd
+#  XSD_INCLUDE_DIR = $${LIB_DIR}/xsd/libxsd
 
   equals(ANDROID_TARGET_ARCH, arm64-v8a) {
     ARCH_DIR = aarch64-linux-android
@@ -107,17 +121,19 @@ android {
     ARCH_DIR = x86
   }
 
+  XSDE_DIR = $${LIB_DIR}/xsde/android-23/$${ARCH_DIR}/libxsde
   XERCES_DIR = $${LIB_DIR}/xerces-c/android-23/$${ARCH_DIR}
   ICU_DIR = $${LIB_DIR}/icu/android-23/$${ARCH_DIR}
 
   #QMAKE_CXXFLAGS += -D_GLIBCXX_USE_C99 # for x86_64
 
-  INCLUDEPATH += $${XSD_INCLUDE_DIR} \
+  INCLUDEPATH += $${XSDE_DIR} \
     $${XERCES_DIR}/include \
     $${ICU_DIR}/include
 
   LIBS += -L$${XERCES_DIR}/lib -lxerces-c \
     -L$${ICU_DIR}/lib -licuuc -licudata -licui18n -licuio \
+    -L$${XSDE_DIR}/xsde -lxsde \
     -L$$(NDK_ROOT)/sources/cxx-stl/stlport/libs/$${ANDROID_TARGET_ARCH} -lstlport_static
 
   DISTFILES += \
@@ -144,3 +160,12 @@ QML_IMPORT_PATH =
 
 # Default rules for deployment.
 include(deployment.pri)
+
+DISTFILES += \
+    android/AndroidManifest.xml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat

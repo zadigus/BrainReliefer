@@ -1,85 +1,100 @@
 #include "Logger.hpp"
 
-#include "LoggerExceptions.hpp"
+#include <fstream>
 
-#include "Data/Application.hpp"
+#include <QApplication>
+#include <QDate>
+#include <QFileInfo>
+#include <QDir>
+#include <QSettings>
 
-#include <algorithm>
-#include <functional>
+#include <QFile>
 
-#include <sstream>
-#include <iostream>
-
-using namespace std::placeholders;
+#include <QDebug>
 
 namespace N_Logger {
 
   //----------------------------------------------------------------------------------------------
-  Logger::Logger()
-    : m_INFLog(new OFFLog)
-    , m_WRNLog(new OFFLog)
-    , m_ERRLog(new OFFLog)
+  QString filename()
   {
-    m_VerboseLevels.emplace("INF", 1);
-    m_VerboseLevels.emplace("WRN", 2);
-    m_VerboseLevels.emplace("ERR", 3);
+    QSettings setting;
+    setting.beginGroup("Logs");
+//    auto result(setting.value("Filename", QFileInfo(setting.fileName()).dir().absoluteFilePath(QCoreApplication::applicationName().append(".log"))).toString());
+    auto result(setting.value("Filename", "/sdcard/BrainReliefer.log").toString());
+    setting.endGroup();
+    return result;
   }
 
   //----------------------------------------------------------------------------------------------
-  Logger::~Logger()
+  void message(QtMsgType a_MsgType, const QMessageLogContext& a_Context, const QString& a_Msg)
   {
-    m_Stream.close();
-  }
+    QByteArray localMsg(a_Msg.toLocal8Bit());
 
-  //----------------------------------------------------------------------------------------------
-  void Logger::init(const N_ApplicationData::Log& a_LogParams)
-  {
-//    m_Stream.open(a_LogParams.Filename(), std::ios::out);
+    QStringList msg;
 
-//    switch (m_VerboseLevels[a_LogParams.Mode() ? *(a_LogParams.Mode()) : "INF"])
-//    {
-//      case 1:
-//        m_INFLog.reset(new INFLog);
-//      case 2:
-//        m_WRNLog.reset(new WRNLog);
-//      case 3:
-//        m_ERRLog.reset(new ERRLog);
-//        break;
-//      default:
-//        throw XUnknownLogMode("Unknown log mode");
-//    }
-  }
-
-  //----------------------------------------------------------------------------------------------
-  std::string Logger::coreMessage(const std::string& aFctSig, const std::string& aFileName, int aLineNb) const
-  {
-    std::string tmp("[" + getDate() + "]");
-    if (!aFctSig.empty())
-      tmp += "[" + aFctSig + "]";
-    if (!aFileName.empty())
-      tmp += "[" + aFileName + "]";
-    if (aLineNb)
+    switch(a_MsgType)
     {
-      std::stringstream s;
-      s << aLineNb;
-      tmp += "[" + s.str() + "]";
+     case QtDebugMsg:
+        msg << "[DBG]";
+        break;
+      case QtWarningMsg:
+        msg << "[WRN]";
+        break;
+      case QtCriticalMsg:
+        msg << "[CRT]";
+        break;
+      case QtFatalMsg:
+        msg << "[FTL]";
+        break;
+      case QtInfoMsg:
+        msg << "[INF]";
+        break;
+      default:
+        break;
     }
-    return tmp;
+
+    msg << coreMessage(a_Context);
+    msg << localMsg.constData();
+
+    QFile file(filename());
+    if(file.open(QIODevice::ReadWrite))
+    {
+      QTextStream stream(&file);
+      stream << "hahahaha";
+    }
+    else
+    {
+      qDebug() << "impossible to write into that bloody file";
+    }
+
+//    auto file(filename());
+//    std::ofstream ofs(filename().toStdString(), std::ios::out);
+//    ofs << msg.join(" ").toStdString() << std::endl;
+//    ofs.close();
+//    qDebug() << msg.join(" ");
   }
 
   //----------------------------------------------------------------------------------------------
-  std::string Logger::getDate() const
+  QString coreMessage(const QMessageLogContext& a_Context)
   {
-    time_t rawtime;
-    unsigned int dateSize(80);
+    QStringList result;
+    result << "[";
+    result << QDate::currentDate().toString();
+    result << "]";
 
-    time(&rawtime);
-    struct tm* timeinfo = localtime(&rawtime);
-    char* tmp = new char[dateSize];
-    strftime(tmp, dateSize, "%d/%m/%Y %H:%M:%S", timeinfo);
-    std::string theDate(tmp);
-    delete[] tmp;
+    result << "[";
+    result << a_Context.function;
+    result << "]";
 
-    return theDate;
+    result << "[";
+    result << a_Context.file;
+    result << "]";
+
+    result << "[";
+    result << QString::number(a_Context.line);
+    result << "]";
+
+    return result.join(" ");
   }
+
 }

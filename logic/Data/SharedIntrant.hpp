@@ -7,6 +7,10 @@
 
 #include <QObject>
 
+//namespace N_Data {
+//  class Intrant;
+//}
+
 namespace N_Data {
 
   class SharedIntrant : public QObject
@@ -21,7 +25,7 @@ namespace N_Data {
 
       Q_INVOKABLE void reset();
 
-      Intrant getIntrant() const;
+      std::unique_ptr<N_Data::Intrant> getData(); // not const because this method transfers ownership
 
       QString title() const;
       void setTitle(const QString& a_Value);
@@ -40,11 +44,6 @@ namespace N_Data {
   //----------------------------------------------------------------------------------
   // inline / template method(s) implementation
   //----------------------------------------------------------------------------------
-
-  inline Intrant SharedIntrant::getIntrant() const
-  {
-    return *m_Data;
-  }
 
 }
 

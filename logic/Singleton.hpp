@@ -1,6 +1,8 @@
 #ifndef SINGLETON_HPP
 #define SINGLETON_HPP
 
+#include <QDebug>
+
 template<class T> class Singleton
 {
   public:
@@ -16,6 +18,8 @@ template<class T> class Singleton
 
 template<class T> T& Singleton<T>::getInstance()
 {
+  qDebug() << "Singleton::getInstance()";
+
   static T instance;
   return instance;
 }

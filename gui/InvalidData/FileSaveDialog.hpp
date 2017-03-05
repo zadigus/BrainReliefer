@@ -5,6 +5,10 @@
 
 #include <QQuickItem>
 
+namespace N_Data {
+  class DataPath;
+}
+
 class FileSaveDialog : public QQuickItem
 {
     Q_OBJECT
@@ -43,6 +47,16 @@ class FileSaveDialog : public QQuickItem
 
     Q_DISABLE_COPY(FileSaveDialog)
 };
+
+//----------------------------------------------------------------------------------
+// non-member method(s)
+//----------------------------------------------------------------------------------
+
+N_Data::DataPath dataPath(const std::string& a_Path, const std::string& a_Name); // TODO: move that into a dedicated namespace
+
+//----------------------------------------------------------------------------------
+// inline / template method(s) implementation
+//----------------------------------------------------------------------------------
 
 inline QString FileSaveDialog::title() const
 {

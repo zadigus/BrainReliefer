@@ -30,6 +30,8 @@ function compileXSDE()
 
   cp $SRC_PATH/configuration-lib-dynamic.make $ROOT_DIR/xsde/build/ld/
 
+  export XSDE_PARSER_VALIDATION="n"
+
   if [ $MY_ARCH_DIR == "linux" ] ; then
     # First, compile for the current platform (Ubuntu 16.04 x86_64)
     CPPFLAGS="-std=gnu++03 -I$LIBRARIES/boost/linux-x86_64/include -I$LIBRARIES/xerces-c/linux-x86_64/include -I$LIBRARIES/Libraries/icu/linux-x86_64/include"
@@ -37,10 +39,10 @@ function compileXSDE()
     LDFLAGS="-L$LIBRARIES/boost/linux-x86_64/lib -lboost_filesystem -lboost_system -lboost_regex -L$LIBRARIES/xerces-c/linux-x86_64/lib -lxerces-c -L$LIBRARIES/icu/linux-x86_64/lib -licudata -licui18n -licuio -licuuc"
 
     cd $ROOT_DIR
-    make CXXFLAGS="$CXXFLAGS" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS" dist_prefix=$TARGET_LIB_DIR dist -j 4
+    make CXXFLAGS="$CXXFLAGS" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS" XSDE_PARSER_VALIDATION="$XSDE_PARSER_VALIDATION" dist_prefix=$TARGET_LIB_DIR dist -j 4
 
     cd $TARGET_LIB_DIR
-    make -j 4
+    make XSDE_PARSER_VALIDATION="$XSDE_PARSER_VALIDATION" -j 4
   else
     ANDROID_PLATFORM="android-"$MY_API_LVL
 
@@ -59,8 +61,10 @@ function compileXSDE()
     CXXFLAGS="--sysroot $SYSROOT -I$NDK_ROOT/sources/cxx-stl/stlport/stlport/ -I$LIBRARIES/boost/$ANDROID_PLATFORM/$MY_ARCH_DIR/include -I$LIBRARIES/xerces-c/$ANDROID_PLATFORM/$MY_ARCH_DIR/include -I$LIBRARIES/icu/$ANDROID_PLATFORM/$MY_ARCH_DIR/include" # -std=gnu++03"
     CPPFLAGS="--sysroot $SYSROOT -I$NDK_ROOT/sources/cxx-stl/stlport/stlport/ -I$LIBRARIES/boost/$ANDROID_PLATFORM/$MY_ARCH_DIR/include -I$LIBRARIES/xerces-c/$ANDROID_PLATFORM/$MY_ARCH_DIR/include -I$LIBRARIES/icu/$ANDROID_PLATFORM/$MY_ARCH_DIR/include" # -std=gnu++03"
 
+    sed -i '7s/^/xsde_parser_validation:=n\n/' $ROOT_DIR/xsde/libxsde/xsde/makefile
+
     cd $ROOT_DIR/xsde/libxsde
-    make CXXFLAGS="$CXXFLAGS" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS" CC="$CC" CXX="$CXX" AR="$AR" RANLIB="$RANLIB" verbose=1
+    make CXXFLAGS="$CXXFLAGS" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS" CC="$CC" CXX="$CXX" AR="$AR" RANLIB="$RANLIB"
 
     cp -R $ROOT_DIR/xsde/libxsde $TARGET_LIB_DIR
   fi
@@ -68,6 +72,3 @@ function compileXSDE()
 
 compileXSDE $ARCH_DIR $API_LVL
 
-#make CXXFLAGS="--sysroot /home/mihl/Libraries/android-sdk/ndk-bundle/platforms/android-23/arch-x86 -I/home/mihl/Libraries/android-sdk/ndk-bundle/sources/cxx-stl/stlport/stlport/ -I/home/mihl/Libraries/boost/android-23/x86/include -I/home/mihl/Libraries/xerces-c/android-23/x86/include -I/home/mihl/Libraries/icu/android-23/x86/include -std=gnu++03" CPPFLAGS="--sysroot /home/mihl/Libraries/android-sdk/ndk-bundle/platforms/android-23/arch-x86 -I/home/mihl/Libraries/android-sdk/ndk-bundle/sources/cxx-stl/stlport/stlport/ -I/home/mihl/Libraries/boost/android-23/x86/include -I/home/mihl/Libraries/xerces-c/android-23/x86/include -I/home/mihl/Libraries/icu/android-23/x86/include -std=gnu++03" LDFLAGS="--sysroot /home/mihl/Libraries/android-sdk/ndk-bundle/platforms/android-23/arch-x86 -L/home/mihl/Libraries/boost/android-23/x86/lib -lboost_filesystem -lboost_system -lboost_regex -L/home/mihl/Libraries/xerces-c/android-23/x86/lib -lxerces-c -L/home/mihl/Libraries/icu/android-23/x86/lib -licudata -licui18n -licuio -licuuc" CXX="/home/mihl/Libraries/android-sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/bin/i686-linux-android-g++" AR="/home/mihl/Libraries/android-sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/bin/i686-linux-android-ar" RANLIB="/home/mihl/Libraries/android-sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/bin/i686-linux-android-ranlib" verbose=1 CC="/home/mihl/Libraries/android-sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/linux-x86_64/bin/i686-linux-android-gcc"
-
-#make CXXFLAGS="-std=gnu++03 -I/home/mihl/Libraries/boost/linux-x86_64/include -I/home/mihl/Libraries/xerces-c/linux-x86_64/include -I//home/mihl/Libraries/icu/linux-x86_64/include" CPPFLAGS="-std=gnu++03 -I/home/mihl/Libraries/boost/linux-x86_64/include -I/home/mihl/Libraries/xerces-c/linux-x86_64/include -I/home/mihl/Libraries/Libraries/icu/linux-x86_64/include" LDFLAGS="-L/home/mihl/Libraries/boost/linux-x86_64/lib -lboost_filesystem -lboost_system -lboost_regex -L/home/mihl/Libraries/xerces-c/linux-x86_64/lib -lxerces-c -L/home/mihl/Libraries/icu/linux-x86_64/lib -licudata -licui18n -licuio -licuuc"

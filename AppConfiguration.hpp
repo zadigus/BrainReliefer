@@ -1,8 +1,9 @@
 #ifndef APPCONFIGURATION_HPP
 #define APPCONFIGURATION_HPP
 
-#include <QObject>
+#include "core/Global.hpp"
 
+#include <QObject>
 #include <QUrl>
 
 class AppConfiguration : public QObject
@@ -19,14 +20,15 @@ class AppConfiguration : public QObject
     QUrl dataFileUrl() const;
     void setDataFileUrl(const QUrl& a_Value);
 
-  signals:
-    void dataFileUrlChanged();
-
   public slots:
 
   private:
-    QUrl m_ConfXmlUrl;
-    QUrl m_ConfXsdUrl;
+    void setupData();
+
+  signals:
+    void dataFileUrlChanged();
+
+  private:
     QUrl m_DataFileUrl;
 };
 

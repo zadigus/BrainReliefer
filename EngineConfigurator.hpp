@@ -26,7 +26,6 @@ class EngineConfigurator
 
     void setupContext();
     void setupProxyModels();
-    void registerMetaTypes();
     void loadQML(const QUrl& a_MainQml);
     void setupConnections();
 

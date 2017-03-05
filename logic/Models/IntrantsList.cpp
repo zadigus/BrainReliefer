@@ -90,7 +90,7 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  void IntrantsList::addIntrant(const Intrant& a_Intrant)
+  void IntrantsList::addIntrant(std::unique_ptr<N_Data::Intrant> a_Intrant)
   {
 //    LOG_INF("Adding new intrant with title <" << a_Intrant.title() << ">.");
 //    int idx(static_cast<int>(m_Data->Intrant().size()));

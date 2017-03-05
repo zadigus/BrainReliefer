@@ -3,14 +3,13 @@
 
 #include "core/Global.hpp"
 
-#include "Data/Data.hpp"
-
 #include <QUrl>
 #include <QFile>
 #include <QString>
 #include <QObject>
 
 namespace N_Data {
+  class Data;
   class IntrantList;
   class SharedIntrant;
   class SharedAction;

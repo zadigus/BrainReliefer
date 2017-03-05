@@ -22,20 +22,33 @@ FileSaveDialog::FileSaveDialog(QQuickItem* a_Parent)
 }
 
 //----------------------------------------------------------------------------------------------
+DataPath dataPath(const std::string& a_Path, const std::string& a_Name)
+{
+  DataPath result;
+  result.name(a_Name);
+  result.assign(a_Path);
+  return result;
+}
+
+//----------------------------------------------------------------------------------------------
 void FileSaveDialog::createNewDataFile ()
 {
-  Data newData(QFileInfo(m_Filename).absoluteDir().absolutePath().toStdString()); // set RootDir
+  Data newData;
+  RootDir rootDir;
+  rootDir.assign(QFileInfo(m_Filename).absoluteDir().absolutePath().toStdString());
+  newData.RootDir(rootDir);
 
   Data::DataPath_sequence& pathSeq(newData.DataPath());
-  pathSeq.push_back(DataPath("NewIntrants.xml",   N_Data::NEW_INTRANTS_ITEMS));
-  pathSeq.push_back(DataPath("Incubation.xml",    N_Data::INCUBATION_ITEMS));
-  pathSeq.push_back(DataPath("References.xml",    N_Data::REFERENCE_ITEMS));
-  pathSeq.push_back(DataPath("Projects.xml",      N_Data::PROJECT_ITEMS));
-  pathSeq.push_back(DataPath("NextActions.xml",   N_Data::NEXT_ACTIONS));
-  pathSeq.push_back(DataPath("Agenda.xml",        N_Data::AGENDA_ITEMS));
+  pathSeq.push_back(dataPath("NewIntrants.xml",   N_Data::NEW_INTRANTS_ITEMS));
+  pathSeq.push_back(dataPath("Incubation.xml",    N_Data::INCUBATION_ITEMS));
+  pathSeq.push_back(dataPath("References.xml",    N_Data::REFERENCE_ITEMS));
+  pathSeq.push_back(dataPath("Projects.xml",      N_Data::PROJECT_ITEMS));
+  pathSeq.push_back(dataPath("NextActions.xml",   N_Data::NEXT_ACTIONS));
+  pathSeq.push_back(dataPath("Agenda.xml",        N_Data::AGENDA_ITEMS));
 
-  std::ofstream ofs(m_Filename.toStdString());
-  Data_(ofs, newData);
+  // TODO: implement the serialization!
+//  std::ofstream ofs(m_Filename.toStdString());
+//  Data_(ofs, newData);
 }
 
 //----------------------------------------------------------------------------------------------

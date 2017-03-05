@@ -5,14 +5,19 @@ namespace N_Data {
   //---------------------------------------------------------------------------------------------------
   SharedIntrant::SharedIntrant(QObject* a_Parent)
     : QObject(a_Parent)
-  {
-    reset();
-  }
+    , m_Data(new Intrant())
+  { }
 
   //---------------------------------------------------------------------------------------------------
   void SharedIntrant::reset()
   {
-    m_Data.reset(new Intrant(""));
+    m_Data.reset(new Intrant());
+  }
+
+  //---------------------------------------------------------------------------------------------------
+  std::unique_ptr<N_Data::Intrant> SharedIntrant::getData()
+  {
+    return std::move(m_Data);
   }
 
   //---------------------------------------------------------------------------------------------------
@@ -30,7 +35,7 @@ namespace N_Data {
   //---------------------------------------------------------------------------------------------------
   QString SharedIntrant::description() const
   {
-    return m_Data->description().present() ? QString::fromStdString(*m_Data->description()) : QString();
+    return m_Data->description_present() ? QString::fromStdString(m_Data->description()) : QString();
   }
 
   //---------------------------------------------------------------------------------------------------

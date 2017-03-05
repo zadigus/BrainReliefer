@@ -40,7 +40,7 @@ namespace N_Models {
       void addAction(const N_Data::Action& a_Action, int a_Idx);
 
       std::unique_ptr<N_Data::Intrant> popIntrant(int a_Idx);
-      void addIntrant(const N_Data::Intrant& a_Intrant);
+      void addIntrant(std::unique_ptr<N_Data::Intrant> a_Intrant);
       void removeIntrant(int a_Idx);
 
       virtual int rowCount(const QModelIndex& a_Parent = QModelIndex()) const override;
@@ -63,7 +63,7 @@ namespace N_Models {
       QUrl m_IntrantListXsd;
       QString m_LoadedFilename;
 
-      std::unique_ptr<N_Data::IntrantList> m_Data;
+//      std::unique_ptr<N_Data::IntrantList> m_Data;
   };
 
   //----------------------------------------------------------------------------------
