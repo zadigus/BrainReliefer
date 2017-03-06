@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
   ec.setupConnections();
   ec.loadQML(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 
-  qInstallMessageHandler(N_Logger::message);
+  qInstallMessageHandler(N_Logger::message); // if called too early, this doesn't work (--> the application hangs forever)
 
   return app.exec();
 }

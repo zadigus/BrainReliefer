@@ -62,10 +62,6 @@ namespace N_Logger {
       QString result(msg.join(" "));
       ts << result << endl;
     }
-    else
-    {
-      QMessageBox::information(QApplication::activeWindow(), "Impossible to write into log file", filename());
-    }
     outFile.close();
   }
 
