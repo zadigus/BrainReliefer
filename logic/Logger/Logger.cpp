@@ -7,22 +7,21 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QSettings>
-
+#include <QStandardPaths>
 #include <QFile>
 
 #include <QDebug>
+
+#include <QMessageBox>
+#include <QApplication>
 
 namespace N_Logger {
 
   //----------------------------------------------------------------------------------------------
   QString filename()
   {
-    QSettings setting;
-    setting.beginGroup("Logs");
-//    auto result(setting.value("Filename", QFileInfo(setting.fileName()).dir().absoluteFilePath(QCoreApplication::applicationName().append(".log"))).toString());
-    auto result(setting.value("Filename", "/sdcard/BrainReliefer.log").toString());
-    setting.endGroup();
-    return result;
+    QDir logDir(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0]);
+    return logDir.absoluteFilePath(QCoreApplication::applicationName().append(".log"));
   }
 
   //----------------------------------------------------------------------------------------------
@@ -56,22 +55,18 @@ namespace N_Logger {
     msg << coreMessage(a_Context);
     msg << localMsg.constData();
 
-    QFile file(filename());
-    if(file.open(QIODevice::ReadWrite))
+    QFile outFile(filename());
+    if(outFile.open(QIODevice::Append | QIODevice::Text))
     {
-      QTextStream stream(&file);
-      stream << "hahahaha";
+      QTextStream ts(&outFile);
+      QString result(msg.join(" "));
+      ts << result << endl;
     }
     else
     {
-      qDebug() << "impossible to write into that bloody file";
+      QMessageBox::information(QApplication::activeWindow(), "Impossible to write into log file", filename());
     }
-
-//    auto file(filename());
-//    std::ofstream ofs(filename().toStdString(), std::ios::out);
-//    ofs << msg.join(" ").toStdString() << std::endl;
-//    ofs.close();
-//    qDebug() << msg.join(" ");
+    outFile.close();
   }
 
   //----------------------------------------------------------------------------------------------
