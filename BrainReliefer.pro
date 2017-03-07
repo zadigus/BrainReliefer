@@ -35,7 +35,8 @@ SOURCES += main.cpp \
     EngineConfigurator.cpp \
     AppConfiguration.cpp \
     gui/InvalidData/FileSaveDialog.cpp \
-    $${MODELS_FOLDER}/ProjectAction.cpp
+    $${MODELS_FOLDER}/ProjectAction.cpp \
+    core/Utils.cpp
 
 HEADERS += $${CORE_FOLDER}/Global.hpp \
     $${LOGGER_FOLDER}/Logger.hpp \
@@ -64,7 +65,8 @@ HEADERS += $${CORE_FOLDER}/Global.hpp \
     EngineConfigurator.hpp \
     AppConfiguration.hpp \
     gui/InvalidData/FileSaveDialog.hpp \
-    $${MODELS_FOLDER}/ProjectAction.hpp
+    $${MODELS_FOLDER}/ProjectAction.hpp \
+    core/Utils.hpp
 
 RESOURCES += gui/qml/qml.qrc \
       $${DATA_FOLDER}/data.qrc

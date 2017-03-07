@@ -8,6 +8,7 @@
 #include "Data/DataExceptions.hpp"
 
 #include "Data/IntrantList.hpp"
+#include "Data/IntrantList-pimpl.hpp"
 
 #include <QFile>
 #include <QDate>
@@ -31,16 +32,19 @@ namespace N_Models {
   //-------------------------------------------------------------------------------------------
   void IntrantsList::setDate(int a_Idx, const QDate& a_Date)
   {
-//    m_Data->Intrant().at(a_Idx).deadlineDate(Intrant::deadlineDate_type(a_Date.year(), a_Date.month(), a_Date.day()));
+    auto& intrant(m_Data->Intrant()[a_Idx]);
+    intrant.deadlineDate(xml_schema::date(a_Date.year(), a_Date.month(), a_Date.day()));
 
-//    QModelIndex currentIdx(index(a_Idx, columnCount() - 1));
-//    emit dataChanged(currentIdx, currentIdx);
+    QModelIndex currentIdx(index(a_Idx, columnCount() - 1));
+    emit dataChanged(currentIdx, currentIdx);
   }
 
   //-------------------------------------------------------------------------------------------
   void IntrantsList::save()
   {
-//    LOG_INF("Storing the data in the file <" << m_LoadedFilename.toStdString() << ">.");
+    qInfo() << "Storing the data in the file <" << m_LoadedFilename << ">.";
+
+    qWarning() << "Not implemented yet.";
 
 //    xml_schema::namespace_infomap map;
 //    map[""].name = "";
@@ -54,107 +58,109 @@ namespace N_Models {
   //-------------------------------------------------------------------------------------------
   void IntrantsList::addAction(const N_Data::Action& a_Action, int a_Idx)
   {
-//    LOG_INF("Adding action <" << a_Action.title() << "> to intrant <" << m_Data->Intrant().at(a_Idx).title() << ">");
+    qInfo() << "Adding action <" << QString::fromStdString(a_Action.title()) << "> to intrant <" << QString::fromStdString(m_Data->Intrant()[a_Idx].title()) << ">";
 
-//    Intrant& intrant(m_Data->Intrant().at(a_Idx));
+    auto& intrant(m_Data->Intrant()[a_Idx]);
 
-//    if(intrant.actions().present())
-//    {
-//      qDebug() << "Actions present";
-//      ActionList& actionList(*(intrant.actions()));
-//      actionList.Action().push_back(a_Action);
-//    }
-//    else
-//    {
-//      qDebug() << "Actions not present";
-//      ActionList actionList;
-//      actionList.Action().push_back(a_Action);
-//      intrant.actions().set(actionList);
-//    }
+    if(intrant.actions_present())
+    {
+      qDebug() << "Actions present";
+      auto& actionList(intrant.actions());
+      actionList.Action().push_back(a_Action);
+    }
+    else
+    {
+      qDebug() << "Actions not present";
+      std::unique_ptr<ActionList> actionList;
+      actionList->Action().push_back(a_Action);
+      intrant.actions(actionList.release());
+    }
 
-//    QModelIndex currentIdx(index(a_Idx, columnCount() - 1));
-//    emit dataChanged(currentIdx, currentIdx);
+    QModelIndex currentIdx(index(a_Idx, columnCount() - 1));
+    emit dataChanged(currentIdx, currentIdx);
 
-//    // TODO: only save if you are in the project model; in the newIntrantsModel, this shouldn't be saved
-//    save();
-  }
-
-  //-------------------------------------------------------------------------------------------
-  std::unique_ptr<Intrant> IntrantsList::popIntrant(int a_Idx)
-  {
-//    std::unique_ptr<Intrant> result(new Intrant(m_Data->Intrant().at(a_Idx)));
-//    LOG_INF("Popping out intrant with title <" << result->title() << ">");
-//    removeIntrant(a_Idx);
-//    return result;
-    return std::unique_ptr<Intrant>();
-  }
-
-  //-------------------------------------------------------------------------------------------
-  void IntrantsList::addIntrant(std::unique_ptr<N_Data::Intrant> a_Intrant)
-  {
-//    LOG_INF("Adding new intrant with title <" << a_Intrant.title() << ">.");
-//    int idx(static_cast<int>(m_Data->Intrant().size()));
-//    beginInsertRows(QModelIndex(), idx, idx);
-//    m_Data->Intrant().push_back(a_Intrant);
-//    endInsertRows();
-//    save();
+    // TODO: only save if you are in the project model; in the newIntrantsModel, this shouldn't be saved
+    save();
   }
 
   //-------------------------------------------------------------------------------------------
   void IntrantsList::removeIntrant(int a_Idx)
   {
-//    LOG_INF("Deleting intrant with title <" << m_Data->Intrant().at(a_Idx).title() << ">...");
-//    removeRow(a_Idx);
-//    save();
+    qInfo() << "Deleting intrant with title <" << QString::fromStdString(m_Data->Intrant()[a_Idx].title()) << ">...";
+    removeRow(a_Idx);
+    save();
+  }
+
+  //-------------------------------------------------------------------------------------------
+  std::unique_ptr<Intrant> IntrantsList::popIntrant(int a_Idx)
+  {
+    auto& seq(m_Data->Intrant());
+    auto it(seq.begin() + a_Idx);
+    std::unique_ptr<Intrant> result(seq.detach(it)); // sets the array element a_Idx to NULL
+    qInfo() << "Popping out intrant with title <" << QString::fromStdString(result->title()) << ">";
+    removeIntrant(a_Idx); // removes the element a_Idx from the array
+    return result;
+  }
+
+  //-------------------------------------------------------------------------------------------
+  void IntrantsList::addIntrant(std::unique_ptr<N_Data::Intrant> a_Intrant)
+  {
+    qInfo() << "Adding new intrant with title <" << QString::fromStdString(a_Intrant->title()) << ">.";
+    int idx(static_cast<int>(m_Data->Intrant().size()));
+    beginInsertRows(QModelIndex(), idx, idx);
+    m_Data->Intrant().push_back(a_Intrant.release());
+    endInsertRows();
+    save();
   }
 
   //-------------------------------------------------------------------------------------------
   void IntrantsList::loadDataFromFile(const QString& a_FileName)
   {
-//    beginResetModel();
+    beginResetModel();
 
-//    try
-//    {
-//      auto DataBuilder = [] (const std::string& a_FileName) { return IntrantList_(a_FileName, xml_schema::flags::dont_validate); };
-//      m_Data = N_DataManagerHelper::getParsedXML<IntrantList>(a_FileName, m_IntrantListXsd, DataBuilder);
-//    }
-//    catch(const XInexistentData& ex)
-//    {
-//      LOG_ERR("Caught exception: " << ex.what());
-//    }
-//    catch(const XInvalidData& ex)
-//    {
-//      LOG_ERR("Caught exception: " << ex.what());
-//      throw ex;
-//      // TODO: if the data does not exist, then automatically create the missing file in the same directory as the main Data.xml
-//    }
-//    // TODO: what happens if a_FileName is empty???? --> set default filename
-//    m_LoadedFilename = a_FileName;
+    try
+    {
+      m_Data = N_DataManagerHelper::getParsedXML<N_Data::IntrantList>(a_FileName, m_IntrantListXsd, N_DataManagerHelper::parse<N_Data::IntrantList_paggr, N_Data::IntrantList>);
+    }
+    catch(const XInexistentData& ex)
+    {
+      qCritical() << "Caught exception: " << ex.what();
+    }
+    catch(const XInvalidData& ex)
+    {
+      qCritical() << "Caught exception: " << ex.what();
+      throw ex;
+      // TODO: if the data does not exist, then automatically create the missing file in the same directory as the main Data.xml
+    }
+    // TODO: what happens if a_FileName is empty???? --> set default filename
+    m_LoadedFilename = a_FileName;
 
-//    endResetModel();
+    endResetModel();
   }
 
   //-------------------------------------------------------------------------------------------
   bool IntrantsList::removeRows(int a_Row, int a_Count, const QModelIndex& /*a_Parent*/)
   {
-//    int lowerIdx(a_Row);
-//    int upperIdx(a_Row + a_Count - 1);
+    int lowerIdx(a_Row);
+    int upperIdx(a_Row + a_Count - 1);
 
-//    beginRemoveRows(QModelIndex(), lowerIdx, upperIdx);
+    beginRemoveRows(QModelIndex(), lowerIdx, upperIdx);
+    for(int idx(upperIdx); idx >= lowerIdx; --idx)
+    {
+      m_Data->Intrant().erase(m_Data->Intrant().begin() + idx);
+    }
+    endRemoveRows();
 
-//    m_Data->Intrant().erase(m_Data->Intrant().begin() + lowerIdx, m_Data->Intrant().begin() + upperIdx + 1);
-
-//    endRemoveRows();
     return true;
   }
 
   //-------------------------------------------------------------------------------------------
   int IntrantsList::rowCount(const QModelIndex& /*parent*/) const
   {
-//    if(m_Data)
-//    {
-//      return static_cast<int>(m_Data->Intrant().size());
-//    }
+    if(m_Data)
+    {
+      return static_cast<int>(m_Data->Intrant().size());
+    }
 
     return 0;
   }
@@ -168,23 +174,22 @@ namespace N_Models {
   //-------------------------------------------------------------------------------------------
   QVariant IntrantsList::data(const QModelIndex& a_Index, int a_Role) const
   {
-//    switch(a_Role)
-//    {
-//      case TitleRole:
-//        return QString::fromStdString(m_Data->Intrant().at(a_Index.row()).title());
-//      case DescriptionRole:
-//      {
-//        Intrant::description_optional descr(m_Data->Intrant().at(a_Index.row()).description());
-//        return descr.present() ? QString::fromStdString(*descr) : QString();
-//      }
-//      case DeadlineRole:
-//      {
-//        Intrant::deadlineDate_optional value(m_Data->Intrant().at(a_Index.row()).deadlineDate());
-//        return value.present() ? QDate((*value).year(), (*value).month(), (*value).day()) : QDate();
-//      }
-//      default:
-//        break;
-//    }
+    auto& intrant(m_Data->Intrant()[a_Index.row()]);
+    switch(a_Role)
+    {
+      case TitleRole:
+        return QString::fromStdString(intrant.title());
+      case DescriptionRole:
+      {
+        return intrant.description_present() ? QString::fromStdString(intrant.description()) : QString();
+      }
+      case DeadlineRole:
+      {
+        return intrant.deadlineDate_present() ? QDate(intrant.deadlineDate().year(), intrant.deadlineDate().month(), intrant.deadlineDate().day()) : QDate();
+      }
+      default:
+        break;
+    }
     return QVariant();
   }
 

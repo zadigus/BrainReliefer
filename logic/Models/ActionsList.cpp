@@ -8,7 +8,9 @@
 #include "Data/DataExceptions.hpp"
 
 #include "Data/SharedIntrant.hpp"
+
 #include "Data/IntrantList.hpp"
+#include "Data/IntrantList-pimpl.hpp"
 
 #include <QFile>
 #include <QDate>
@@ -32,40 +34,39 @@ namespace N_Models {
   //-------------------------------------------------------------------------------------------
   void ActionsList::loadDataFromFile(const QString& a_FileName)
   {
-//    std::unique_ptr<IntrantList> intrantList;
-//    try
-//    {
-//      auto DataBuilder = [] (const std::string& a_FileName) { return IntrantList_(a_FileName, xml_schema::flags::dont_validate); };
-//      intrantList = N_DataManagerHelper::getParsedXML<IntrantList>(a_FileName, m_IntrantListXsd, DataBuilder);
-//    }
-//    catch(const XInexistentData& ex)
-//    {
-//      LOG_ERR("Caught exception: " << ex.what());
-//    }
-//    catch(const XInvalidData& ex)
-//    {
-//      LOG_ERR("Caught exception: " << ex.what());
-//      throw ex;
-//      // TODO: if the data do not exist, then automatically create the missing file in the same directory as the main Data.xml
-//    }
+    std::unique_ptr<IntrantList> intrantList;
+    try
+    {
+      intrantList = N_DataManagerHelper::getParsedXML<N_Data::IntrantList>(a_FileName, m_IntrantListXsd, N_DataManagerHelper::parse<N_Data::IntrantList_paggr, N_Data::IntrantList>);
+    }
+    catch(const XInexistentData& ex)
+    {
+      qCritical() << "Caught exception: " << ex.what();
+    }
+    catch(const XInvalidData& ex)
+    {
+      qCritical() << "Caught exception: " << ex.what();
+      throw ex;
+      // TODO: if the data do not exist, then automatically create the missing file in the same directory as the main Data.xml
+    }
 
-//    beginResetModel();
+    beginResetModel();
 
-//    m_Data.clear();
-//    std::for_each(intrantList->Intrant().begin(), intrantList->Intrant().end(),
-//                  [this](const N_Data::Intrant& a_Item)
-//    {
-//      if(a_Item.actions().present())
-//      {
-//        std::string projectTitle(a_Item.title());
+    m_Data.clear();
+    std::for_each(intrantList->Intrant().begin(), intrantList->Intrant().end(),
+                  [this](const N_Data::Intrant& a_Item)
+    {
+      if(a_Item.actions_present())
+      {
+        QString projectTitle(QString::fromStdString(a_Item.title()));
 
-//        auto& actionList(*(a_Item.actions()));
-//        std::transform(actionList.Action().begin(), actionList.Action().end(), std::back_inserter(m_Data),
-//                       [&projectTitle](const N_Data::Action& a_Action) -> ProjectAction { return ProjectAction(a_Action, projectTitle); });
-//      }
-//    });
+        auto& actionList(a_Item.actions());
+        std::transform(actionList.Action().begin(), actionList.Action().end(), std::back_inserter(m_Data),
+                       [&projectTitle](const N_Data::Action& a_Action) -> ProjectAction { return ProjectAction(a_Action, projectTitle); });
+      }
+    });
 
-//    endResetModel();
+    endResetModel();
   }
 
   //-------------------------------------------------------------------------------------------
@@ -96,7 +97,7 @@ namespace N_Models {
   //-------------------------------------------------------------------------------------------
   QVariant ActionsList::data(const QModelIndex& a_Index, int a_Role) const
   {
-/*    switch(a_Role)
+    switch(a_Role)
     {
       case TitleRole:
         return m_Data.at(a_Index.row()).title();
@@ -114,7 +115,7 @@ namespace N_Models {
 //      }
       default:
         break;
-    }*/
+    }
     return QVariant();
   }
 

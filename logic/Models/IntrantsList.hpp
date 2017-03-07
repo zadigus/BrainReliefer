@@ -63,7 +63,7 @@ namespace N_Models {
       QUrl m_IntrantListXsd;
       QString m_LoadedFilename;
 
-//      std::unique_ptr<N_Data::IntrantList> m_Data;
+      std::unique_ptr<N_Data::IntrantList> m_Data;
   };
 
   //----------------------------------------------------------------------------------
