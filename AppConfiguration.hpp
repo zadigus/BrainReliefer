@@ -4,21 +4,20 @@
 #include "core/Global.hpp"
 
 #include <QObject>
-#include <QUrl>
 
 class AppConfiguration : public QObject
 {
   Q_OBJECT
 
-  Q_PROPERTY(QUrl dataFileUrl READ dataFileUrl WRITE setDataFileUrl NOTIFY dataFileUrlChanged)
+  Q_PROPERTY(QString dataDir READ dataDir WRITE setDataDir NOTIFY dataDirChanged)
 
   public:
     explicit AppConfiguration(QObject* a_Parent = 0);
 
     void setup();
 
-    QUrl dataFileUrl() const;
-    void setDataFileUrl(const QUrl& a_Value);
+    QString dataDir() const;
+    void setDataDir(const QString& a_Value);
 
   public slots:
 
@@ -26,15 +25,15 @@ class AppConfiguration : public QObject
     void setupData();
 
   signals:
-    void dataFileUrlChanged();
+    void dataDirChanged();
 
   private:
-    QUrl m_DataFileUrl;
+    QString m_DataDir;
 };
 
-inline QUrl AppConfiguration::dataFileUrl () const
+inline QString AppConfiguration::dataDir () const
 {
-  return m_DataFileUrl;
+  return m_DataDir;
 }
 
 #endif // APPCONFIGURATION_HPP

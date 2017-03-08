@@ -1,7 +1,5 @@
 #include "Logger.hpp"
 
-#include <fstream>
-
 #include <QApplication>
 #include <QDate>
 #include <QFileInfo>
@@ -9,11 +7,7 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <QFile>
-
-#include <QDebug>
-
-#include <QMessageBox>
-#include <QApplication>
+#include <QTextStream>
 
 namespace N_Logger {
 

@@ -1,19 +1,19 @@
 #ifndef DATACONSTANTS_HPP
 #define DATACONSTANTS_HPP
 
+#include <QString>
+
 namespace N_Data {
 
-  const std::string NEW_INTRANTS_ITEMS  = "NewIntrantItems";
+  const QString NEW_INTRANTS_XML  = "NewIntrants.xml";
 
-  const std::string INCUBATION_ITEMS    = "IncubationItems";
+  const QString INCUBATION_XML    = "Incubation.xml";
 
-  const std::string REFERENCE_ITEMS     = "ReferenceItems";
+  const QString REFERENCES_XML    = "References.xml";
 
-  const std::string PROJECT_ITEMS       = "ProjectItems";
+  const QString PROJECTS_XML      = "Projects.xml";
 
-  const std::string NEXT_ACTIONS        = "NextActions";
-
-  const std::string AGENDA_ITEMS        = "AgendaItems";
+  const QString AGENDA_XML        = "Agenda.xml";
 
 }
 

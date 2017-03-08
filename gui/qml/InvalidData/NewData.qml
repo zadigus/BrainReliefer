@@ -1,37 +1,30 @@
 import QtQuick 2.5
+import QtQuick.Dialogs 1.0
 
 import "/js/Global.js" as Global
 import ".."
 
-import InvalidData 1.0
-
-FileSaveDialog
-{
-    id: fileSaveDialog
-    title: qsTr("New data file")
-    nameFilters: qsTr("XML Data (*.xml)")
+FileDialog {
+    id: fileDialog
+    title: qsTr("Please choose a folder to contain your app data")
+    selectFolder: true
+    selectMultiple: false
+    folder: shortcuts.home
 
     signal handle(string name)
 
+    onAccepted: {
+        console.log("Chosen folder: " + fileDialog.fileUrl)
+        appConfiguration.dataDir = fileDialog.fileUrl
+        handle("mainMenu")
+    }
+    onRejected: {
+        console.log("Canceled")
+        windowFooter.goBack()
+    }
     Component.onCompleted:
     {
-        windowFooter.activateBackArrow(Global.history.length >= 2)
         windowHeader.text = qsTr("New Data")
-        if(fileSaveDialog.open())
-        {
-            console.log("File save dialog created new filename")
-
-            fileSaveDialog.createNewDataFile()
-            console.log("File created: " + fileSaveDialog.filenameUrl)
-
-            appConfiguration.dataFileUrl = fileSaveDialog.filenameUrl
-            windowFooter.goHome() // for some (obscure) reason, I can't use the handle("mainMenu") signal here
-            // --> does nothing...
-        }
-        else
-        {
-            console.log("Canceled")
-            windowFooter.goBack()
-        }
+        visible = true
     }
 }

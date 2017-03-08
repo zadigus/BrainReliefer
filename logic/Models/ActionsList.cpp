@@ -37,7 +37,7 @@ namespace N_Models {
     std::unique_ptr<IntrantList> intrantList;
     try
     {
-      intrantList = N_DataManagerHelper::getParsedXML<N_Data::IntrantList>(a_FileName, m_IntrantListXsd, N_DataManagerHelper::parse<N_Data::IntrantList_paggr, N_Data::IntrantList>);
+      intrantList = N_DataManagerHelper::getParsedXML<N_Data::IntrantList_paggr, N_Data::IntrantList>(a_FileName, m_IntrantListXsd);
     }
     catch(const XInexistentData& ex)
     {

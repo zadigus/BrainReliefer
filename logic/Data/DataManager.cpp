@@ -3,25 +3,39 @@
 #include "Data/DataManagerHelper.hpp"
 #include "Data/DataExceptions.hpp"
 #include "Data/DataConstants.hpp"
-#include "Data/Data.hpp"
-#include "Data/Data-pimpl.hpp"
+//#include "Data/Data.hpp"
+//#include "Data/Data-pimpl.hpp"
 #include "Data/IntrantList.hpp"
 #include "Data/SharedIntrant.hpp"
 #include "Data/SharedAction.hpp"
 
 #include "Models/IntrantsList.hpp"
 
-#include <sstream>
-
 #include <QFile>
 #include <QDir>
+
+#include <sstream>
+#include <functional>
+
+using namespace std::placeholders;
 
 namespace N_Data {
 
   //----------------------------------------------------------------------------------------------
+  DataManager::T_LoadSignals loadSignals(DataManager* a_DataManager)
+  {
+    DataManager::T_LoadSignals result;
+    result.insert(NEW_INTRANTS_XML, std::bind(&DataManager::newIntrantsLoaded, a_DataManager, _1));
+    result.insert(INCUBATION_XML, std::bind(&DataManager::incubatedLoaded, a_DataManager, _1));
+    result.insert(REFERENCES_XML, std::bind(&DataManager::referencesLoaded, a_DataManager, _1));
+    result.insert(PROJECTS_XML, std::bind(&DataManager::projectsLoaded, a_DataManager, _1));
+    return result;
+  }
+
+  //----------------------------------------------------------------------------------------------
   DataManager::DataManager(QObject* a_Parent)
     : QObject(a_Parent)
-    , m_DataXsd(QStringLiteral("qrc:/xsd/Data.xsd"))
+    , m_LoadSignals(loadSignals(this))
   { }
 
   //----------------------------------------------------------------------------------------------
@@ -54,48 +68,47 @@ namespace N_Data {
   }
 
   //----------------------------------------------------------------------------------------------
-  void DataManager::load(const QUrl& a_PathToFile)
+  void DataManager::loadExistingFiles(const QDir& a_DataDir)
   {
-    try
+    QStringList filters;
+    filters << "*.xml";
+    foreach(auto& filename, a_DataDir.entryList(filters))
     {
-      m_Data = N_DataManagerHelper::getParsedXML<N_Data::Data>(a_PathToFile.toLocalFile(), m_DataXsd, N_DataManagerHelper::parse<N_Data::Data_paggr, N_Data::Data>);
-      emitLoaded(NEW_INTRANTS_ITEMS, std::bind(&DataManager::newIntrantsLoaded, this, std::placeholders::_1));
-      emitLoaded(REFERENCE_ITEMS, std::bind(&DataManager::referencesLoaded, this, std::placeholders::_1));
-      emitLoaded(INCUBATION_ITEMS, std::bind(&DataManager::incubatedLoaded, this, std::placeholders::_1));
-      emitLoaded(PROJECT_ITEMS, std::bind(&DataManager::projectsLoaded, this, std::placeholders::_1));
-    }
-    catch(const XInvalidData& ex)
-    {
-      qWarning() << "Caught XInvalidData exception: " << ex.what();
-      emit invalidDataFile();
-    }
-    catch(const XInexistentData& ex)
-    {
-      qCritical() << "Caught XInexistentData exception: " << ex.what();
-      qCritical() << "This exception is not handled yet; we should create a new empty file in this case, shouldn't we?";
-      // TODO: handle this exception
+      auto it(m_LoadSignals.find(filename));
+      if(it != m_LoadSignals.end())
+      {
+        emit m_LoadSignals[filename](a_DataDir.absoluteFilePath(filename));
+        m_LoadSignals.remove(filename);
+      }
     }
   }
 
   //----------------------------------------------------------------------------------------------
-  void DataManager::emitLoaded(const std::string& a_ItemName, const std::function<void(const QString&)>& a_EmitCallback)
+  void DataManager::createMissingFiles(const QDir& a_DataDir)
   {
-    if(m_Data)
+    for(auto filename : m_LoadSignals.keys())
     {
-      auto IsDataWithName = [&a_ItemName] (const DataPath& a_DataPath) { return a_DataPath.name() == a_ItemName; };
-      Data::DataPath_const_iterator it(std::find_if(m_Data->DataPath().begin(), m_Data->DataPath().end(), IsDataWithName));
-      if(it != m_Data->DataPath().end())
-      {
-        emit a_EmitCallback(QDir(QString::fromStdString(m_Data->RootDir())).filePath(QString::fromStdString(*it)));
-        return;
-      }
-      std::stringstream ss;
-      ss << a_ItemName;
-      ss << " do not exist.";
-      throw XInexistentData(ss.str());
-      // TODO : create the file
+      QFile file(a_DataDir.absoluteFilePath(filename));
+      file.open(QIODevice::WriteOnly | QIODevice::Text);
+      file.close();
     }
-    throw XInexistentData("Main data file missing.");
+  }
+
+  //----------------------------------------------------------------------------------------------
+  void DataManager::load(const QString& a_PathToDir)
+  {
+    QDir dataDir(a_PathToDir);
+
+    if(!dataDir.exists() || a_PathToDir.isEmpty())
+    {
+      emit invalidDataFile();
+      return;
+    }
+
+    loadExistingFiles(dataDir);
+    createMissingFiles(dataDir);
+
+    m_LoadSignals.clear();
   }
 
 }

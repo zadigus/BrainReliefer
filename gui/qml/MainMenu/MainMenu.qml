@@ -3,10 +3,6 @@ import QtQuick 2.5
 import "/js/Global.js" as Global
 import "../BaseMenu"
 
-//import "../InvalidData"
-
-//import InvalidData 1.0
-
 Menu
 {
     id: mainMenu
@@ -38,6 +34,6 @@ Menu
 
         buildMenu(Global.menuHeight)
 
-        dataManager.load(appConfiguration.dataFileUrl)
+        dataManager.load(appConfiguration.dataDir)
     }
 }

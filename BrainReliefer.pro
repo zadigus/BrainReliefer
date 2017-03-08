@@ -18,11 +18,6 @@ SOURCES += main.cpp \
     $${DATA_FOLDER}/IntrantList-pskel.cpp \
     $${DATA_FOLDER}/IntrantList-simpl.cpp \
     $${DATA_FOLDER}/IntrantList-sskel.cpp \
-    $${DATA_FOLDER}/Data.cpp \
-    $${DATA_FOLDER}/Data-pimpl.cpp \
-    $${DATA_FOLDER}/Data-pskel.cpp \
-    $${DATA_FOLDER}/Data-simpl.cpp \
-    $${DATA_FOLDER}/Data-sskel.cpp \
     $${DATA_FOLDER}/DataValidator.cpp \
     $${MODELS_FOLDER}/IntrantsList.cpp \
     $${MODELS_FOLDER}/ActionsList.cpp \
@@ -34,7 +29,6 @@ SOURCES += main.cpp \
     $${COMMONDATA_FOLDER}/Action.cpp \
     EngineConfigurator.cpp \
     AppConfiguration.cpp \
-    gui/InvalidData/FileSaveDialog.cpp \
     $${MODELS_FOLDER}/ProjectAction.cpp \
     core/Utils.cpp
 
@@ -45,11 +39,6 @@ HEADERS += $${CORE_FOLDER}/Global.hpp \
     $${DATA_FOLDER}/IntrantList-pskel.hpp \
     $${DATA_FOLDER}/IntrantList-simpl.hpp \
     $${DATA_FOLDER}/IntrantList-sskel.hpp \
-    $${DATA_FOLDER}/Data.hpp \
-    $${DATA_FOLDER}/Data-pimpl.hpp \
-    $${DATA_FOLDER}/Data-pskel.hpp \
-    $${DATA_FOLDER}/Data-simpl.hpp \
-    $${DATA_FOLDER}/Data-sskel.hpp \
     $${DATA_FOLDER}/DataValidator.hpp \
     $${MODELS_FOLDER}/IntrantsList.hpp \
     $${MODELS_FOLDER}/ActionsList.hpp \
@@ -64,7 +53,6 @@ HEADERS += $${CORE_FOLDER}/Global.hpp \
     logic/Singleton.hpp \
     EngineConfigurator.hpp \
     AppConfiguration.hpp \
-    gui/InvalidData/FileSaveDialog.hpp \
     $${MODELS_FOLDER}/ProjectAction.hpp \
     core/Utils.hpp
 

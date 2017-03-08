@@ -13,7 +13,7 @@ void AppConfiguration::setupData()
 {
   QSettings settings;
   settings.beginGroup("Data");
-  m_DataFileUrl = QUrl::fromLocalFile(settings.value("DataFile").toString());
+  m_DataDir = settings.value("DataDir").toString();
   settings.endGroup();
 }
 
@@ -24,13 +24,13 @@ void AppConfiguration::setup()
 }
 
 //----------------------------------------------------------------------------------------------
-void AppConfiguration::setDataFileUrl(const QUrl& a_Value)
+void AppConfiguration::setDataDir(const QString& a_Value)
 {
-  m_DataFileUrl = a_Value;
-  emit dataFileUrlChanged();
+  m_DataDir = a_Value;
+  emit dataDirChanged();
 
   QSettings settings;
   settings.beginGroup("Data");
-  settings.setValue("DataFile", m_DataFileUrl.toLocalFile());
+  settings.setValue("DataDir", m_DataDir);
   settings.endGroup();
 }

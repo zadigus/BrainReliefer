@@ -7,27 +7,33 @@
 #include "Data/DataExceptions.hpp"
 
 #include <xsde/cxx/parser/expat/document.hxx>
+#include <xsde/cxx/serializer/genx/document.hxx>
 
 #include <QUrl>
 #include <QFileInfo>
+
+#include <sstream>
 
 namespace N_Data {
 
   namespace N_DataManagerHelper {
 
-    template <class T>
-    std::unique_ptr<T> getParsedXML(const QString& a_XmlFilename, const QUrl& a_XsdFilename, const std::function<std::unique_ptr<T>(const std::string&)>& a_Functor);
+    template <class Data_paggr, class Data>
+    std::unique_ptr<Data> getParsedXML(const QString& a_XmlFilename, const QUrl& a_XsdFilename);
 
     template<class Data_paggr, class Data>
     std::unique_ptr<Data> parse(const std::string& a_Filename);
+
+    template<class Data_saggr, class Data>
+    void serialize(const std::string& a_Filename, const Data& a_Data);
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
     // inline / template method(s) implementation
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-    template <class T>
-    std::unique_ptr<T> getParsedXML(const QString& a_XmlFilename, const QUrl& a_XsdFilename, const std::function<std::unique_ptr<T>(const std::string&)>& a_Functor)
+    template <class Data_paggr, class Data>
+    std::unique_ptr<Data> getParsedXML(const QString& a_XmlFilename, const QUrl& a_XsdFilename)
     {
       QFile xmlFile(a_XmlFilename);
       if(!N_DataValidator::isXMLDataValid(a_XsdFilename, xmlFile))
@@ -36,7 +42,7 @@ namespace N_Data {
       }
 
       QFileInfo info(xmlFile);
-      return a_Functor(info.absoluteFilePath().toStdString());
+      return parse<Data_paggr, Data>(info.absoluteFilePath().toStdString());
     }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -51,6 +57,26 @@ namespace N_Data {
       return std::unique_ptr<Data>(data_p.post());
     }
 
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------
+    template<class Data_saggr, class Data>
+    void serialize(const std::string& a_Filename, const Data& a_Data)
+    {
+      Data_saggr data_s;
+      xsde::cxx::serializer::genx::document_simpl doc_s(data_s.root_serializer(), data_s.root_name());
+      data_s.pre(a_Data);
+      std::ostringstream ost;
+      doc_s.serialize(ost, xsde::cxx::serializer::genx::document_simpl::pretty_print);
+      data_s.post();
+
+      QFile outFile(QString::fromStdString(a_Filename));
+      if(outFile.open(QIODevice::WriteOnly | QIODevice::Text))
+      {
+        QTextStream ts(&outFile);
+        QString result(QString::fromStdString(ost.str()));
+        ts << result << endl;
+      }
+      outFile.close();
+    }
   }
 }
 

@@ -3,10 +3,9 @@
 
 #include "core/Global.hpp"
 
-#include <QUrl>
-#include <QFile>
 #include <QString>
 #include <QObject>
+#include <QMap>
 
 namespace N_Data {
   class Data;
@@ -19,6 +18,8 @@ namespace N_Models {
   class IntrantsList;
 }
 
+class QDir;
+
 namespace N_Data {
 
   class DataManager : public QObject
@@ -26,10 +27,13 @@ namespace N_Data {
     Q_OBJECT
 
     public:
+      typedef QMap<QString, std::function<void(const QString&)> > T_LoadSignals;
+
+    public:
       DataManager(QObject* a_Parent = NULL);
       virtual ~DataManager();
 
-      Q_INVOKABLE void load(const QUrl& a_PathToFile);
+      Q_INVOKABLE void load(const QString& a_PathToDir);
 
       Q_INVOKABLE void addAction(N_Models::IntrantsList* a_SrcModel, N_Data::SharedAction* a_Action, int a_Idx);
 
@@ -38,7 +42,8 @@ namespace N_Data {
       Q_INVOKABLE void transferIntrant(N_Models::IntrantsList* a_SrcModel, N_Models::IntrantsList* a_DestModel, int a_Idx);
 
     private:
-      void emitLoaded(const std::string& a_ItemName, const std::function<void(const QString&)>& a_EmitCallback);
+      void loadExistingFiles(const QDir& a_DataDir);
+      void createMissingFiles(const QDir& a_DataDir);
 
     signals:
       void invalidDataFile();
@@ -49,9 +54,7 @@ namespace N_Data {
       void projectsLoaded(const QString& a_FileName);
 
     private:
-      QUrl m_DataXsd;
-
-      std::unique_ptr<Data> m_Data;
+      T_LoadSignals m_LoadSignals;
   };
 
   //----------------------------------------------------------------------------------
@@ -61,7 +64,7 @@ namespace N_Data {
   //----------------------------------------------------------------------------------
   // non-member method(s)
   //----------------------------------------------------------------------------------
-
+  DataManager::T_LoadSignals loadSignals(DataManager* a_DataManager);
 }
 
 #endif // DATA_DATAFILESMANAGER_HPP

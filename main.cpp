@@ -6,7 +6,6 @@
 
 #include "Data/SharedIntrant.hpp"
 #include "Data/SharedAction.hpp"
-#include "InvalidData/FileSaveDialog.hpp"
 #include "Models/IntrantsList.hpp"
 #include "Models/ActionsList.hpp"
 
@@ -15,7 +14,6 @@
 //----------------------------------------------------------------------------------------------
 void registerMetaTypes ()
 {
-  qmlRegisterType<FileSaveDialog>("InvalidData", 1, 0, "FileSaveDialog");
   qmlRegisterType<N_Models::IntrantsList>("MyDataManagement", 1, 0, "IntrantsList");
   qmlRegisterType<N_Models::ActionsList>("MyDataManagement", 1, 0, "ActionsList");
   qmlRegisterType<N_Data::SharedIntrant>("MyDataManagement", 1, 0, "SharedIntrant");

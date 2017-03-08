@@ -6,14 +6,16 @@ import ".."
 
 FileDialog {
     id: fileDialog
-    title: qsTr("Please choose a file")
+    title: qsTr("Please choose folder containing your app data")
+    selectFolder: true
+    selectMultiple: false
     folder: shortcuts.home
 
     signal handle(string name)
 
     onAccepted: {
-        console.log("Chosen file: " + fileDialog.fileUrl)
-        appConfiguration.dataFileUrl = fileDialog.fileUrl
+        console.log("Chosen folder: " + fileDialog.fileUrl)
+        appConfiguration.dataDir = fileDialog.fileUrl
         handle("mainMenu")
     }
     onRejected: {

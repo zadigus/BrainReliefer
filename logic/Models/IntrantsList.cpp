@@ -116,11 +116,13 @@ namespace N_Models {
   //-------------------------------------------------------------------------------------------
   void IntrantsList::loadDataFromFile(const QString& a_FileName)
   {
+    qDebug() << "Loading file " << a_FileName;
+
     beginResetModel();
 
     try
     {
-      m_Data = N_DataManagerHelper::getParsedXML<N_Data::IntrantList>(a_FileName, m_IntrantListXsd, N_DataManagerHelper::parse<N_Data::IntrantList_paggr, N_Data::IntrantList>);
+      m_Data = N_DataManagerHelper::getParsedXML<N_Data::IntrantList_paggr, N_Data::IntrantList>(a_FileName, m_IntrantListXsd);
     }
     catch(const XInexistentData& ex)
     {
