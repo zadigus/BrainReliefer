@@ -1,5 +1,5 @@
-#ifndef DATA_DATAEXCEPTIONS_HPP
-#define DATA_DATAEXCEPTIONS_HPP
+#ifndef DATA_XSDEEXCEPTIONS_HPP
+#define DATA_XSDEEXCEPTIONS_HPP
 
 #include "core/Global.hpp"
 
@@ -21,13 +21,6 @@ namespace N_Data {
     private:
       QString m_Xml;
       QUrl m_Xsd;
-  };
-
-  class XInexistentData : public std::runtime_error
-  {
-    public:
-      XInexistentData(const std::string& a_Msg) : std::runtime_error(a_Msg) { }
-      virtual ~XInexistentData() { }
   };
 
 }

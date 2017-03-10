@@ -44,7 +44,7 @@ HEADERS += $${CORE_FOLDER}/Global.hpp \
     $${MODELS_FOLDER}/ActionsModel.hpp \
     $${MODELS_FOLDER}/ModelsHelper.hpp \
     $${DATA_FOLDER}/DataManager.hpp \
-    $${DATA_FOLDER}/DataExceptions.hpp \
+    $${DATA_FOLDER}/XsdeExceptions.hpp \
     $${DATA_FOLDER}/DataConstants.hpp \
     $${DATA_FOLDER}/SharedIntrant.hpp \
     $${DATA_FOLDER}/SharedAction.hpp \

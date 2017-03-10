@@ -1,5 +1,5 @@
-#ifndef MODELS_INTRANTSLIST_HPP
-#define MODELS_INTRANTSLIST_HPP
+#ifndef MODELS_INTRANTSMODEL_HPP
+#define MODELS_INTRANTSMODEL_HPP
 
 #include "core/Global.hpp"
 

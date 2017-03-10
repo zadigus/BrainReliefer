@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<IntrantList>
+<IntrantsList>
   <Intrant>
     <title>System Icon Tray</title>
     <description>It would be handy to have the brain booster application running in background. To do so, I can call 
@@ -20,4 +20,4 @@ https://developers.google.com/google-apps/calendar/</description>
     http://stackoverflow.com/questions/20751604/static-qt5-build-on-linux-how-to-handle-fonts-when-deploying
     </description>
   </Intrant>
-</IntrantList>
+</IntrantsList>

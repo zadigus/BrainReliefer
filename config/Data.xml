@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<Data>
-	<RootDir>G:/workspace/BrainReliefer/config</RootDir>
-	<DataPath name="NewIntrantItems">NewIntrants.xml</DataPath>
-	<DataPath name="IncubationItems">Incubation.xml</DataPath>
-</Data>

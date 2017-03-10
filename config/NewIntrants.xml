@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<IntrantList>
+<IntrantsList>
   <Intrant>
     <title>Make the whole "Add intrant" page flickable</title>
   </Intrant>
@@ -39,9 +38,12 @@
     <title>Implement intrant addition in the intrant management page</title>
   </Intrant>
   <Intrant>
-    <title>Organiser la crèche</title>
+    <title>Provide merge mechanism for all kinds of intrants</title>
   </Intrant>
   <Intrant>
     <title>Apprendre à jouer du piano avec la myrtille</title>
   </Intrant>
-</IntrantList>
+  <Intrant>
+    <title>Organiser la crèche</title>
+  </Intrant>
+</IntrantsList>

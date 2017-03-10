@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<IntrantList>
+<IntrantsList>
   <Intrant>
     <title>Learn Greek</title>
   </Intrant>
@@ -12,4 +11,4 @@
     <description>C'est vraiment un bel empafé.</description>
     <deadlineDate>2016-11-19</deadlineDate>
   </Intrant>
-</IntrantList>
+</IntrantsList>

@@ -1,5 +1,5 @@
-#ifndef MODELS_ACTIONSLIST_HPP
-#define MODELS_ACTIONSLIST_HPP
+#ifndef MODELS_ACTIONSMODEL_HPP
+#define MODELS_ACTIONSMODEL_HPP
 
 #include "core/Global.hpp"
 
@@ -37,7 +37,7 @@ namespace N_Models {
       virtual bool removeRows(int a_Row, int a_Count, const QModelIndex& a_Parent = QModelIndex()) override;
 
     public slots:
-      void loadDataFromFile(const QString& a_FileName);
+      void loadDataFromFile(const QString& a_Filename);
 
     private:
 

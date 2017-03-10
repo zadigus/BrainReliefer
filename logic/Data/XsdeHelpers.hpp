@@ -1,10 +1,10 @@
-#ifndef DATA_DATAMANAGERHELPER_HPP
-#define DATA_DATAMANAGERHELPER_HPP
+#ifndef DATA_XSDEHELPERS_HPP
+#define DATA_XSDEHELPERS_HPP
 
 #include "core/Global.hpp"
 
 #include "Data/DataValidator.hpp"
-#include "Data/DataExceptions.hpp"
+#include "Data/XsdeExceptions.hpp"
 
 #include "core/Utils.hpp"
 
@@ -20,22 +20,44 @@ namespace N_Data {
 
   namespace N_XsdeHelpers {
 
+    template<class Data_paggr, class Data>
+    std::unique_ptr<Data> loadXML(const QString& a_XmlFilename, const QUrl& a_XsdFilename);
+
     template <class Data_paggr, class Data>
-    std::unique_ptr<Data> getParsedXML(const QString& a_XmlFilename, const QUrl& a_XsdFilename);
+    std::unique_ptr<Data> parseXML(const QString& a_XmlFilename, const QUrl& a_XsdFilename);
 
     template<class Data_paggr, class Data>
     std::unique_ptr<Data> parse(const std::string& a_Filename);
 
     template<class Data_saggr, class Data>
-    void serialize(const std::string& a_Filename, const Data& a_Data);
+    void serializeXML(const std::string& a_Filename, const Data& a_Data);
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
     // inline / template method(s) implementation
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
+    template<class Data_paggr, class Data>
+    std::unique_ptr<Data> loadXML(const QString& a_XmlFilename, const QUrl& a_XsdFilename)
+    {
+      std::unique_ptr<Data> result;
+
+      try
+      {
+        result = N_XsdeHelpers::parseXML<Data_paggr, Data>(a_XmlFilename, a_XsdFilename);
+      }
+      catch(const XInvalidData& ex)
+      {
+        qCritical() << "Caught exception: " << ex.what();
+        result.reset(new Data());
+      }
+
+      return result;
+    }
+
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------
     template <class Data_paggr, class Data>
-    std::unique_ptr<Data> getParsedXML(const QString& a_XmlFilename, const QUrl& a_XsdFilename)
+    std::unique_ptr<Data> parseXML(const QString& a_XmlFilename, const QUrl& a_XsdFilename)
     {
       QFile xmlFile(a_XmlFilename);
       if(!N_DataValidator::isXMLDataValid(a_XsdFilename, xmlFile))
@@ -61,7 +83,7 @@ namespace N_Data {
 
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
     template<class Data_saggr, class Data>
-    void serialize(const std::string& a_Filename, const Data& a_Data)
+    void serializeXML(const std::string& a_Filename, const Data& a_Data)
     {
       Data_saggr data_s;
       xsde::cxx::serializer::genx::document_simpl doc_s(data_s.root_serializer(), data_s.root_name());

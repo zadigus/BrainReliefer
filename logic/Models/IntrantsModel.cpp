@@ -3,17 +3,14 @@
 #include "Models/ModelsHelper.hpp"
 
 #include "Data/XsdeHelpers.hpp"
-#include "Data/DataValidator.hpp"
 #include "Data/DataManager.hpp"
-#include "Data/DataExceptions.hpp"
 
 #include "Data/IntrantsList.hpp"
 #include "Data/IntrantsList-pimpl.hpp"
+#include "Data/IntrantsList-simpl.hpp"
 
 #include <QFile>
 #include <QDate>
-
-#include <fstream>
 
 using namespace N_Data;
 
@@ -43,16 +40,7 @@ namespace N_Models {
   void IntrantsModel::save()
   {
     qInfo() << "Storing the data in the file <" << m_LoadedFilename << ">.";
-
-    qWarning() << "Not implemented yet.";
-
-//    xml_schema::namespace_infomap map;
-//    map[""].name = "";
-//    map[""].schema = "";
-
-//    std::ofstream ofs(m_LoadedFilename.toStdString());
-//    IntrantList_ (ofs, *m_Data, map);
-//    ofs.close();
+    N_XsdeHelpers::serializeXML<IntrantsList_saggr, IntrantsList>(m_LoadedFilename.toStdString(), *m_Data);
   }
 
   //-------------------------------------------------------------------------------------------
@@ -86,7 +74,7 @@ namespace N_Models {
   //-------------------------------------------------------------------------------------------
   void IntrantsModel::removeIntrant(int a_Idx)
   {
-    qInfo() << "Deleting intrant with title <" << QString::fromStdString(m_Data->Intrant()[a_Idx].title()) << ">...";
+    qInfo() << QString::fromStdString("Deleting intrant");
     removeRow(a_Idx);
     save();
   }
@@ -114,29 +102,13 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  void IntrantsModel::loadDataFromFile(const QString& a_FileName)
+  void IntrantsModel::loadDataFromFile(const QString& a_Filename)
   {
-    qDebug() << "Loading file " << a_FileName;
+    qDebug() << "Loading file " << a_Filename;
 
     beginResetModel();
-
-    try
-    {
-      m_Data = N_XsdeHelpers::getParsedXML<N_Data::IntrantsList_paggr, N_Data::IntrantsList>(a_FileName, m_IntrantsListXsd);
-    }
-    catch(const XInexistentData& ex)
-    {
-      qCritical() << "Caught exception: " << ex.what();
-    }
-    catch(const XInvalidData& ex)
-    {
-      qCritical() << "Caught exception: " << ex.what();
-      throw ex;
-      // TODO: if the data does not exist, then automatically create the missing file in the same directory as the main Data.xml
-    }
-    // TODO: what happens if a_FileName is empty???? --> set default filename
-    m_LoadedFilename = a_FileName;
-
+    m_Data = N_XsdeHelpers::loadXML<N_Data::IntrantsList_paggr, N_Data::IntrantsList>(a_Filename, m_IntrantsListXsd);
+    m_LoadedFilename = a_Filename;
     endResetModel();
   }
 

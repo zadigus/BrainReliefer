@@ -3,9 +3,7 @@
 #include "Models/ModelsHelper.hpp"
 
 #include "Data/XsdeHelpers.hpp"
-#include "Data/DataValidator.hpp"
 #include "Data/DataManager.hpp"
-#include "Data/DataExceptions.hpp"
 
 #include "Data/SharedIntrant.hpp"
 
@@ -14,8 +12,6 @@
 
 #include <QFile>
 #include <QDate>
-
-#include <fstream>
 
 using namespace N_Data;
 
@@ -32,23 +28,9 @@ namespace N_Models {
   { }
 
   //-------------------------------------------------------------------------------------------
-  void ActionsModel::loadDataFromFile(const QString& a_FileName)
+  void ActionsModel::loadDataFromFile(const QString& a_Filename)
   {
-    std::unique_ptr<N_Data::IntrantsList> intrantsList;
-    try
-    {
-      intrantsList = N_XsdeHelpers::getParsedXML<N_Data::IntrantsList_paggr, N_Data::IntrantsList>(a_FileName, m_IntrantsListXsd);
-    }
-    catch(const XInexistentData& ex)
-    {
-      qCritical() << "Caught exception: " << ex.what();
-    }
-    catch(const XInvalidData& ex)
-    {
-      qCritical() << "Caught exception: " << ex.what();
-      throw ex;
-      // TODO: if the data do not exist, then automatically create the missing file in the same directory as the main Data.xml
-    }
+    std::unique_ptr<N_Data::IntrantsList> intrantsList(N_XsdeHelpers::loadXML<N_Data::IntrantsList_paggr, N_Data::IntrantsList>(a_Filename, m_IntrantsListXsd));
 
     beginResetModel();
 
@@ -103,16 +85,16 @@ namespace N_Models {
         return m_Data.at(a_Index.row()).title();
       case ProjectRole:
         return m_Data.at(a_Index.row()).projectTitle();
-//      case DescriptionRole:
-//      {
-//        Intrant::description_optional descr(m_Data->Intrant().at(a_Index.row()).description());
-//        return descr.present() ? QString::fromStdString(*descr) : QString();
-//      }
-//      case DeadlineRole:
-//      {
-//        Intrant::deadlineDate_optional value(m_Data->Intrant().at(a_Index.row()).deadlineDate());
-//        return value.present() ? QDate((*value).year(), (*value).month(), (*value).day()) : QDate();
-//      }
+        //      case DescriptionRole:
+        //      {
+        //        Intrant::description_optional descr(m_Data->Intrant().at(a_Index.row()).description());
+        //        return descr.present() ? QString::fromStdString(*descr) : QString();
+        //      }
+        //      case DeadlineRole:
+        //      {
+        //        Intrant::deadlineDate_optional value(m_Data->Intrant().at(a_Index.row()).deadlineDate());
+        //        return value.present() ? QDate((*value).year(), (*value).month(), (*value).day()) : QDate();
+        //      }
       default:
         break;
     }

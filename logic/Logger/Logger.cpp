@@ -57,7 +57,7 @@ namespace N_Logger {
   {
     QStringList result;
     result << "[";
-    result << QDate::currentDate().toString();
+    result << QDateTime::currentDateTime().toString();
     result << "]";
 
     result << "[";
