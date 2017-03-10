@@ -1,6 +1,8 @@
 #include "Utils.hpp"
 
 #include <QString>
+#include <QFile>
+#include <QTextStream>
 
 namespace N_Utils {
 
@@ -12,4 +14,15 @@ namespace N_Utils {
     return p;
   }
 
+  //-------------------------------------------------------------------------------
+  void writeTextToFile(const QString& a_Filename, QIODevice::OpenModeFlag a_OpenModeFlag, const QString& a_Output)
+  {
+    QFile outFile(a_Filename);
+    if(outFile.open(a_OpenModeFlag | QIODevice::Text))
+    {
+      QTextStream ts(&outFile);
+      ts << a_Output << endl;
+    }
+    outFile.close();
+  }
 }

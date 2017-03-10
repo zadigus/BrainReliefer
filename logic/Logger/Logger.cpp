@@ -1,13 +1,13 @@
 #include "Logger.hpp"
 
+#include "core/Utils.hpp"
+
 #include <QApplication>
 #include <QDate>
 #include <QFileInfo>
 #include <QDir>
 #include <QSettings>
 #include <QStandardPaths>
-#include <QFile>
-#include <QTextStream>
 
 namespace N_Logger {
 
@@ -49,14 +49,7 @@ namespace N_Logger {
     msg << coreMessage(a_Context);
     msg << localMsg.constData();
 
-    QFile outFile(filename());
-    if(outFile.open(QIODevice::Append | QIODevice::Text))
-    {
-      QTextStream ts(&outFile);
-      QString result(msg.join(" "));
-      ts << result << endl;
-    }
-    outFile.close();
+    N_Utils::writeTextToFile(filename(), QIODevice::Append, msg.join(" "));
   }
 
   //----------------------------------------------------------------------------------------------

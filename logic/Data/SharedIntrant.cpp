@@ -1,6 +1,13 @@
 #include "Data/SharedIntrant.hpp"
 
+#include "Data/IntrantsList.hpp"
+
+
 namespace N_Data {
+
+  //---------------------------------------------------------------------------------------------------
+  SharedIntrant::~SharedIntrant()
+  { }
 
   //---------------------------------------------------------------------------------------------------
   SharedIntrant::SharedIntrant(QObject* a_Parent)

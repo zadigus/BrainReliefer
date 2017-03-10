@@ -1,16 +1,16 @@
-#include "Models/ActionsList.hpp"
+#include "Models/ActionsModel.hpp"
 
 #include "Models/ModelsHelper.hpp"
 
-#include "Data/DataManagerHelper.hpp"
+#include "Data/XsdeHelpers.hpp"
 #include "Data/DataValidator.hpp"
 #include "Data/DataManager.hpp"
 #include "Data/DataExceptions.hpp"
 
 #include "Data/SharedIntrant.hpp"
 
-#include "Data/IntrantList.hpp"
-#include "Data/IntrantList-pimpl.hpp"
+#include "Data/IntrantsList.hpp"
+#include "Data/IntrantsList-pimpl.hpp"
 
 #include <QFile>
 #include <QDate>
@@ -22,22 +22,22 @@ using namespace N_Data;
 namespace N_Models {
 
   //-------------------------------------------------------------------------------------------
-  ActionsList::ActionsList(QObject* a_Parent)
+  ActionsModel::ActionsModel(QObject* a_Parent)
     : QAbstractListModel(a_Parent)
-    , m_IntrantListXsd(QStringLiteral("qrc:/xsd/IntrantList.xsd"))
+    , m_IntrantsListXsd(QStringLiteral("qrc:/xsd/IntrantsList.xsd"))
   { }
 
   //-------------------------------------------------------------------------------------------
-  ActionsList::~ActionsList()
+  ActionsModel::~ActionsModel()
   { }
 
   //-------------------------------------------------------------------------------------------
-  void ActionsList::loadDataFromFile(const QString& a_FileName)
+  void ActionsModel::loadDataFromFile(const QString& a_FileName)
   {
-    std::unique_ptr<IntrantList> intrantList;
+    std::unique_ptr<N_Data::IntrantsList> intrantsList;
     try
     {
-      intrantList = N_DataManagerHelper::getParsedXML<N_Data::IntrantList_paggr, N_Data::IntrantList>(a_FileName, m_IntrantListXsd);
+      intrantsList = N_XsdeHelpers::getParsedXML<N_Data::IntrantsList_paggr, N_Data::IntrantsList>(a_FileName, m_IntrantsListXsd);
     }
     catch(const XInexistentData& ex)
     {
@@ -53,7 +53,7 @@ namespace N_Models {
     beginResetModel();
 
     m_Data.clear();
-    std::for_each(intrantList->Intrant().begin(), intrantList->Intrant().end(),
+    std::for_each(intrantsList->Intrant().begin(), intrantsList->Intrant().end(),
                   [this](const N_Data::Intrant& a_Item)
     {
       if(a_Item.actions_present())
@@ -70,7 +70,7 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  bool ActionsList::removeRows(int a_Row, int a_Count, const QModelIndex& /*a_Parent*/)
+  bool ActionsModel::removeRows(int a_Row, int a_Count, const QModelIndex& /*a_Parent*/)
   {
     int lowerIdx(a_Row);
     int upperIdx(a_Row + a_Count - 1);
@@ -83,19 +83,19 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  int ActionsList::rowCount(const QModelIndex& /*parent*/) const
+  int ActionsModel::rowCount(const QModelIndex& /*parent*/) const
   {
     return static_cast<int>(m_Data.size());
   }
 
   //-------------------------------------------------------------------------------------------
-  int ActionsList::columnCount(const QModelIndex& /*parent*/) const
+  int ActionsModel::columnCount(const QModelIndex& /*parent*/) const
   {
     return 1;
   }
 
   //-------------------------------------------------------------------------------------------
-  QVariant ActionsList::data(const QModelIndex& a_Index, int a_Role) const
+  QVariant ActionsModel::data(const QModelIndex& a_Index, int a_Role) const
   {
     switch(a_Role)
     {
@@ -120,7 +120,7 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  QVariant ActionsList::headerData(int a_Section, Qt::Orientation a_Orientation, int a_Role) const
+  QVariant ActionsModel::headerData(int a_Section, Qt::Orientation a_Orientation, int a_Role) const
   {
     if(a_Role != TitleRole)
     {
@@ -139,7 +139,7 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  QHash<int, QByteArray> ActionsList::roleNames() const
+  QHash<int, QByteArray> ActionsModel::roleNames() const
   {
     QHash<int, QByteArray> result;
     result[TitleRole] = "title";

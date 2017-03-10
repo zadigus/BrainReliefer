@@ -6,8 +6,8 @@
 #include "Data/SharedIntrant.hpp"
 #include "Data/SharedAction.hpp"
 
-#include "Models/IntrantsList.hpp"
-#include "Models/ActionsList.hpp"
+#include "Models/IntrantsModel.hpp"
+#include "Models/ActionsModel.hpp"
 
 #include <QQmlContext>
 #include <QSortFilterProxyModel>
@@ -16,24 +16,22 @@
 EngineConfigurator::EngineConfigurator(QQmlApplicationEngine& a_Engine)
   : m_Engine(a_Engine)
   , m_AppConfiguration(new AppConfiguration)
-  , m_NewIntrantsModel(new N_Models::IntrantsList)
-  , m_ReferencesModel(new N_Models::IntrantsList)
-  , m_IncubatedModel(new N_Models::IntrantsList)
-  , m_ProjectsModel(new N_Models::IntrantsList)
+  , m_NewIntrantsModel(new N_Models::IntrantsModel)
+  , m_ReferencesModel(new N_Models::IntrantsModel)
+  , m_IncubatedModel(new N_Models::IntrantsModel)
+  , m_ProjectsModel(new N_Models::IntrantsModel)
   , m_ActionsModel(new QSortFilterProxyModel)
   , m_DataManager(new N_Data::DataManager)
   , m_SharedIntrant(new N_Data::SharedIntrant)
   , m_SharedAction(new N_Data::SharedAction)
-{
-
-}
+{ }
 
 //----------------------------------------------------------------------------------------------
 void EngineConfigurator::setupProxyModels()
 {
-  N_Models::ActionsList* model(new N_Models::ActionsList);
+  N_Models::ActionsModel* model(new N_Models::ActionsModel);
   m_ActionsModel->setSourceModel(model);
-  m_ActionsModel->setFilterRole(N_Models::ActionsList::ProjectRole);
+  m_ActionsModel->setFilterRole(N_Models::ActionsModel::ProjectRole);
 }
 
 //----------------------------------------------------------------------------------------------

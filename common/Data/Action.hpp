@@ -3,7 +3,7 @@
 
 #include "core/Global.hpp"
 
-#include "Data/IntrantList.hpp"
+#include "Data/IntrantsList.hpp"
 
 #include <QString>
 #include <QDate>

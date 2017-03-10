@@ -7,20 +7,17 @@
 
 #include <QUrl>
 
-#include <memory>
-#include <functional>
-
 class QDate;
 
 namespace N_Data {
   class Action;
   class Intrant;
-  class IntrantList;
+  class IntrantsList;
 }
 
 namespace N_Models {
 
-  class IntrantsList : public QAbstractListModel
+  class IntrantsModel : public QAbstractListModel
   {
       Q_OBJECT
 
@@ -32,8 +29,8 @@ namespace N_Models {
       };
 
     public:
-      IntrantsList(QObject* a_Parent = Q_NULLPTR);
-      ~IntrantsList();
+      IntrantsModel(QObject* a_Parent = Q_NULLPTR);
+      ~IntrantsModel();
 
       Q_INVOKABLE void setDate(int a_Idx, const QDate& a_Date);
 
@@ -60,10 +57,10 @@ namespace N_Models {
       void loadDataFromFile(const QString& a_FileName);
 
     private:
-      QUrl m_IntrantListXsd;
+      QUrl m_IntrantsListXsd;
       QString m_LoadedFilename;
 
-      std::unique_ptr<N_Data::IntrantList> m_Data;
+      std::unique_ptr<N_Data::IntrantsList> m_Data;
   };
 
   //----------------------------------------------------------------------------------

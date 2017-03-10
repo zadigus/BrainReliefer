@@ -6,6 +6,8 @@
 #include "Data/DataValidator.hpp"
 #include "Data/DataExceptions.hpp"
 
+#include "core/Utils.hpp"
+
 #include <xsde/cxx/parser/expat/document.hxx>
 #include <xsde/cxx/serializer/genx/document.hxx>
 
@@ -16,7 +18,7 @@
 
 namespace N_Data {
 
-  namespace N_DataManagerHelper {
+  namespace N_XsdeHelpers {
 
     template <class Data_paggr, class Data>
     std::unique_ptr<Data> getParsedXML(const QString& a_XmlFilename, const QUrl& a_XsdFilename);
@@ -68,14 +70,7 @@ namespace N_Data {
       doc_s.serialize(ost, xsde::cxx::serializer::genx::document_simpl::pretty_print);
       data_s.post();
 
-      QFile outFile(QString::fromStdString(a_Filename));
-      if(outFile.open(QIODevice::WriteOnly | QIODevice::Text))
-      {
-        QTextStream ts(&outFile);
-        QString result(QString::fromStdString(ost.str()));
-        ts << result << endl;
-      }
-      outFile.close();
+      N_Utils::writeTextToFile(QString::fromStdString(a_Filename), QIODevice::WriteOnly, QString::fromStdString(ost.str()));
     }
   }
 }

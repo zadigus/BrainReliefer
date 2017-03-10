@@ -6,16 +6,16 @@
 
 #include "Data/SharedIntrant.hpp"
 #include "Data/SharedAction.hpp"
-#include "Models/IntrantsList.hpp"
-#include "Models/ActionsList.hpp"
+#include "Models/IntrantsModel.hpp"
+#include "Models/ActionsModel.hpp"
 
 #include "Logger/Logger.hpp"
 
 //----------------------------------------------------------------------------------------------
 void registerMetaTypes ()
 {
-  qmlRegisterType<N_Models::IntrantsList>("MyDataManagement", 1, 0, "IntrantsList");
-  qmlRegisterType<N_Models::ActionsList>("MyDataManagement", 1, 0, "ActionsList");
+  qmlRegisterType<N_Models::IntrantsModel>("MyDataManagement", 1, 0, "IntrantsList");
+  qmlRegisterType<N_Models::ActionsModel>("MyDataManagement", 1, 0, "ActionsList");
   qmlRegisterType<N_Data::SharedIntrant>("MyDataManagement", 1, 0, "SharedIntrant");
   qmlRegisterType<N_Data::SharedAction>("MyDataManagement", 1, 0, "SharedAction");
 }

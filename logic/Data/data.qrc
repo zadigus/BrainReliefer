@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/xsd">
-        <file>IntrantList.xsd</file>
+        <file>IntrantsList.xsd</file>
     </qresource>
 </RCC>

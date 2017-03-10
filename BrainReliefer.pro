@@ -13,14 +13,14 @@ CORE_FOLDER   = core
 
 SOURCES += main.cpp \
     $${LOGGER_FOLDER}/Logger.cpp \
-    $${DATA_FOLDER}/IntrantList.cpp \
-    $${DATA_FOLDER}/IntrantList-pimpl.cpp \
-    $${DATA_FOLDER}/IntrantList-pskel.cpp \
-    $${DATA_FOLDER}/IntrantList-simpl.cpp \
-    $${DATA_FOLDER}/IntrantList-sskel.cpp \
+    $${DATA_FOLDER}/IntrantsList.cpp \
+    $${DATA_FOLDER}/IntrantsList-pimpl.cpp \
+    $${DATA_FOLDER}/IntrantsList-pskel.cpp \
+    $${DATA_FOLDER}/IntrantsList-simpl.cpp \
+    $${DATA_FOLDER}/IntrantsList-sskel.cpp \
     $${DATA_FOLDER}/DataValidator.cpp \
-    $${MODELS_FOLDER}/IntrantsList.cpp \
-    $${MODELS_FOLDER}/ActionsList.cpp \
+    $${MODELS_FOLDER}/IntrantsModel.cpp \
+    $${MODELS_FOLDER}/ActionsModel.cpp \
     $${MODELS_FOLDER}/ModelsHelper.cpp \
     $${DATA_FOLDER}/DataManager.cpp \
     $${DATA_FOLDER}/DataExceptions.cpp \
@@ -34,21 +34,21 @@ SOURCES += main.cpp \
 
 HEADERS += $${CORE_FOLDER}/Global.hpp \
     $${LOGGER_FOLDER}/Logger.hpp \
-    $${DATA_FOLDER}/IntrantList.hpp \
-    $${DATA_FOLDER}/IntrantList-pimpl.hpp \
-    $${DATA_FOLDER}/IntrantList-pskel.hpp \
-    $${DATA_FOLDER}/IntrantList-simpl.hpp \
-    $${DATA_FOLDER}/IntrantList-sskel.hpp \
+    $${DATA_FOLDER}/IntrantsList.hpp \
+    $${DATA_FOLDER}/IntrantsList-pimpl.hpp \
+    $${DATA_FOLDER}/IntrantsList-pskel.hpp \
+    $${DATA_FOLDER}/IntrantsList-simpl.hpp \
+    $${DATA_FOLDER}/IntrantsList-sskel.hpp \
     $${DATA_FOLDER}/DataValidator.hpp \
-    $${MODELS_FOLDER}/IntrantsList.hpp \
-    $${MODELS_FOLDER}/ActionsList.hpp \
+    $${MODELS_FOLDER}/IntrantsModel.hpp \
+    $${MODELS_FOLDER}/ActionsModel.hpp \
     $${MODELS_FOLDER}/ModelsHelper.hpp \
-    $${DATA_FOLDER}/DataManagerHelper.hpp \
     $${DATA_FOLDER}/DataManager.hpp \
     $${DATA_FOLDER}/DataExceptions.hpp \
     $${DATA_FOLDER}/DataConstants.hpp \
     $${DATA_FOLDER}/SharedIntrant.hpp \
     $${DATA_FOLDER}/SharedAction.hpp \
+    $${DATA_FOLDER}/XsdeHelpers.hpp \
     $${COMMONDATA_FOLDER}/Action.hpp \
     logic/Singleton.hpp \
     EngineConfigurator.hpp \

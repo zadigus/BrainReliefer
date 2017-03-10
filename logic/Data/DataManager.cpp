@@ -1,15 +1,13 @@
 #include "DataManager.hpp"
 
-#include "Data/DataManagerHelper.hpp"
+#include "Data/XsdeHelpers.hpp"
 #include "Data/DataExceptions.hpp"
 #include "Data/DataConstants.hpp"
-//#include "Data/Data.hpp"
-//#include "Data/Data-pimpl.hpp"
-#include "Data/IntrantList.hpp"
+//#include "Data/IntrantsList.hpp"
 #include "Data/SharedIntrant.hpp"
 #include "Data/SharedAction.hpp"
 
-#include "Models/IntrantsList.hpp"
+#include "Models/IntrantsModel.hpp"
 
 #include <QFile>
 #include <QDir>
@@ -43,25 +41,25 @@ namespace N_Data {
   { }
 
   //----------------------------------------------------------------------------------------------
-  void DataManager::addAction(N_Models::IntrantsList* a_SrcModel, N_Data::SharedAction* a_Action, int a_Idx)
+  void DataManager::addAction(N_Models::IntrantsModel* a_SrcModel, N_Data::SharedAction* a_Action, int a_Idx)
   {
     a_SrcModel->addAction(a_Action->getData(), a_Idx);
   }
 
   //----------------------------------------------------------------------------------------------
-  void DataManager::addIntrant(N_Models::IntrantsList* a_SrcModel, SharedIntrant* a_Intrant)
+  void DataManager::addIntrant(N_Models::IntrantsModel* a_SrcModel, SharedIntrant* a_Intrant)
   {
     a_SrcModel->addIntrant(a_Intrant->getData());
   }
 
   //----------------------------------------------------------------------------------------------
-  void DataManager::removeIntrant(N_Models::IntrantsList* a_SrcModel, int a_Idx)
+  void DataManager::removeIntrant(N_Models::IntrantsModel* a_SrcModel, int a_Idx)
   {
     a_SrcModel->removeIntrant(a_Idx);
   }
 
   //----------------------------------------------------------------------------------------------
-  void DataManager::transferIntrant(N_Models::IntrantsList* a_SrcModel, N_Models::IntrantsList* a_DestModel, int a_Idx)
+  void DataManager::transferIntrant(N_Models::IntrantsModel* a_SrcModel, N_Models::IntrantsModel* a_DestModel, int a_Idx)
   {
     std::unique_ptr<Intrant> intrant(a_SrcModel->popIntrant(a_Idx));
     a_DestModel->addIntrant(std::move(intrant));

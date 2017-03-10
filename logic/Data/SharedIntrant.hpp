@@ -3,13 +3,11 @@
 
 #include "core/Global.hpp"
 
-#include "Data/IntrantList.hpp"
-
 #include <QObject>
 
-//namespace N_Data {
-//  class Intrant;
-//}
+namespace N_Data {
+  class Intrant;
+}
 
 namespace N_Data {
 
@@ -22,6 +20,7 @@ namespace N_Data {
 
     public:
       explicit SharedIntrant(QObject* a_Parent = Q_NULLPTR);
+      virtual ~SharedIntrant();
 
       Q_INVOKABLE void reset();
 
@@ -38,7 +37,7 @@ namespace N_Data {
       void descriptionChanged();
 
     private:
-      std::unique_ptr<Intrant> m_Data;
+      std::unique_ptr<N_Data::Intrant> m_Data;
   };
 
   //----------------------------------------------------------------------------------

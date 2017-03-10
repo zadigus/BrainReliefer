@@ -10,7 +10,7 @@
 
 namespace N_Models {
 
-  class ActionsList : public QAbstractListModel
+  class ActionsModel : public QAbstractListModel
   {
       Q_OBJECT
 
@@ -23,8 +23,8 @@ namespace N_Models {
       };
 
     public:
-      ActionsList(QObject* a_Parent = Q_NULLPTR);
-      ~ActionsList();
+      ActionsModel(QObject* a_Parent = Q_NULLPTR);
+      ~ActionsModel();
 
       virtual int rowCount(const QModelIndex& a_Parent = QModelIndex()) const override;
       virtual int columnCount(const QModelIndex& a_Parent = QModelIndex()) const override;
@@ -43,7 +43,7 @@ namespace N_Models {
 
 
     private:
-      QUrl m_IntrantListXsd;
+      QUrl m_IntrantsListXsd;
 
       std::vector<ProjectAction> m_Data;
   };

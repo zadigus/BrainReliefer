@@ -1,14 +1,14 @@
-#include "Models/IntrantsList.hpp"
+#include "Models/IntrantsModel.hpp"
 
 #include "Models/ModelsHelper.hpp"
 
-#include "Data/DataManagerHelper.hpp"
+#include "Data/XsdeHelpers.hpp"
 #include "Data/DataValidator.hpp"
 #include "Data/DataManager.hpp"
 #include "Data/DataExceptions.hpp"
 
-#include "Data/IntrantList.hpp"
-#include "Data/IntrantList-pimpl.hpp"
+#include "Data/IntrantsList.hpp"
+#include "Data/IntrantsList-pimpl.hpp"
 
 #include <QFile>
 #include <QDate>
@@ -20,17 +20,17 @@ using namespace N_Data;
 namespace N_Models {
 
   //-------------------------------------------------------------------------------------------
-  IntrantsList::IntrantsList(QObject* a_Parent)
+  IntrantsModel::IntrantsModel(QObject* a_Parent)
     : QAbstractListModel(a_Parent)
-    , m_IntrantListXsd(QStringLiteral("qrc:/xsd/IntrantList.xsd"))
+    , m_IntrantsListXsd(QStringLiteral("qrc:/xsd/IntrantsList.xsd"))
   { }
 
   //-------------------------------------------------------------------------------------------
-  IntrantsList::~IntrantsList()
+  IntrantsModel::~IntrantsModel()
   { }
 
   //-------------------------------------------------------------------------------------------
-  void IntrantsList::setDate(int a_Idx, const QDate& a_Date)
+  void IntrantsModel::setDate(int a_Idx, const QDate& a_Date)
   {
     auto& intrant(m_Data->Intrant()[a_Idx]);
     intrant.deadlineDate(xml_schema::date(a_Date.year(), a_Date.month(), a_Date.day()));
@@ -40,7 +40,7 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  void IntrantsList::save()
+  void IntrantsModel::save()
   {
     qInfo() << "Storing the data in the file <" << m_LoadedFilename << ">.";
 
@@ -56,7 +56,7 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  void IntrantsList::addAction(const N_Data::Action& a_Action, int a_Idx)
+  void IntrantsModel::addAction(const N_Data::Action& a_Action, int a_Idx)
   {
     qInfo() << "Adding action <" << QString::fromStdString(a_Action.title()) << "> to intrant <" << QString::fromStdString(m_Data->Intrant()[a_Idx].title()) << ">";
 
@@ -71,9 +71,9 @@ namespace N_Models {
     else
     {
       qDebug() << "Actions not present";
-      std::unique_ptr<ActionList> actionList;
-      actionList->Action().push_back(a_Action);
-      intrant.actions(actionList.release());
+      std::unique_ptr<ActionsList> actionsList;
+      actionsList->Action().push_back(a_Action);
+      intrant.actions(actionsList.release());
     }
 
     QModelIndex currentIdx(index(a_Idx, columnCount() - 1));
@@ -84,7 +84,7 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  void IntrantsList::removeIntrant(int a_Idx)
+  void IntrantsModel::removeIntrant(int a_Idx)
   {
     qInfo() << "Deleting intrant with title <" << QString::fromStdString(m_Data->Intrant()[a_Idx].title()) << ">...";
     removeRow(a_Idx);
@@ -92,7 +92,7 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  std::unique_ptr<Intrant> IntrantsList::popIntrant(int a_Idx)
+  std::unique_ptr<Intrant> IntrantsModel::popIntrant(int a_Idx)
   {
     auto& seq(m_Data->Intrant());
     auto it(seq.begin() + a_Idx);
@@ -103,7 +103,7 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  void IntrantsList::addIntrant(std::unique_ptr<N_Data::Intrant> a_Intrant)
+  void IntrantsModel::addIntrant(std::unique_ptr<N_Data::Intrant> a_Intrant)
   {
     qInfo() << "Adding new intrant with title <" << QString::fromStdString(a_Intrant->title()) << ">.";
     int idx(static_cast<int>(m_Data->Intrant().size()));
@@ -114,7 +114,7 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  void IntrantsList::loadDataFromFile(const QString& a_FileName)
+  void IntrantsModel::loadDataFromFile(const QString& a_FileName)
   {
     qDebug() << "Loading file " << a_FileName;
 
@@ -122,7 +122,7 @@ namespace N_Models {
 
     try
     {
-      m_Data = N_DataManagerHelper::getParsedXML<N_Data::IntrantList_paggr, N_Data::IntrantList>(a_FileName, m_IntrantListXsd);
+      m_Data = N_XsdeHelpers::getParsedXML<N_Data::IntrantsList_paggr, N_Data::IntrantsList>(a_FileName, m_IntrantsListXsd);
     }
     catch(const XInexistentData& ex)
     {
@@ -141,7 +141,7 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  bool IntrantsList::removeRows(int a_Row, int a_Count, const QModelIndex& /*a_Parent*/)
+  bool IntrantsModel::removeRows(int a_Row, int a_Count, const QModelIndex& /*a_Parent*/)
   {
     int lowerIdx(a_Row);
     int upperIdx(a_Row + a_Count - 1);
@@ -157,7 +157,7 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  int IntrantsList::rowCount(const QModelIndex& /*parent*/) const
+  int IntrantsModel::rowCount(const QModelIndex& /*parent*/) const
   {
     if(m_Data)
     {
@@ -168,13 +168,13 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  int IntrantsList::columnCount(const QModelIndex& /*parent*/) const
+  int IntrantsModel::columnCount(const QModelIndex& /*parent*/) const
   {
     return 1;
   }
 
   //-------------------------------------------------------------------------------------------
-  QVariant IntrantsList::data(const QModelIndex& a_Index, int a_Role) const
+  QVariant IntrantsModel::data(const QModelIndex& a_Index, int a_Role) const
   {
     auto& intrant(m_Data->Intrant()[a_Index.row()]);
     switch(a_Role)
@@ -196,7 +196,7 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  QVariant IntrantsList::headerData(int a_Section, Qt::Orientation a_Orientation, int a_Role) const
+  QVariant IntrantsModel::headerData(int a_Section, Qt::Orientation a_Orientation, int a_Role) const
   {
     if(a_Role != TitleRole)
     {
@@ -215,7 +215,7 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  QHash<int, QByteArray> IntrantsList::roleNames() const
+  QHash<int, QByteArray> IntrantsModel::roleNames() const
   {
     QHash<int, QByteArray> result;
     result[TitleRole] = "title";

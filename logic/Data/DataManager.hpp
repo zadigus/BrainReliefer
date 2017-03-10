@@ -8,14 +8,12 @@
 #include <QMap>
 
 namespace N_Data {
-  class Data;
-  class IntrantList;
   class SharedIntrant;
   class SharedAction;
 }
 
 namespace N_Models {
-  class IntrantsList;
+  class IntrantsModel;
 }
 
 class QDir;
@@ -35,11 +33,11 @@ namespace N_Data {
 
       Q_INVOKABLE void load(const QString& a_PathToDir);
 
-      Q_INVOKABLE void addAction(N_Models::IntrantsList* a_SrcModel, N_Data::SharedAction* a_Action, int a_Idx);
+      Q_INVOKABLE void addAction(N_Models::IntrantsModel* a_SrcModel, N_Data::SharedAction* a_Action, int a_Idx);
 
-      Q_INVOKABLE void addIntrant(N_Models::IntrantsList* a_SrcModel, N_Data::SharedIntrant* a_Intrant);
-      Q_INVOKABLE void removeIntrant(N_Models::IntrantsList* a_SrcModel, int a_Idx);
-      Q_INVOKABLE void transferIntrant(N_Models::IntrantsList* a_SrcModel, N_Models::IntrantsList* a_DestModel, int a_Idx);
+      Q_INVOKABLE void addIntrant(N_Models::IntrantsModel* a_SrcModel, N_Data::SharedIntrant* a_Intrant);
+      Q_INVOKABLE void removeIntrant(N_Models::IntrantsModel* a_SrcModel, int a_Idx);
+      Q_INVOKABLE void transferIntrant(N_Models::IntrantsModel* a_SrcModel, N_Models::IntrantsModel* a_DestModel, int a_Idx);
 
     private:
       void loadExistingFiles(const QDir& a_DataDir);

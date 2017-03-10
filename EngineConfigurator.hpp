@@ -8,7 +8,7 @@ class QUrl;
 class AppConfiguration;
 
 namespace N_Models {
-  class IntrantsList;
+  class IntrantsModel;
 }
 
 namespace N_Data {
@@ -34,10 +34,10 @@ class EngineConfigurator
 
     AppConfiguration* m_AppConfiguration;
 
-    N_Models::IntrantsList* m_NewIntrantsModel;
-    N_Models::IntrantsList* m_ReferencesModel;
-    N_Models::IntrantsList* m_IncubatedModel;
-    N_Models::IntrantsList* m_ProjectsModel;
+    N_Models::IntrantsModel* m_NewIntrantsModel;
+    N_Models::IntrantsModel* m_ReferencesModel;
+    N_Models::IntrantsModel* m_IncubatedModel;
+    N_Models::IntrantsModel* m_ProjectsModel;
     QSortFilterProxyModel* m_ActionsModel;
     N_Data::DataManager* m_DataManager;
     N_Data::SharedIntrant* m_SharedIntrant;
