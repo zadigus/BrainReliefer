@@ -42,9 +42,9 @@ for ARCH in `ls $NDK_ROOT/toolchains/`; do
 
     SYSROOT="$NDK_ROOT/platforms/$ANDROID_PLATFORM/"$(getPlatformDir $ARCH)
 
-    LDFLAGS="--sysroot $SYSROOT"
-    CFLAGS="--sysroot $SYSROOT -I$NDK_ROOT/sources/cxx-stl/stlport/stlport/"
-    CPPFLAGS="--sysroot $SYSROOT -I$NDK_ROOT/sources/cxx-stl/stlport/stlport/"
+    LDFLAGS="--sysroot $SYSROOT" # -L$NDK_ROOT/sources/cxx-stl/gnu-libstdc++/4.9/libs/"$(getSTLPortLibDir $ARCH)" -lgnustl_static -lsupc++"
+    CFLAGS="--sysroot $SYSROOT -I$NDK_ROOT/sources/cxx-stl/gnu-libstdc++/4.9/include -I$NDK_ROOT/sources/cxx-stl/gnu-libstdc++/4.9/libs/"$(getSTLPortLibDir $ARCH)"/include"
+    CPPFLAGS="--sysroot $SYSROOT -I$NDK_ROOT/sources/cxx-stl/gnu-libstdc++/4.9/include -I$NDK_ROOT/sources/cxx-stl/gnu-libstdc++/4.9/libs/"$(getSTLPortLibDir $ARCH)"/include"
 
     echo "###########################################################"
     echo "ARCH = $ARCH_DIR"

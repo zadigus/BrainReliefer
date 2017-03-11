@@ -24,7 +24,7 @@ void AppConfiguration::setup()
 }
 
 //----------------------------------------------------------------------------------------------
-void AppConfiguration::setDataDir(const QString& a_Value)
+void AppConfiguration::setDataDir(const QUrl& a_Value)
 {
   m_DataDir = a_Value;
   emit dataDirChanged();

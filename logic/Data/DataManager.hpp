@@ -31,7 +31,7 @@ namespace N_Data {
       DataManager(QObject* a_Parent = NULL);
       virtual ~DataManager();
 
-      Q_INVOKABLE void load(const QString& a_PathToDir);
+      Q_INVOKABLE void load(const QUrl& a_PathToDir);
 
       Q_INVOKABLE void addAction(N_Models::IntrantsModel* a_SrcModel, N_Data::SharedAction* a_Action, int a_Idx);
 

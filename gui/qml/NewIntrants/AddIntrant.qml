@@ -26,11 +26,7 @@ Rectangle
     background: FocusRectangle {
       textField: titleField
     }
-    Binding {
-      target: sharedIntrant
-      property: "title"
-      value: titleField.text
-    }
+    onTextChanged: sharedIntrant.title = text
   }
 
   Rectangle {

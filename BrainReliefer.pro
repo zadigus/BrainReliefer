@@ -23,7 +23,7 @@ SOURCES += main.cpp \
     $${MODELS_FOLDER}/ActionsModel.cpp \
     $${MODELS_FOLDER}/ModelsHelper.cpp \
     $${DATA_FOLDER}/DataManager.cpp \
-    $${DATA_FOLDER}/DataExceptions.cpp \
+    $${DATA_FOLDER}/XsdeExceptions.cpp \
     $${DATA_FOLDER}/SharedIntrant.cpp \
     $${DATA_FOLDER}/SharedAction.cpp \
     $${COMMONDATA_FOLDER}/Action.cpp \
@@ -111,20 +111,26 @@ android {
     ARCH_DIR = x86
   }
 
-  XSDE_DIR = $${LIB_DIR}/xsde/android-23/$${ARCH_DIR}/libxsde
+  BOOST_DIR  = $${LIB_DIR}/boost/android-23/$${ARCH_DIR}
+  XSDE_DIR   = $${LIB_DIR}/xsde/android-23/$${ARCH_DIR}/libxsde
   XERCES_DIR = $${LIB_DIR}/xerces-c/android-23/$${ARCH_DIR}
-  ICU_DIR = $${LIB_DIR}/icu/android-23/$${ARCH_DIR}
+  ICU_DIR    = $${LIB_DIR}/icu/android-23/$${ARCH_DIR}
 
-  #QMAKE_CXXFLAGS += -D_GLIBCXX_USE_C99 # for x86_64
+#  QMAKE_CXXFLAGS += -D_GLIBCXX_USE_C99 # for x86_64
+
+  QMAKE_CXXFLAGS += -D__GXX_EXPERIMENTAL_CXX_0X__
 
   INCLUDEPATH += $${XSDE_DIR} \
     $${XERCES_DIR}/include \
-    $${ICU_DIR}/include
+    $${ICU_DIR}/include \
+    $${BOOST_DIR}/include \
+    $${NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/4.9/include
 
   LIBS += -L$${XERCES_DIR}/lib -lxerces-c \
     -L$${ICU_DIR}/lib -licuuc -licudata -licui18n -licuio \
     -L$${XSDE_DIR}/xsde -lxsde \
-    -L$$(NDK_ROOT)/sources/cxx-stl/stlport/libs/$${ANDROID_TARGET_ARCH} -lstlport_static
+    -L$${NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/4.9/libs/$${ANDROID_TARGET_ARCH} -lgnustl_static \
+    -L$${BOOST_DIR}/lib -lboost_filesystem -lboost_regex -lboost_system
 
   DISTFILES += \
     android/AndroidManifest.xml \

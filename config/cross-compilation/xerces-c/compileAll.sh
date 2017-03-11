@@ -12,7 +12,7 @@ SRC_DIR=$ROOT_DIR/src
 
 if [ -d $ROOT_DIR ] ; then
   echo "Folder $ROOT_DIR already exists." # the folder is created after lib archive untar
-  #exit
+  exit
 fi
 
 cd $DOWNLOADS_DIR
@@ -25,7 +25,7 @@ mkdir $BUILD_DIR
 cd $BUILD_DIR
 $ROOT_DIR/configure --prefix=$TARGET_LIB_DIR/linux-x86_64 --enable-static=yes --enable-shared=no --enable-transcoder-icu --with-icu=$ICU_DIR/linux-x86_64 --enable-msgloader-inmemory --disable-threads
 make -j 4
-#make install
+make install
 
 # Cross-compile
 for ARCH in `ls $NDK_ROOT/toolchains/`; do
@@ -44,9 +44,9 @@ for ARCH in `ls $NDK_ROOT/toolchains/`; do
 
     SYSROOT="$NDK_ROOT/platforms/$ANDROID_PLATFORM/"$(getPlatformDir $ARCH)
 
-    LDFLAGS="--sysroot $SYSROOT -L$NDK_ROOT/sources/cxx-stl/stlport/libs/"$(getSTLPortLibDir $ARCH)" -lstlport_shared"
-    CFLAGS="--sysroot $SYSROOT -I$NDK_ROOT/sources/cxx-stl/stlport/stlport/"
-    CPPFLAGS="--sysroot $SYSROOT -I$NDK_ROOT/sources/cxx-stl/stlport/stlport/"
+    LDFLAGS="--sysroot $SYSROOT -L$NDK_ROOT/sources/cxx-stl/gnu-libstdc++/4.9/libs/"$(getSTLPortLibDir $ARCH_DIR)" -lgnustl_shared"
+    CFLAGS="--sysroot $SYSROOT -I$NDK_ROOT/sources/cxx-stl/gnu-libstdc++/4.9/include -I$NDK_ROOT/sources/cxx-stl/gnu-libstdc++/4.9/libs/"$(getSTLPortLibDir $ARCH_DIR)"/include"
+    CPPFLAGS="--sysroot $SYSROOT -I$NDK_ROOT/sources/cxx-stl/gnu-libstdc++/4.9/include -I$NDK_ROOT/sources/cxx-stl/gnu-libstdc++/4.9/libs/"$(getSTLPortLibDir $ARCH_DIR)"/include"
 
     echo "###########################################################"
     echo "ARCH = $ARCH_DIR"
@@ -72,8 +72,8 @@ for ARCH in `ls $NDK_ROOT/toolchains/`; do
     ln -s $LIB/crtend_so.o
     cd ..
 
-    make -j 4 verbose=1
-#    make install
+    make -j 4
+    make install
 
   fi
 

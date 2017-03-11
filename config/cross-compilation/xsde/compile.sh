@@ -57,9 +57,9 @@ function compileXSDE()
 
     SYSROOT="$NDK_ROOT/platforms/$ANDROID_PLATFORM/"$(getPlatformDir $MY_ARCH_DIR)
 
-    LDFLAGS="--sysroot $SYSROOT -L$LIBRARIES/boost/$ANDROID_PLATFORM/$MY_ARCH_DIR/lib -lboost_filesystem -lboost_system -lboost_regex -L$LIBRARIES/xerces-c/$ANDROID_PLATFORM/$MY_ARCH_DIR/lib -lxerces-c -L$LIBRARIES/icu/$ANDROID_PLATFORM/$MY_ARCH_DIR/lib -licudata -licui18n -licuio -licuuc"
-    CXXFLAGS="--sysroot $SYSROOT -I$NDK_ROOT/sources/cxx-stl/stlport/stlport/ -I$LIBRARIES/boost/$ANDROID_PLATFORM/$MY_ARCH_DIR/include -I$LIBRARIES/xerces-c/$ANDROID_PLATFORM/$MY_ARCH_DIR/include -I$LIBRARIES/icu/$ANDROID_PLATFORM/$MY_ARCH_DIR/include" # -std=gnu++03"
-    CPPFLAGS="--sysroot $SYSROOT -I$NDK_ROOT/sources/cxx-stl/stlport/stlport/ -I$LIBRARIES/boost/$ANDROID_PLATFORM/$MY_ARCH_DIR/include -I$LIBRARIES/xerces-c/$ANDROID_PLATFORM/$MY_ARCH_DIR/include -I$LIBRARIES/icu/$ANDROID_PLATFORM/$MY_ARCH_DIR/include" # -std=gnu++03"
+    LDFLAGS="--sysroot $SYSROOT -L$LIBRARIES/boost/$ANDROID_PLATFORM/$MY_ARCH_DIR/lib -lboost_filesystem -lboost_system -lboost_regex -L$LIBRARIES/xerces-c/$ANDROID_PLATFORM/$MY_ARCH_DIR/lib -lxerces-c -L$LIBRARIES/icu/$ANDROID_PLATFORM/$MY_ARCH_DIR/lib -licudata -licui18n -licuio -licuuc -L$NDK_ROOT/sources/cxx-stl/gnu-libstdc++/4.9/libs/"$(getSTLPortLibDir $MY_ARCH_DIR)"/ -lgnustl_static"
+    CXXFLAGS="--sysroot $SYSROOT -I$LIBRARIES/boost/$ANDROID_PLATFORM/$MY_ARCH_DIR/include -I$LIBRARIES/xerces-c/$ANDROID_PLATFORM/$MY_ARCH_DIR/include -I$LIBRARIES/icu/$ANDROID_PLATFORM/$MY_ARCH_DIR/include -I$NDK_ROOT/sources/cxx-stl/gnu-libstdc++/4.9/include -I$NDK_ROOT/sources/cxx-stl/gnu-libstdc++/4.9/libs/"$(getSTLPortLibDir $MY_ARCH_DIR)"/include"
+    CPPFLAGS="--sysroot $SYSROOT -I$LIBRARIES/boost/$ANDROID_PLATFORM/$MY_ARCH_DIR/include -I$LIBRARIES/xerces-c/$ANDROID_PLATFORM/$MY_ARCH_DIR/include -I$LIBRARIES/icu/$ANDROID_PLATFORM/$MY_ARCH_DIR/include -I$NDK_ROOT/sources/cxx-stl/gnu-libstdc++/4.9/include -I$NDK_ROOT/sources/cxx-stl/gnu-libstdc++/4.9/libs/"$(getSTLPortLibDir $MY_ARCH_DIR)"/include"
 
     sed -i '7s/^/xsde_parser_validation:=n\n/' $ROOT_DIR/xsde/libxsde/xsde/makefile
 

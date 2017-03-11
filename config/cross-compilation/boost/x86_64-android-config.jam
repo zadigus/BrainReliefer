@@ -14,13 +14,14 @@ local SYSROOT = $(NDK_ROOT)/platforms/android-$(API_LVL)/arch-x86_64 ;
 using gcc : android :
   $(NDK_ROOT)/toolchains/x86_64-4.9/prebuilt/linux-x86_64/bin/x86_64-linux-android-g++ :
   <compileflags>--sysroot=$(SYSROOT)
-  <compileflags>-I$(NDK_ROOT)/sources/cxx-stl/stlport/stlport/
-  <compileflags>-I$(NDK_ROOT)\sources\cxx-stl\gnu-libstdc++\4.9\include
+  <compileflags>-I$(NDK_ROOT)/sources/cxx-stl/gnu-libstdc++/4.9/include
+  <compileflags>-I$(NDK_ROOT)/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86_64/include
   <linkflags>--sysroot=$(SYSROOT)
-  <linkflags>$(NDK_ROOT)/sources/cxx-stl/stlport/libs/x86_64 -lstlport_static
+  <linkflags>$(NDK_ROOT)/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86_64 -lgnustl_static
   #<cxxflags>-std=c++11
   <cxxflags>--sysroot=$(SYSROOT)
-  <cxxflags>-I$(NDK_ROOT)/sources/cxx-stl/stlport/stlport/
+  <cxxflags>-I$(NDK_ROOT)/sources/cxx-stl/gnu-libstdc++/4.9/include
+  <cxxflags>-I$(NDK_ROOT)/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86_64/include
   <archiver>$(NDK_ROOT)/toolchains/x86_64-4.9/prebuilt/linux-x86_64/bin/x86_64-linux-android-ar
   <ranlib>$(NDK_ROOT)/toolchains/x86_64-4.9/prebuilt/linux-x86_64/bin/x86_64-linux-android-ranlib
   ;

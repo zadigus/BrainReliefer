@@ -89,13 +89,16 @@ namespace N_Data {
       QFile file(a_DataDir.absoluteFilePath(filename));
       file.open(QIODevice::WriteOnly | QIODevice::Text);
       file.close();
+      emit m_LoadSignals[filename](a_DataDir.absoluteFilePath(filename));
     }
   }
 
   //----------------------------------------------------------------------------------------------
-  void DataManager::load(const QString& a_PathToDir)
+  void DataManager::load(const QUrl& a_PathToDir)
   {
-    QDir dataDir(a_PathToDir);
+    QDir dataDir(a_PathToDir.toLocalFile());
+
+    qDebug() << "data path = " << a_PathToDir.toLocalFile();
 
     if(!dataDir.exists() || a_PathToDir.isEmpty())
     {
