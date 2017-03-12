@@ -64,5 +64,6 @@ void EngineConfigurator::setupConnections()
   QObject::connect(m_DataManager, SIGNAL(referencesLoaded(QString)), m_ReferencesModel, SLOT(loadDataFromFile(QString)));
   QObject::connect(m_DataManager, SIGNAL(incubatedLoaded(QString)), m_IncubatedModel, SLOT(loadDataFromFile(QString)));
   QObject::connect(m_DataManager, SIGNAL(projectsLoaded(QString)), m_ProjectsModel, SLOT(loadDataFromFile(QString)));
-  QObject::connect(m_DataManager, SIGNAL(projectsLoaded(QString)), m_ActionsModel->sourceModel(), SLOT(loadDataFromFile(QString)));
+  QObject::connect(m_DataManager, SIGNAL(projectsLoaded(QString)), m_ActionsModel->sourceModel(), SLOT(loadDataFromFile(QString))); // sourceModel() really necessary because without it we connect to the proxy model
+  QObject::connect(m_ProjectsModel, SIGNAL(intrantAdded(int)), m_ActionsModel->sourceModel(), SLOT(onIntrantAdded(int)));
 }

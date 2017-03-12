@@ -1,6 +1,7 @@
 #include "Models/ActionsModel.hpp"
 
 #include "Models/ModelsHelper.hpp"
+#include "Models/IntrantsModel.hpp"
 
 #include "Data/XsdeHelpers.hpp"
 #include "Data/DataManager.hpp"
@@ -13,6 +14,7 @@
 #include <QFile>
 #include <QDate>
 
+using namespace std::placeholders;
 using namespace N_Data;
 
 namespace N_Models {
@@ -28,6 +30,28 @@ namespace N_Models {
   { }
 
   //-------------------------------------------------------------------------------------------
+  void ActionsModel::onIntrantAdded(int a_Idx)
+  {
+    if(auto intrantsModel = qobject_cast<IntrantsModel*>(sender()))
+    {
+      addActionsFromIntrant(intrantsModel->getIntrant(a_Idx));
+    }
+  }
+
+  //-------------------------------------------------------------------------------------------
+  void ActionsModel::addActionsFromIntrant(const N_Data::Intrant& a_Item)
+  {
+    auto projectTitle(QString::fromStdString(a_Item.title()));
+
+    if(a_Item.actions_present())
+    {
+      auto& actionList(a_Item.actions());
+      std::transform(actionList.Action().begin(), actionList.Action().end(), std::back_inserter(m_Data),
+                     [&projectTitle](const N_Data::Action& a_Action) -> ProjectAction { return ProjectAction(a_Action, projectTitle); });
+    }
+  }
+
+  //-------------------------------------------------------------------------------------------
   void ActionsModel::loadDataFromFile(const QString& a_Filename)
   {
     std::unique_ptr<N_Data::IntrantsList> intrantsList(N_XsdeHelpers::loadXML<N_Data::IntrantsList_paggr, N_Data::IntrantsList>(a_Filename, m_IntrantsListXsd));
@@ -36,17 +60,7 @@ namespace N_Models {
 
     m_Data.clear();
     std::for_each(intrantsList->Intrant().begin(), intrantsList->Intrant().end(),
-                  [this](const N_Data::Intrant& a_Item)
-    {
-      if(a_Item.actions_present())
-      {
-        QString projectTitle(QString::fromStdString(a_Item.title()));
-
-        auto& actionList(a_Item.actions());
-        std::transform(actionList.Action().begin(), actionList.Action().end(), std::back_inserter(m_Data),
-                       [&projectTitle](const N_Data::Action& a_Action) -> ProjectAction { return ProjectAction(a_Action, projectTitle); });
-      }
-    });
+                  std::bind(&ActionsModel::addActionsFromIntrant, this, _1));
 
     endResetModel();
   }

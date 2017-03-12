@@ -3,7 +3,6 @@
 #include "Data/XsdeHelpers.hpp"
 #include "Data/XsdeExceptions.hpp"
 #include "Data/DataConstants.hpp"
-//#include "Data/IntrantsList.hpp"
 #include "Data/SharedIntrant.hpp"
 #include "Data/SharedAction.hpp"
 
@@ -11,9 +10,6 @@
 
 #include <QFile>
 #include <QDir>
-
-#include <sstream>
-#include <functional>
 
 using namespace std::placeholders;
 
@@ -97,8 +93,6 @@ namespace N_Data {
   void DataManager::load(const QUrl& a_PathToDir)
   {
     QDir dataDir(a_PathToDir.toLocalFile());
-
-    qDebug() << "data path = " << a_PathToDir.toLocalFile();
 
     if(!dataDir.exists() || a_PathToDir.isEmpty())
     {

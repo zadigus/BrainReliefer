@@ -5,7 +5,6 @@
 #include "Data/XsdeHelpers.hpp"
 #include "Data/DataManager.hpp"
 
-#include "Data/IntrantsList.hpp"
 #include "Data/IntrantsList-pimpl.hpp"
 #include "Data/IntrantsList-simpl.hpp"
 
@@ -59,7 +58,7 @@ namespace N_Models {
     else
     {
       qDebug() << "Actions not present";
-      std::unique_ptr<ActionsList> actionsList;
+      std::unique_ptr<ActionsList> actionsList(new ActionsList);
       actionsList->Action().push_back(a_Action);
       intrant.actions(actionsList.release());
     }
@@ -72,9 +71,16 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
+  N_Data::Intrant& IntrantsModel::getIntrant(int a_Idx) const
+  {
+    return m_Data->Intrant()[a_Idx];
+  }
+
+  //-------------------------------------------------------------------------------------------
   void IntrantsModel::removeIntrant(int a_Idx)
   {
     qInfo() << QString::fromStdString("Deleting intrant");
+
     removeRow(a_Idx);
     save();
   }
@@ -94,17 +100,19 @@ namespace N_Models {
   void IntrantsModel::addIntrant(std::unique_ptr<N_Data::Intrant> a_Intrant)
   {
     qInfo() << "Adding new intrant with title <" << QString::fromStdString(a_Intrant->title()) << ">.";
+
     int idx(static_cast<int>(m_Data->Intrant().size()));
     beginInsertRows(QModelIndex(), idx, idx);
     m_Data->Intrant().push_back(a_Intrant.release());
     endInsertRows();
+    emit intrantAdded(idx);
     save();
   }
 
   //-------------------------------------------------------------------------------------------
   void IntrantsModel::loadDataFromFile(const QString& a_Filename)
   {
-    qDebug() << "Loading file " << a_Filename;
+    qInfo() << "Loading file " << a_Filename;
 
     beginResetModel();
     m_Data = N_XsdeHelpers::loadXML<N_Data::IntrantsList_paggr, N_Data::IntrantsList>(a_Filename, m_IntrantsListXsd);

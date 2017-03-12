@@ -8,6 +8,10 @@
 #include <QAbstractListModel>
 #include <QUrl>
 
+namespace N_Data {
+  class Intrant;
+}
+
 namespace N_Models {
 
   class ActionsModel : public QAbstractListModel
@@ -38,9 +42,10 @@ namespace N_Models {
 
     public slots:
       void loadDataFromFile(const QString& a_Filename);
+      void onIntrantAdded(int a_Idx);
 
     private:
-
+      void addActionsFromIntrant(const N_Data::Intrant& a_Item);
 
     private:
       QUrl m_IntrantsListXsd;

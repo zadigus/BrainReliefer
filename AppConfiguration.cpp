@@ -3,11 +3,22 @@
 #include <QApplication>
 #include <QSettings>
 
+#ifdef __ANDROID__
+#include <QStandardPaths>
+#endif
+
 //----------------------------------------------------------------------------------------------
 AppConfiguration::AppConfiguration(QObject* a_Parent)
   : QObject(a_Parent)
 { }
 
+#ifdef __ANDROID__
+//----------------------------------------------------------------------------------------------
+void AppConfiguration::setupData()
+{ // under Android (and probably iOSx and Windows Phone), we need to set that location automatically
+  m_DataDir = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
+}
+#else
 //----------------------------------------------------------------------------------------------
 void AppConfiguration::setupData()
 {
@@ -16,6 +27,7 @@ void AppConfiguration::setupData()
   m_DataDir = settings.value("DataDir").toString();
   settings.endGroup();
 }
+#endif
 
 //----------------------------------------------------------------------------------------------
 void AppConfiguration::setup()

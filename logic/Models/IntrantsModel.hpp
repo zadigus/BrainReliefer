@@ -3,17 +3,13 @@
 
 #include "core/Global.hpp"
 
+#include "Data/IntrantsList.hpp"
+
 #include <QAbstractListModel>
 
 #include <QUrl>
 
 class QDate;
-
-namespace N_Data {
-  class Action;
-  class Intrant;
-  class IntrantsList;
-}
 
 namespace N_Models {
 
@@ -37,6 +33,7 @@ namespace N_Models {
       void addAction(const N_Data::Action& a_Action, int a_Idx);
 
       std::unique_ptr<N_Data::Intrant> popIntrant(int a_Idx);
+      N_Data::Intrant& getIntrant(int a_Idx) const;
       void addIntrant(std::unique_ptr<N_Data::Intrant> a_Intrant);
       void removeIntrant(int a_Idx);
 
@@ -50,11 +47,14 @@ namespace N_Models {
 
       virtual bool removeRows(int a_Row, int a_Count, const QModelIndex& a_Parent = QModelIndex()) override;
 
+    public slots:
+      void loadDataFromFile(const QString& a_FileName);
+
     private:
       void save();
 
-    public slots:
-      void loadDataFromFile(const QString& a_FileName);
+    signals:
+      void intrantAdded(int a_Idx);
 
     private:
       QUrl m_IntrantsListXsd;
