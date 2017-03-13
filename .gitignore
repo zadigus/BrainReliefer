@@ -2,7 +2,6 @@
 *.exe
 build/
 log/*.log
-*.user
 logic/Data/Data.*pp
 logic/Data/Data-*.*pp
 logic/Data/IntrantsList.*pp
