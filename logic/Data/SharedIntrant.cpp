@@ -24,7 +24,9 @@ namespace N_Data {
   //---------------------------------------------------------------------------------------------------
   std::unique_ptr<N_Data::Intrant> SharedIntrant::getData()
   {
-    return std::move(m_Data);
+    auto result(std::move(m_Data));
+    reset();
+    return result;
   }
 
   //---------------------------------------------------------------------------------------------------
