@@ -22,11 +22,19 @@ Rectangle
     focus: true
     placeholderText: qsTr("Enter title")
     width: parent.width
-    height: 50
+    height: settings.value("TextField", "height")
+    topPadding: settings.value("TextField", "topPadding")
+    bottomPadding: settings.value("TextField", "bottomPadding")
+    font { pointSize: settings.value("TextField", "font.pointSize") }
     background: FocusRectangle {
       textField: titleField
     }
-    onTextChanged: sharedIntrant.title = text
+    Binding {
+        target: sharedIntrant
+        property: "title"
+        value: titleField.text
+    }
+
   }
 
   Rectangle {

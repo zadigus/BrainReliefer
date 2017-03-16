@@ -7,6 +7,10 @@ class QUrl;
 
 class AppConfiguration;
 
+namespace N_Settings {
+  class Settings;
+}
+
 namespace N_Models {
   class IntrantsModel;
 }
@@ -33,6 +37,7 @@ class EngineConfigurator
     QQmlApplicationEngine& m_Engine;
 
     AppConfiguration* m_AppConfiguration;
+    N_Settings::Settings* m_Settings;
 
     N_Models::IntrantsModel* m_NewIntrantsModel;
     N_Models::IntrantsModel* m_ReferencesModel;

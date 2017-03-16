@@ -1,7 +1,3 @@
-#include <QQmlApplicationEngine>
-
-#include <QApplication>
-
 #include "EngineConfigurator.hpp"
 
 #include "Data/SharedIntrant.hpp"
@@ -11,7 +7,9 @@
 
 #include "Logger/Logger.hpp"
 
-#include <QFile>
+#include <QQmlApplicationEngine>
+
+#include <QApplication>
 
 //----------------------------------------------------------------------------------------------
 void registerMetaTypes ()
@@ -43,13 +41,7 @@ int main(int argc, char *argv[])
   ec.setupConnections();
   ec.loadQML(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 
-  QFile logFile(N_Logger::filename());
-  if(!logFile.exists())
-  {
-    logFile.open(QIODevice::WriteOnly | QIODevice::Text);
-    logFile.close();
-  }
-
+  N_Logger::resetLogFile();
   qInstallMessageHandler(N_Logger::message); // if called too early, this doesn't work (--> the application hangs forever)
 
   return app.exec();

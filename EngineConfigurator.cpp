@@ -9,6 +9,8 @@
 #include "Models/IntrantsModel.hpp"
 #include "Models/ActionsModel.hpp"
 
+#include "Settings/Settings.hpp"
+
 #include <QQmlContext>
 #include <QSortFilterProxyModel>
 
@@ -16,6 +18,7 @@
 EngineConfigurator::EngineConfigurator(QQmlApplicationEngine& a_Engine)
   : m_Engine(a_Engine)
   , m_AppConfiguration(new AppConfiguration)
+  , m_Settings(new N_Settings::Settings)
   , m_NewIntrantsModel(new N_Models::IntrantsModel)
   , m_ReferencesModel(new N_Models::IntrantsModel)
   , m_IncubatedModel(new N_Models::IntrantsModel)
@@ -41,6 +44,7 @@ void EngineConfigurator::setupContext()
 
   QQmlContext* context(m_Engine.rootContext());
   context->setContextProperty("appConfiguration", m_AppConfiguration);
+  context->setContextProperty("settings", m_Settings);
   context->setContextProperty("dataManager", m_DataManager);
   context->setContextProperty("newIntrantsModel", m_NewIntrantsModel);
   context->setContextProperty("referencesModel", m_ReferencesModel);

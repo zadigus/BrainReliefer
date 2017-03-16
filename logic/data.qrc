@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/xsd">
+        <file alias="IntrantsList.xsd">Data/IntrantsList.xsd</file>
+    </qresource>
+    <qresource prefix="/conf">
+	<file alias="Settings.conf">Settings/Settings.conf</file>
+   </qresource>
+</RCC>

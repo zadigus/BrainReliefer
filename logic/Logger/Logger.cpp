@@ -12,6 +12,17 @@
 namespace N_Logger {
 
   //----------------------------------------------------------------------------------------------
+  void resetLogFile()
+  {
+    QFile logFile(N_Logger::filename());
+    if(!logFile.exists())
+    {
+      logFile.open(QIODevice::WriteOnly | QIODevice::Text);
+      logFile.close();
+    }
+  }
+
+  //----------------------------------------------------------------------------------------------
   QString filename()
   {
     QDir logDir(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0]);

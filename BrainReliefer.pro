@@ -7,6 +7,7 @@ CONFIG += c++11
 DATA_FOLDER   = logic/Data
 MODELS_FOLDER = logic/Models
 LOGGER_FOLDER = logic/Logger
+SETTINGS_FOLDER = logic/Settings
 COMMONDATA_FOLDER = common/Data
 CORE_FOLDER   = core
 
@@ -27,6 +28,7 @@ SOURCES += main.cpp \
     $${DATA_FOLDER}/SharedIntrant.cpp \
     $${DATA_FOLDER}/SharedAction.cpp \
     $${COMMONDATA_FOLDER}/Action.cpp \
+    $${SETTINGS_FOLDER}/Settings.cpp \
     EngineConfigurator.cpp \
     AppConfiguration.cpp \
     $${MODELS_FOLDER}/ProjectAction.cpp \
@@ -50,6 +52,7 @@ HEADERS += $${CORE_FOLDER}/Global.hpp \
     $${DATA_FOLDER}/SharedAction.hpp \
     $${DATA_FOLDER}/XsdeHelpers.hpp \
     $${COMMONDATA_FOLDER}/Action.hpp \
+    $${SETTINGS_FOLDER}/Settings.hpp \
     logic/Singleton.hpp \
     EngineConfigurator.hpp \
     AppConfiguration.hpp \
@@ -57,7 +60,7 @@ HEADERS += $${CORE_FOLDER}/Global.hpp \
     core/Utils.hpp
 
 RESOURCES += gui/qml/qml.qrc \
-      $${DATA_FOLDER}/data.qrc
+      logic/data.qrc
 
 INCLUDEPATH += gui \
     logic \
