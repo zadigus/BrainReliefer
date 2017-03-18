@@ -21,7 +21,7 @@ Item {
     orientation: ListView.Vertical
 
     model: newIntrantsModel
-    delegate: NewIntrantDelegate { } //intrantDelegate
+    delegate: NewIntrantDelegate { }
   }
 
   Component.onCompleted:

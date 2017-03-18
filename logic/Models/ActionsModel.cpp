@@ -46,8 +46,14 @@ namespace N_Models {
     if(a_Item.actions_present())
     {
       auto& actionList(a_Item.actions());
+
+      int idx(static_cast<int>(m_Data.size()));
+      beginInsertRows(QModelIndex(), idx, idx + actionList.Action().size()-1);
+
       std::transform(actionList.Action().begin(), actionList.Action().end(), std::back_inserter(m_Data),
                      [&projectTitle](const N_Data::Action& a_Action) -> ProjectAction { return ProjectAction(a_Action, projectTitle); });
+
+      endInsertRows();
     }
   }
 

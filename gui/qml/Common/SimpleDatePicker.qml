@@ -27,7 +27,7 @@ Column {
       calendar.destroy()
     }
 
-    var component = Qt.createComponent("/NewIntrants/NewIntrantCalendar.qml")
+    var component = Qt.createComponent("/Common/Calendar.qml")
     calendar = component.createObject(parent)
     validateButton.visible = true
   }
@@ -41,6 +41,7 @@ Column {
     visible: false
     function onClicked()
     {
+      console.log("SimpleDatePicker::validate")
       var chosenDate
       if(parent.calendar)
       {

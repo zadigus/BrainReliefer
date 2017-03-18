@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 import MyDataManagement 1.0
 
 import "/js/Global.js" as Global
-import "../Common/"
+import "../Common/" as Common
 
 Rectangle
 {
@@ -17,24 +17,16 @@ Rectangle
 
   // TODO: make the whole rectangle flickable
 
-  TextField {
+  Common.TextField {
     id: titleField
     focus: true
     placeholderText: qsTr("Enter title")
     width: parent.width
-    height: settings.value("TextField", "height")
-    topPadding: settings.value("TextField", "topPadding")
-    bottomPadding: settings.value("TextField", "bottomPadding")
-    font { pointSize: settings.value("TextField", "font.pointSize") }
-    background: FocusRectangle {
-      textField: titleField
-    }
     Binding {
-        target: sharedIntrant
-        property: "title"
-        value: titleField.text
+      target: sharedIntrant
+      property: "title"
+      value: titleField.text
     }
-
   }
 
   Rectangle {
@@ -47,7 +39,7 @@ Rectangle
     }
   }
 
-  FocusableTextEdit {
+  Common.FocusableTextEdit {
     id: descriptionField
     width: parent.width
     height: 100
@@ -60,7 +52,7 @@ Rectangle
     }
   }
 
-  ActionButton {
+  Common.ActionButton {
     anchors.bottom: parent.bottom
     width: parent.width
     height: 100

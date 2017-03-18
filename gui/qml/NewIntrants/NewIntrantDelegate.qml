@@ -266,15 +266,11 @@ Component
 
       property int sideMargin: 10
 
-      TextField {
+      Common.TextField {
         id: actionTitleField
         focus: false
         placeholderText: qsTr("Enter action title")
         width: backgroundRectangle.width - 2 * defineNextActionLayout.sideMargin
-        height: 50
-        background: Common.FocusRectangle {
-          textField: actionTitleField
-        }
         Binding {
           target: sharedAction
           property: "title"
@@ -330,16 +326,12 @@ Component
           }
         }
 
-        TextField {
+        Common.TextField {
           id: delegateField
           visible: false
           focus: true
           placeholderText: qsTr("Enter delegate name")
           width: backgroundRectangle.width - 2 * defineNextActionLayout.sideMargin
-          height: 50
-          background: Common.FocusRectangle {
-            textField: delegateField
-          }
           Binding {
             target: sharedAction
             property: "delegate"

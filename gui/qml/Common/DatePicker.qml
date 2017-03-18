@@ -46,7 +46,7 @@ Column {
       {
         if(!calendarComponent)
         {
-          var component = Qt.createComponent("/NewIntrants/NewIntrantCalendar.qml")
+          var component = Qt.createComponent("/Common/Calendar.qml")
           var calendar = component.createObject(parent.parent)
           parent.parent.calendarComponent = calendar
           validateButton.visible = true
