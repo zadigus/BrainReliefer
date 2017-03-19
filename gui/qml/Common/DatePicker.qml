@@ -27,8 +27,6 @@ Column {
       id: defaultDateButton
       buttonText: defaultText
       width: buttonWidth
-      height: buttonHeight
-      radius: 5
       visible: true
       function onClicked()
       {
@@ -39,8 +37,6 @@ Column {
       id: changeDateButton
       buttonText: qsTr("Change consultation deadline")
       width: buttonWidth
-      height: buttonHeight
-      radius: 5
       visible: true
       function onClicked()
       {
@@ -61,8 +57,6 @@ Column {
     id: validateButton
     buttonText: qsTr("Validate")
     width: 350
-    height: 50
-    radius: 5
     visible: false
     function onClicked()
     {

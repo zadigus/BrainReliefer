@@ -29,8 +29,11 @@ class EngineConfigurator
     EngineConfigurator(QQmlApplicationEngine& a_Engine);
 
     void setupContext();
-    void setupProxyModels();
+    void setupSettings();
     void loadQML(const QUrl& a_MainQml);
+
+  private:
+    void setupProxyModels();
     void setupConnections();
 
   private:

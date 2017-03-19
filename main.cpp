@@ -36,13 +36,13 @@ int main(int argc, char *argv[])
   QQmlApplicationEngine engine;
 
   EngineConfigurator ec(engine);
-  ec.setupContext();
-  ec.setupProxyModels();
-  ec.setupConnections();
-  ec.loadQML(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 
   N_Logger::resetLogFile();
   qInstallMessageHandler(N_Logger::message); // if called too early, this doesn't work (--> the application hangs forever)
+
+  ec.setupContext();
+  ec.loadQML(QUrl(QStringLiteral("qrc:/qml/main.qml")));
+  ec.setupSettings(); // depends on the main window's size
 
   return app.exec();
 }

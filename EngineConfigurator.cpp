@@ -18,7 +18,7 @@
 EngineConfigurator::EngineConfigurator(QQmlApplicationEngine& a_Engine)
   : m_Engine(a_Engine)
   , m_AppConfiguration(new AppConfiguration)
-  , m_Settings(new N_Settings::Settings)
+  , m_Settings(Q_NULLPTR) // this needs to be initialized after the call to loadQML
   , m_NewIntrantsModel(new N_Models::IntrantsModel)
   , m_ReferencesModel(new N_Models::IntrantsModel)
   , m_IncubatedModel(new N_Models::IntrantsModel)
@@ -28,6 +28,15 @@ EngineConfigurator::EngineConfigurator(QQmlApplicationEngine& a_Engine)
   , m_SharedIntrant(new N_Data::SharedIntrant)
   , m_SharedAction(new N_Data::SharedAction)
 { }
+
+//----------------------------------------------------------------------------------------------
+void EngineConfigurator::setupSettings()
+{
+  m_Settings = new N_Settings::Settings;
+
+  QQmlContext* context(m_Engine.rootContext());
+  context->setContextProperty("settings", m_Settings);
+}
 
 //----------------------------------------------------------------------------------------------
 void EngineConfigurator::setupProxyModels()
@@ -44,7 +53,6 @@ void EngineConfigurator::setupContext()
 
   QQmlContext* context(m_Engine.rootContext());
   context->setContextProperty("appConfiguration", m_AppConfiguration);
-  context->setContextProperty("settings", m_Settings);
   context->setContextProperty("dataManager", m_DataManager);
   context->setContextProperty("newIntrantsModel", m_NewIntrantsModel);
   context->setContextProperty("referencesModel", m_ReferencesModel);
@@ -53,6 +61,9 @@ void EngineConfigurator::setupContext()
   context->setContextProperty("actionsModel", m_ActionsModel);
   context->setContextProperty("sharedIntrant", m_SharedIntrant);
   context->setContextProperty("sharedAction", m_SharedAction);
+
+  setupProxyModels();
+  setupConnections();
 }
 
 //----------------------------------------------------------------------------------------------

@@ -96,8 +96,6 @@ Component
       Common.ActionButton {
         buttonText: qsTr("Doable")
         width: parent.buttonWidth
-        height: parent.buttonHeight
-        radius: 5
         function onClicked()
         {
           intrant.state = 'Doable'
@@ -107,8 +105,6 @@ Component
       Common.ActionButton {
         buttonText: qsTr("Not doable")
         width: parent.buttonWidth
-        height: parent.buttonHeight
-        radius: 5
         function onClicked()
         {
           intrant.state = 'NotDoable'
@@ -136,8 +132,6 @@ Component
         id: deleteBtn
         buttonText: qsTr("Delete")
         width: parent.buttonWidth
-        height: parent.buttonHeight
-        radius: 5
         function onClicked()
         {
           console.log("deleting index = " + index)
@@ -148,8 +142,6 @@ Component
         id: incubateBtn
         buttonText: qsTr("Incubate")
         width: parent.buttonWidth
-        height: parent.buttonHeight
-        radius: 5
         function onClicked()
         {
           intrant.state = 'Incubate'
@@ -178,8 +170,6 @@ Component
         id: referenceBtn
         buttonText: qsTr("Keep as reference")
         width: parent.buttonWidth
-        height: parent.buttonHeight
-        radius: 5
         function onClicked()
         {
           intrant.state = 'SetAsReference'
@@ -225,8 +215,6 @@ Component
         id: addNextActionBtn
         buttonText: qsTr("Define next action")
         width: parent.buttonWidth
-        height: parent.buttonHeight
-        radius: 5
         function onClicked()
         {
           intrant.state = 'DefineNextAction'
@@ -238,9 +226,7 @@ Component
         id: addProjectBtn
         buttonText: qsTr("Done")
         width: parent.buttonWidth
-        height: parent.buttonHeight
         visible: actionModel.count > 0
-        radius: 5
         function onClicked()
         {
           console.log("Define the project!")
@@ -288,8 +274,6 @@ Component
           id: postponeBtn
           buttonText: qsTr("Post-pone")
           width: parent.buttonWidth - 2 * defineNextActionLayout.sideMargin
-          height: parent.buttonHeight
-          radius: 5
           function onClicked()
           {
             intrant.state = 'PostponeAction'
@@ -318,8 +302,6 @@ Component
           id: delegateBtn
           buttonText: qsTr("Delegate")
           width: parent.buttonWidth - 2 * defineNextActionLayout.sideMargin
-          height: parent.buttonHeight
-          radius: 5
           function onClicked()
           {
             intrant.state = 'DelegateAction'
@@ -354,8 +336,6 @@ Component
           id: validateActionBtn
           buttonText: qsTr("Done")
           width: parent.buttonWidth - 2 * defineNextActionLayout.sideMargin
-          height: parent.buttonHeight
-          radius: 5
           function onClicked()
           {
             parent.finalizeAction()

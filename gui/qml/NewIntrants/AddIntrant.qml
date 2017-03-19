@@ -29,22 +29,11 @@ Rectangle
     }
   }
 
-  Rectangle {
-    id: toBeRemoved1
-    width: parent.width
-    height: 50
-    anchors.top: titleField.bottom
-    Text {
-      text: "TODO: Put a button to add optional fields like the description"
-    }
-  }
-
   Common.FocusableTextEdit {
     id: descriptionField
     width: parent.width
-    height: 100
-    anchors.top: toBeRemoved1.bottom
-    placeHolderText: qsTr("Enter description here")
+    anchors.top: titleField.bottom
+    placeHolderText: qsTr("Enter (optional) description here")
     Binding {
       target: sharedIntrant
       property: "description"
@@ -55,7 +44,6 @@ Rectangle
   Common.ActionButton {
     anchors.bottom: parent.bottom
     width: parent.width
-    height: 100
     buttonText: qsTr("Save")
 
     function onClicked()

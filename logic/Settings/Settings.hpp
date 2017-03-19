@@ -20,21 +20,23 @@ namespace N_Settings {
 
     private:
       QSettings m_Settings;
-
+      qreal m_Ratio;
+      qreal m_FontRatio;
   };
 
   //----------------------------------------------------------------------------------
   // inline / template method(s) implementation
   //----------------------------------------------------------------------------------
 
-  inline Settings::Settings(QObject* a_Parent)
-    : QObject(a_Parent)
-    , m_Settings(":/conf/Settings.conf", QSettings::IniFormat)
-  { }
-
   inline Settings::~Settings()
   { }
 
+  //----------------------------------------------------------------------------------
+  // non-member method(s) declaration
+  //----------------------------------------------------------------------------------
+
+  qreal ratio(QSettings& a_Settings);
+  qreal fontRatio(QSettings& a_Settings, qreal a_Ratio);
 }
 
 #endif // SETTINGS_HPP

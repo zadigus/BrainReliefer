@@ -36,8 +36,6 @@ Column {
     id: validateButton
     buttonText: qsTr("Validate")
     width: 50 // parent.buttonWidth
-    height: parent.buttonHeight
-    radius: 5
     visible: false
     function onClicked()
     {
