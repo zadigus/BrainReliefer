@@ -10,7 +10,7 @@ Component
   {
     id: action
 
-    property int initialActionHeight: 40
+    property int initialActionHeight: mainWindow.scaledValue(settings.value("Intrant", "height"))
 
     width: parent.width
     height: initialActionHeight

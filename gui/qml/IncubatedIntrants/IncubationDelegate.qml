@@ -15,7 +15,7 @@ Component
     // rather than having a "PropertyChanges" line for each element we
     // want to fade.
     property bool detailsOpacity : false
-    property int initialIntrantHeight: 40
+    property int initialIntrantHeight: mainWindow.scaledValue(settings.value("Intrant", "height"))
 
     width: parent.width
     height: initialIntrantHeight
@@ -35,13 +35,10 @@ Component
     }
 
     // A button to close the detailed view, i.e. set the state back to default ('').
-    Common.TextButton {
+    Common.CloseButton {
       id: closeButton
-      y: 10
-      anchors { right: background.right; rightMargin: 10 }
+      anchors.right: background.right
       opacity: detailsOpacity
-      text: "Close"
-
       onClicked: intrant.state = '';
     }
 

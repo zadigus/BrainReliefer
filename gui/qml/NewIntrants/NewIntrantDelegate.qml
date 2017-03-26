@@ -16,9 +16,9 @@ Component
       id: actionModel
     }
 
-    property int initialIntrantHeight: 40
+    property int initialIntrantHeight: mainWindow.scaledValue(settings.value("Intrant", "height"))
 
-    width: newIntrantsList.width // TODO: set the parent here
+    width: newIntrantsList.width
     height: initialIntrantHeight
 
     // A simple rounded rectangle for the background
@@ -36,13 +36,10 @@ Component
     }
 
     // A button to close the detailed view, i.e. set the state back to default ('').
-    Common.TextButton {
+    Common.CloseButton {
       id: closeButton
-      y: 10
-      anchors { right: backgroundRectangle.right; rightMargin: 10 }
+      anchors.right: backgroundRectangle.right
       visible: false
-      text: "Close"
-
       onClicked: intrant.state = '';
     }
 
@@ -91,24 +88,17 @@ Component
       spacing: 0
 
       property int buttonWidth: (backgroundRectangle.width - 2 * leftMargin) / 2
-      property int buttonHeight: 25
 
       Common.ActionButton {
         buttonText: qsTr("Doable")
         width: parent.buttonWidth
-        function onClicked()
-        {
-          intrant.state = 'Doable'
-          // TODO: clear listview model
-        }
+        onClicked: intrant.state = 'Doable' // TODO: clear listview model
       }
+
       Common.ActionButton {
         buttonText: qsTr("Not doable")
         width: parent.buttonWidth
-        function onClicked()
-        {
-          intrant.state = 'NotDoable'
-        }
+        onClicked: intrant.state = 'NotDoable'
       }
     }
 
@@ -121,31 +111,23 @@ Component
       visible: false
 
       anchors {
-        top: dataLayout.bottom; topMargin: 1
+        bottom: backgroundRectangle.bottom; bottomMargin: 1
         horizontalCenter: backgroundRectangle.horizontalCenter
       }
 
       property int buttonWidth: backgroundRectangle.width
-      property int buttonHeight: 25
 
       Common.ActionButton {
         id: deleteBtn
         buttonText: qsTr("Delete")
         width: parent.buttonWidth
-        function onClicked()
-        {
-          console.log("deleting index = " + index)
-          dataManager.removeIntrant(newIntrantsModel, index)
-        }
+        onClicked: dataManager.removeIntrant(newIntrantsModel, index)
       }
       Common.ActionButton {
         id: incubateBtn
         buttonText: qsTr("Incubate")
         width: parent.buttonWidth
-        function onClicked()
-        {
-          intrant.state = 'Incubate'
-        }
+        onClicked: intrant.state = 'Incubate'
       }
 
       Common.DatePicker {
@@ -153,14 +135,12 @@ Component
         background: backgroundRectangle
         defaultText: qsTr("Maybe one day")
         visible: false
-        function onDateValidated(pickedDate)
-        {
+        onDateValidated: {
           console.log("incubating index " + index + " with date " + pickedDate)
           newIntrantsModel.setDate(index, pickedDate)
           dataManager.transferIntrant(newIntrantsModel, incubatedModel, index)
         }
-        function onDefaultClicked()
-        {
+        onDefaultClicked: {
           console.log("incubating index " + index + " without date")
           dataManager.transferIntrant(newIntrantsModel, incubatedModel, index)
         }
@@ -170,10 +150,7 @@ Component
         id: referenceBtn
         buttonText: qsTr("Keep as reference")
         width: parent.buttonWidth
-        function onClicked()
-        {
-          intrant.state = 'SetAsReference'
-        }
+        onClicked: intrant.state = 'SetAsReference'
       }
 
       Common.DatePicker {
@@ -181,14 +158,12 @@ Component
         background: backgroundRectangle
         defaultText: qsTr("No deadline")
         visible: false
-        function onDateValidated(pickedDate)
-        {
+        onDateValidated: {
           console.log("setting index " + index + " as a reference with date " + pickedDate)
           newIntrantsModel.setDate(index, pickedDate)
           dataManager.transferIntrant(newIntrantsModel, referencesModel, index)
         }
-        function onDefaultClicked()
-        {
+        onDefaultClicked: {
           console.log("setting index " + index + " as a reference without date")
           dataManager.transferIntrant(newIntrantsModel, referencesModel, index)
         }
@@ -209,14 +184,12 @@ Component
       }
 
       property int buttonWidth: backgroundRectangle.width
-      property int buttonHeight: 25
 
       Common.ActionButton {
         id: addNextActionBtn
         buttonText: qsTr("Define next action")
         width: parent.buttonWidth
-        function onClicked()
-        {
+        onClicked: {
           intrant.state = 'DefineNextAction'
           sharedAction.reset()
         }
@@ -227,9 +200,7 @@ Component
         buttonText: qsTr("Done")
         width: parent.buttonWidth
         visible: actionModel.count > 0
-        function onClicked()
-        {
-          console.log("Define the project!")
+        onClicked: {
           dataManager.transferIntrant(newIntrantsModel, projectsModel, index)
           actionModel.clear()
         }
@@ -268,16 +239,12 @@ Component
         spacing: 5
 
         property int buttonWidth: backgroundRectangle.width
-        property int buttonHeight: 25
 
         Common.ActionButton {
           id: postponeBtn
           buttonText: qsTr("Post-pone")
           width: parent.buttonWidth - 2 * defineNextActionLayout.sideMargin
-          function onClicked()
-          {
-            intrant.state = 'PostponeAction'
-          }
+          onClicked: intrant.state = 'PostponeAction'
         }
 
         function finalizeAction()
@@ -291,8 +258,7 @@ Component
           id: postponedActionDatePicker
           background: backgroundRectangle
           visible: false
-          function onDateValidated(pickedDate)
-          {
+          onDateValidated: {
             sharedAction.deadline = pickedDate
             parent.finalizeAction()
           }
@@ -302,10 +268,7 @@ Component
           id: delegateBtn
           buttonText: qsTr("Delegate")
           width: parent.buttonWidth - 2 * defineNextActionLayout.sideMargin
-          function onClicked()
-          {
-            intrant.state = 'DelegateAction'
-          }
+          onClicked: intrant.state = 'DelegateAction'
         }
 
         Common.TextField {
@@ -325,8 +288,7 @@ Component
           id: delegatedActionDatePicker
           background: backgroundRectangle
           visible: false
-          function onDateValidated(pickedDate)
-          {
+          onDateValidated: {
             sharedAction.deadline = pickedDate
             parent.finalizeAction()
           }
@@ -336,10 +298,7 @@ Component
           id: validateActionBtn
           buttonText: qsTr("Done")
           width: parent.buttonWidth - 2 * defineNextActionLayout.sideMargin
-          function onClicked()
-          {
-            parent.finalizeAction()
-          }
+          onClicked: parent.finalizeAction()
         }
       }
     }

@@ -1,29 +1,35 @@
 import QtQuick 2.5
+import QtQuick.Layouts 1.1
 
 import "/js/Global.js" as Global
 import "../BaseMenu"
 
-Menu
-{
-    id: newIntrantsMenu
+ColumnLayout {
+  spacing: settings.value("Menu", "spacing")
 
-    menus: [
-                {text: qsTr("Add"),     link: "newIntrants.add"},
-                {text: qsTr("Manage"),  link: "newIntrants.manage"},
-            ]
+  signal handle(string name)
 
-    menuFontMetrics: myMenuFontMetrics
+  MenuItem {
+    Layout.alignment: Qt.AlignCenter
+    Layout.preferredWidth: mediator.width
+    Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    menuText: qsTr("Add")
+    menuLink: "newIntrants.add"
+  }
 
-    MenuFontMetrics
-    {
-        id: myMenuFontMetrics
-        myMenu: newIntrantsMenu
-    }
+  MenuItem {
+    Layout.alignment: Qt.AlignCenter
+    Layout.preferredWidth: mediator.width
+    Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    menuText: qsTr("Manage")
+    menuLink: "newIntrants.manage"
+  }
 
-    Component.onCompleted:
-    {
-        windowFooter.activateBackArrow(Global.history.length >= 2)
-        windowHeader.text = qsTr("New Intrants")
-        buildMenu(Global.menuHeight)
-    }
+  Component.onCompleted:
+  {
+    windowFooter.activateBackArrow(Global.history.length >= 2)
+    windowHeader.text = qsTr("New Intrants")
+  }
 }

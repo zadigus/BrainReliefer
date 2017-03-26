@@ -3,5 +3,3 @@
 .pragma library
 
 var history = new Array (0);
-var optimalFontSize = 0;
-var menuHeight = 0;

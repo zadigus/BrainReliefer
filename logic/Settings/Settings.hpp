@@ -20,8 +20,6 @@ namespace N_Settings {
 
     private:
       QSettings m_Settings;
-      qreal m_Ratio;
-      qreal m_FontRatio;
   };
 
   //----------------------------------------------------------------------------------
@@ -35,8 +33,6 @@ namespace N_Settings {
   // non-member method(s) declaration
   //----------------------------------------------------------------------------------
 
-  qreal ratio(QSettings& a_Settings);
-  qreal fontRatio(QSettings& a_Settings, qreal a_Ratio);
 }
 
 #endif // SETTINGS_HPP

@@ -59,6 +59,7 @@ namespace N_Logger {
 
     msg << coreMessage(a_Context);
     msg << localMsg.constData();
+    msg << "\n";
 
     N_Utils::writeTextToFile(filename(), QIODevice::Append, msg.join(" "));
   }

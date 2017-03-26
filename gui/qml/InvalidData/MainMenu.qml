@@ -1,29 +1,34 @@
 import QtQuick 2.5
+import QtQuick.Layouts 1.1
 
 import "/js/Global.js" as Global
 import "../BaseMenu"
 
-Menu
-{
-    id: invalidDataMenu
+ColumnLayout {
+  spacing: settings.value("Menu", "spacing")
 
-    menus: [
-                {text: qsTr("New Data"),     link: "invalidData.new"},
-                {text: qsTr("Load Data"),    link: "invalidData.load"}
-            ]
+  signal handle(string name)
 
-    menuFontMetrics: myMenuFontMetrics
+  MenuItem {
+    Layout.alignment: Qt.AlignCenter
+    Layout.preferredWidth: mediator.width
+    Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    menuText: qsTr("New Data")
+    menuLink: "invalidData.new"
+  }
 
-    MenuFontMetrics
-    {
-        id: myMenuFontMetrics
-        myMenu: invalidDataMenu
-    }
+  MenuItem {
+    Layout.alignment: Qt.AlignCenter
+    Layout.preferredWidth: mediator.width
+    Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    menuText: qsTr("Load Data")
+    menuLink: "invalidData.load"
+  }
 
-    Component.onCompleted:
-    {
-        windowHeader.text = qsTr("Wrong data")
-
-        buildMenu(Global.menuHeight)
-    }
+  Component.onCompleted:
+  {
+    windowHeader.text = qsTr("Wrong data")
+  }
 }

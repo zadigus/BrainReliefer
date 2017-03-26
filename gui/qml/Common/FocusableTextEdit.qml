@@ -37,7 +37,7 @@ FocusRectangle {
         width: myFlickable.width - 2*x
         height: myFlickable.height - 2*y
 
-        font { pointSize: settings.value("TextEdit", "font.pointSize") }
+        font.pixelSize: width * settings.value("TextEdit", "fontRatio")
 
         onCursorRectangleChanged: myFlickable.ensureVisible(cursorRectangle)
 

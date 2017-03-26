@@ -37,12 +37,12 @@ int main(int argc, char *argv[])
 
   EngineConfigurator ec(engine);
 
-  N_Logger::resetLogFile();
-  qInstallMessageHandler(N_Logger::message); // if called too early, this doesn't work (--> the application hangs forever)
+//  N_Logger::resetLogFile();
+//  qInstallMessageHandler(N_Logger::message); // if called too early, this doesn't work (--> the application hangs forever)
 
   ec.setupContext();
+  ec.setupSettings(); // TODO: put that into setupContext
   ec.loadQML(QUrl(QStringLiteral("qrc:/qml/main.qml")));
-  ec.setupSettings(); // depends on the main window's size
 
   return app.exec();
 }

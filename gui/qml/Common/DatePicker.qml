@@ -9,17 +9,21 @@ Column {
   spacing: 10
 
   property var calendarComponent
-  onVisibleChanged:
-      if(calendarComponent)
-      {
-        validateButton.visible = false
-        changeDateButton.visible = true
-        defaultDateButton.visible = true
-        calendarComponent.destroy()
-      }
+  onVisibleChanged: {
+    if(calendarComponent)
+    {
+      validateButton.visible = false
+      changeDateButton.visible = true
+      defaultDateButton.visible = true
+      calendarComponent.destroy()
+    }
+  }
 
   property int buttonWidth: background.width / 2
-  property int buttonHeight: 25
+  property int buttonHeight: mainWindow.scaledValue(settings.value("ActionButton", "height"))
+
+  signal dateValidated(date pickedDate)
+  signal defaultClicked
 
   Row {
     spacing: 0
@@ -28,18 +32,14 @@ Column {
       buttonText: defaultText
       width: buttonWidth
       visible: true
-      function onClicked()
-      {
-        parent.parent.onDefaultClicked()
-      }
+      onClicked: parent.parent.defaultClicked()
     }
     ActionButton {
       id: changeDateButton
       buttonText: qsTr("Change consultation deadline")
       width: buttonWidth
       visible: true
-      function onClicked()
-      {
+      onClicked: {
         if(!calendarComponent)
         {
           var component = Qt.createComponent("/Common/Calendar.qml")
@@ -56,17 +56,16 @@ Column {
   ActionButton {
     id: validateButton
     buttonText: qsTr("Validate")
-    width: 350
+    width: background.width
     visible: false
-    function onClicked()
-    {
+    onClicked: {
       var chosenDate
       if(calendarComponent)
       {
         chosenDate = calendarComponent.selectedDate
       }
 
-      parent.onDateValidated(chosenDate);
+      parent.dateValidated(chosenDate)
     }
   }
 }

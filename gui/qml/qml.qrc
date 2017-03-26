@@ -6,8 +6,6 @@
         <file>Header.qml</file>
     </qresource>
     <qresource prefix="/BaseMenu">
-        <file alias="Menu.qml">BaseMenu/Menu.qml</file>
-        <file alias="MenuFontMetrics.qml">BaseMenu/MenuFontMetrics.qml</file>
         <file alias="MenuItem.qml">BaseMenu/MenuItem.qml</file>
     </qresource>
     <qresource prefix="/MainMenu">
@@ -58,7 +56,7 @@
         <file alias="PlaceHolderText.qml">Common/PlaceHolderText.qml</file>
         <file alias="FocusableTextEdit.qml">Common/FocusableTextEdit.qml</file>
         <file alias="ActionButton.qml">Common/ActionButton.qml</file>
-        <file alias="TextButton.qml">Common/TextButton.qml</file>
+        <file alias="CloseButton.qml">Common/CloseButton.qml</file>
         <file alias="Calendar.qml">Common/Calendar.qml</file>
         <file alias="DatePicker.qml">Common/DatePicker.qml</file>
         <file alias="SimpleDatePicker.qml">Common/SimpleDatePicker.qml</file>

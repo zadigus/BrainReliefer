@@ -1,39 +1,75 @@
 import QtQuick 2.5
+import QtQuick.Layouts 1.1
 
 import "/js/Global.js" as Global
 import "../BaseMenu"
 
-Menu
-{
-    id: mainMenu
 
-    menus: [
-                {text: qsTr("New Intrants"),          link: "newIntrants"},
-                {text: qsTr("Incubated Intrants"),    link: "incubation.browse"},
-                {text: qsTr("References"),            link: "references.browse"},
-                {text: qsTr("Projects"),              link: "projects.browse"},
-                {text: qsTr("Next Actions"),          link: "nextActions.browse"},
-                {text: qsTr("Agenda"),                link: "agenda"}
-            ]
+ColumnLayout {
+  spacing: settings.value("Menu", "spacing")
 
-    menuFontMetrics: myMenuFontMetrics
+  signal handle(string name)
 
-    MenuFontMetrics
-    {
-        id: myMenuFontMetrics
-        myMenu: mainMenu
-    }
+  MenuItem {
+    Layout.alignment: Qt.AlignCenter
+    Layout.preferredWidth: mediator.width
+    Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    menuText: qsTr("New Intrants")
+    menuLink: "newIntrants"
+  }
 
-    Component.onCompleted:
-    {
-        windowFooter.activateBackArrow(Global.history.length >= 2)
-        windowFooter.activateHome(false)
-        windowHeader.text = qsTr("Home")
+  MenuItem {
+    Layout.alignment: Qt.AlignCenter
+    Layout.preferredWidth: mediator.width
+    Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    menuText: qsTr("Incubated Intrants")
+    menuLink: "incubation.browse"
+  }
 
-        Global.menuHeight = mediator.height / mainMenu.menus.length
+  MenuItem {
+    Layout.alignment: Qt.AlignCenter
+    Layout.preferredWidth: mediator.width
+    Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    menuText: qsTr("References")
+    menuLink: "references.browse"
+  }
 
-        buildMenu(Global.menuHeight)
+  MenuItem {
+    Layout.alignment: Qt.AlignCenter
+    Layout.preferredWidth: mediator.width
+    Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    menuText: qsTr("Projects")
+    menuLink: "projects.browse"
+  }
 
-        dataManager.load(appConfiguration.dataDir)
-    }
+  MenuItem {
+    Layout.alignment: Qt.AlignCenter
+    Layout.preferredWidth: mediator.width
+    Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    menuText: qsTr("Next Actions")
+    menuLink: "nextActions.browse"
+  }
+
+  MenuItem {
+    Layout.alignment: Qt.AlignCenter
+    Layout.preferredWidth: mediator.width
+    Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+    menuText: qsTr("Agenda")
+    menuLink: "agenda"
+  }
+
+  Component.onCompleted:
+  {
+      windowFooter.activateBackArrow(Global.history.length >= 2)
+      windowFooter.activateHome(false)
+      windowHeader.text = qsTr("Home")
+
+      dataManager.load(appConfiguration.dataDir)
+  }
 }

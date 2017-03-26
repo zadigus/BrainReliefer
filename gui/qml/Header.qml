@@ -9,10 +9,8 @@ Rectangle {
     Text
     {
         id: headerTxt
-        font { family: "Arial"; pixelSize: Global.optimalFontSize }
+        font { family: "Arial"; pixelSize: parent.width * 0.1 }
         anchors.centerIn: parent
     }
-
-    Component.onCompleted: headerTxt.font.pixelSize = Global.optimalFontSize
 
 }

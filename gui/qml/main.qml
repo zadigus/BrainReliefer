@@ -16,6 +16,20 @@ Window
     visible: true
     modality: Qt.ApplicationModal
 
+    function ratio()
+    {
+      var myHeight  = Math.max(width, height)
+      var myWidth   = Math.min(width, height)
+      var refHeight = settings.value("Scaling", "refHeight")
+      var refWidth  = settings.value("Scaling", "refWidth")
+      return Math.min(myHeight/refHeight, myWidth/refWidth)
+    }
+
+    function scaledValue(value)
+    {
+      return ratio() * value
+    }
+
     Header
     {
         id: windowHeader

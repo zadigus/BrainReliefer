@@ -11,8 +11,9 @@ Column {
   property int buttonWidth: background.width
   property int buttonHeight: 25
 
-  onVisibleChanged:
-  {
+  signal dateValidated(date pickedDate)
+
+  onVisibleChanged: {
     if(calendar)
     {
       validateButton.visible = false
@@ -37,16 +38,14 @@ Column {
     buttonText: qsTr("Validate")
     width: 50 // parent.buttonWidth
     visible: false
-    function onClicked()
-    {
-      console.log("SimpleDatePicker::validate")
+    onClicked: {
       var chosenDate
       if(parent.calendar)
       {
         chosenDate = parent.calendar.selectedDate
       }
 
-      parent.onDateValidated(chosenDate);
+      parent.dateValidated(chosenDate);
     }
   }
 }

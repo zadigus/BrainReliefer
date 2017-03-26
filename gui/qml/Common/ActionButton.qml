@@ -6,16 +6,18 @@ Rectangle {
   property string buttonText
 
   radius: settings.value("ActionButton", "radius")
-  height: settings.value("ActionButton", "height")
+  height: mainWindow.scaledValue(settings.value("ActionButton", "height"))
+
+  signal clicked
 
   border.color: "blue"
   Text {
     text: buttonText
     anchors.centerIn: parent
-    font { pointSize: settings.value("ActionButton", "font.pointSize") }
+    font.pixelSize: parent.width * settings.value("ActionButton", "fontRatio")
   }
   MouseArea {
     anchors.fill: parent
-    onClicked: parent.onClicked()
+    onClicked: parent.clicked()
   }
 }

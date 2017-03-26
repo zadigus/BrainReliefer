@@ -46,8 +46,7 @@ Rectangle
     width: parent.width
     buttonText: qsTr("Save")
 
-    function onClicked()
-    {
+    onClicked: {
       dataManager.addIntrant(newIntrantsModel, sharedIntrant)
       windowFooter.goBack()
     }
