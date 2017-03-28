@@ -24,7 +24,7 @@ Component
     // A simple rounded rectangle for the background
     Rectangle {
       id: backgroundRectangle
-      x: 2; y: 2; width: parent.width - 2*x; height: parent.height - 2*y
+      x: 2; y: 2; width: parent.width - 2 * x; height: parent.height - 2 * y
       color: "ivory"
       border.color: "orange"
       radius: 5
@@ -311,17 +311,17 @@ Component
       visible: false
 
       width: backgroundRectangle.width
-      height: 250
 
       anchors {
         top: doableLayout.bottom; topMargin: 1
         horizontalCenter: backgroundRectangle.horizontalCenter
+        bottom: backgroundRectangle.bottom
       }
 
       orientation: ListView.Vertical
 
       header: Text {
-        text: "Action list"
+        text: "Actions list"
         font { pointSize: 18; bold: true }
         width: parent.width
         horizontalAlignment: Text.AlignHCenter

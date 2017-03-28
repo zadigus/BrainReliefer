@@ -22,9 +22,6 @@ Rectangle
     MouseArea
     {
         anchors.fill: parent
-        onClicked:
-        {
-            menuItem.parent.handle(menuLink)
-        }
+        onClicked: menuItem.parent.handle(menuLink)
     }
 }
