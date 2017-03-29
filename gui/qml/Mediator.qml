@@ -12,7 +12,7 @@ Item
         "invalidData.new"       : "/InvalidData/NewData.qml",
         "invalidData.load"      : "/InvalidData/LoadData.qml",
 
-        "newIntrants"           : "/NewIntrants/NewIntrants.qml",
+//        "newIntrants"           : "/NewIntrants/NewIntrants.qml",
         "newIntrants.add"       : "/NewIntrants/AddIntrant.qml",
         "newIntrants.manage"    : "/NewIntrants/ManageNewIntrants.qml",
 

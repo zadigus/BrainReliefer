@@ -17,4 +17,5 @@ State {
   PropertyChanges { target: referenceDatePicker; visible: true }
   PropertyChanges { target: deleteBtn; visible: false }
   PropertyChanges { target: incubateBtn; visible: false }
+  StateChangeScript { script: newIntrantsList.intrantOpened() }
 }

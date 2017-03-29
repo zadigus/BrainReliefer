@@ -14,4 +14,5 @@ State {
   // Show doable page layout
   PropertyChanges { target: doableLayout; visible: true }
   PropertyChanges { target: actionList; visible: true }
+  StateChangeScript { script: newIntrantsList.intrantOpened() }
 }

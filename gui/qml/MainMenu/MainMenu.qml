@@ -16,7 +16,7 @@ ColumnLayout {
     Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
     Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
     menuText: qsTr("New Intrants")
-    menuLink: "newIntrants"
+    menuLink: "newIntrants.manage"
   }
 
   MenuItem {

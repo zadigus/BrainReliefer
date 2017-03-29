@@ -18,4 +18,5 @@ State {
   PropertyChanges { target: validateActionBtn; visible: false}
   PropertyChanges { target: delegateField; visible: true }
   StateChangeScript { script: delegatedActionDatePicker.displayCalendar() }
+  StateChangeScript { script: newIntrantsList.intrantOpened() }
 }

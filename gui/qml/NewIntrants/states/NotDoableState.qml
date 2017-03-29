@@ -13,4 +13,5 @@ State {
   PropertyChanges { target: closeButton; visible: true }
   // Show not doable buttons: delete, incubate, keep as reference
   PropertyChanges { target: notDoableLayout; visible: true }
+  StateChangeScript { script: newIntrantsList.intrantOpened() }
 }

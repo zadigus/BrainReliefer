@@ -58,7 +58,7 @@ Component
         wrapMode: intrant.state == 'Details' ? Text.Wrap : Text.NoWrap
         x: 10
         width: backgroundRectangle.width - 2 * x
-        font.pixelSize: 24
+        font.pixelSize: mainWindow.scaledValue(settings.value("NewIntrants", "title.pixelSize"))
       }
 
       Text {
@@ -350,7 +350,10 @@ Component
         name: "PostponeAction"
       }, States.DelegateActionState {
         name: "DelegateAction"
-      }]
+      }, States.DefaultState {
+        name: ""
+      }
+    ]
 
     transitions: Transition {
       // Make the state changes smooth
@@ -359,6 +362,5 @@ Component
         NumberAnimation { duration: 300; properties: "x,contentY,height,width" }
       }
     }
-
   }
 }

@@ -30,6 +30,7 @@
         <file alias="states/IncubateState.qml">NewIntrants/states/IncubateState.qml</file>
         <file alias="states/NotDoableState.qml">NewIntrants/states/NotDoableState.qml</file>
         <file alias="states/DetailsState.qml">NewIntrants/states/DetailsState.qml</file>
+        <file alias="states/DefaultState.qml">NewIntrants/states/DefaultState.qml</file>
     </qresource>
     <qresource prefix="/References">
         <file alias="BrowseReferences.qml">References/BrowseReferences.qml</file>
@@ -61,6 +62,7 @@
         <file alias="DatePicker.qml">Common/DatePicker.qml</file>
         <file alias="SimpleDatePicker.qml">Common/SimpleDatePicker.qml</file>
         <file alias="TextField.qml">Common/TextField.qml</file>
+        <file alias="AddButton.qml">Common/AddButton.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file>backArrow.png</file>

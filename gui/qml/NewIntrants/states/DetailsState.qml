@@ -16,4 +16,5 @@ State {
   PropertyChanges { target: doableBtnsLayout; visible: true }
   // Show description
   PropertyChanges { target: descriptionData; visible: true }
+  StateChangeScript { script: newIntrantsList.intrantOpened() }
 }

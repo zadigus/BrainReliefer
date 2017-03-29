@@ -17,4 +17,5 @@ State {
   PropertyChanges { target: delegateBtn; visible: false}
   PropertyChanges { target: validateActionBtn; visible: false}
   StateChangeScript { script: postponedActionDatePicker.displayCalendar() }
+  StateChangeScript { script: newIntrantsList.intrantOpened() }
 }

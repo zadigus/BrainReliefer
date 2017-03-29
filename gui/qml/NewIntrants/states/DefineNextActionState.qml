@@ -13,4 +13,5 @@ State {
   PropertyChanges { target: closeButton; visible: true }
   // Show state page layout
   PropertyChanges { target: defineNextActionLayout; visible: true }
+  StateChangeScript { script: newIntrantsList.intrantOpened() }
 }
