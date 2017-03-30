@@ -1,5 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.1
 
 import "../Common" as Common
 import "../NewIntrants/states" as States
@@ -43,18 +44,24 @@ Component
       onClicked: intrant.state = '';
     }
 
-    Column {
+    ColumnLayout {
       id: mainColumn
 
-      topPadding: 5
+      anchors.fill: parent
+
+//      Layout.preferredHeight: backgroundRectangle.height
 
       /*
      * Lay out the data: title, description,...
      */
-      Column {
+      ColumnLayout {
         id: dataLayout
         x: 0; y: 10;
         spacing: 10
+
+        Layout.alignment: Qt.AlignTop
+        Layout.topMargin: 10
+        Layout.leftMargin: 10
 
         Text {
           id: titleData
@@ -81,10 +88,10 @@ Component
       /*
      * "Not doable" actions: delete, incubate, set as reference
      */
-      Column {
+      ColumnLayout {
         id: notDoableLayout
 
-        topPadding: 15
+        anchors { top: mainColumn.top; topMargin: 50 }
 
         spacing: 10
         visible: false
@@ -147,10 +154,10 @@ Component
       /*
      * "Doable" actions: define next actions button and list of defined next actions
      */
-      Column {
+      ColumnLayout {
         id: doableLayout
 
-        topPadding: 15
+        Layout.topMargin: 15
 
         spacing: 10
         visible: false
@@ -183,11 +190,11 @@ Component
         {
           id: actionsList
 
+          Layout.fillHeight: true
+
           visible: true
 
           width: backgroundRectangle.width
-
-          height: 250
 
           orientation: ListView.Vertical
 
@@ -207,10 +214,11 @@ Component
       /*
      * Define next action
      */
-      Column {
+      ColumnLayout {
         id: defineNextActionLayout
 
-        topPadding: 15
+        Layout.topMargin: 5
+        Layout.alignment: Qt.AlignTop | Qt.AlignCenter
 
         property string myState
 
@@ -230,7 +238,7 @@ Component
           id: actionTitleField
           focus: false
           placeholderText: qsTr("Enter action title")
-          width: backgroundRectangle.width - 2 * defineNextActionLayout.sideMargin
+          Layout.preferredWidth: parent.width
           Binding {
             target: sharedAction
             property: "title"

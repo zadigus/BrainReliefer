@@ -13,6 +13,6 @@ State {
   PropertyChanges { target: closeButton; visible: true }
   // Show doable page layout
   PropertyChanges { target: doableLayout; visible: true }
-  PropertyChanges { target: actionList; visible: true }
+  PropertyChanges { target: actionsList; visible: true }
   StateChangeScript { script: newIntrantsList.intrantOpened() }
 }
