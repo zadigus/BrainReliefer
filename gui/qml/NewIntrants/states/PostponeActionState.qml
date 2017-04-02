@@ -13,9 +13,9 @@ State {
   PropertyChanges { target: closeButton; visible: true }
   // Show state page layout
   PropertyChanges { target: defineNextActionLayout; visible: true }
-  PropertyChanges { target: postponedActionDatePicker; visible: true }
-  PropertyChanges { target: delegateBtn; visible: false}
-  PropertyChanges { target: validateActionBtn; visible: false}
-  StateChangeScript { script: postponedActionDatePicker.displayCalendar() }
+  PropertyChanges { target: defineNextActionLayout.postponedActionDatePicker; visible: true }
+  PropertyChanges { target: defineNextActionLayout.delegateBtn; visible: false}
+  PropertyChanges { target: defineNextActionLayout.validateActionBtn; visible: false}
+  StateChangeScript { script: defineNextActionLayout.postponedActionDatePicker.displayCalendar() }
   StateChangeScript { script: newIntrantsList.intrantOpened() }
 }

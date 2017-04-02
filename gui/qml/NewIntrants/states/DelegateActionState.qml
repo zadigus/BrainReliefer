@@ -13,10 +13,10 @@ State {
   PropertyChanges { target: closeButton; visible: true }
   // Show state page layout
   PropertyChanges { target: defineNextActionLayout; visible: true }
-  PropertyChanges { target: delegatedActionDatePicker; visible: true }
-  PropertyChanges { target: postponeBtn; visible: false}
-  PropertyChanges { target: validateActionBtn; visible: false}
-  PropertyChanges { target: delegateField; visible: true }
-  StateChangeScript { script: delegatedActionDatePicker.displayCalendar() }
+  PropertyChanges { target: defineNextActionLayout.delegatedActionDatePicker; visible: true }
+  PropertyChanges { target: defineNextActionLayout.postponeBtn; visible: false}
+  PropertyChanges { target: defineNextActionLayout.validateActionBtn; visible: false}
+  PropertyChanges { target: defineNextActionLayout.delegateField; visible: true }
+  StateChangeScript { script: defineNextActionLayout.delegatedActionDatePicker.displayCalendar() }
   StateChangeScript { script: newIntrantsList.intrantOpened() }
 }

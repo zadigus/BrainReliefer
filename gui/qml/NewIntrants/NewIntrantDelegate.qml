@@ -178,6 +178,7 @@ Component
           onClicked: {
             dataManager.transferIntrant(newIntrantsModel, projectsModel, index)
             actionsModel.clear()
+            newIntrantsList.intrantClosed()
           }
         }
 
@@ -209,115 +210,21 @@ Component
       /*
      * Define next action
      */
-      ColumnLayout {
+      Common.DefineNextActionLayout {
         id: defineNextActionLayout
 
-        Layout.topMargin: 5
-        Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-
-        property string myState
-
-        signal finalizeAction
-
         onFinalizeAction: {
-          dataManager.addAction(newIntrantsModel, sharedAction, index)
+          dataManager.addAction(newIntrantsModel, sharedAction, index) // index is the intrant's index in the intrants list
           actionsModel.append({"title": sharedAction.title})
           intrant.state = 'Doable'
         }
 
-        // TODO: this binding must not be part of the generic component!
         Binding {
           target: intrant
           property: "state"
           value: defineNextActionLayout.myState
         }
-
-        spacing: 10
-        visible: false
-
-        Common.TextField {
-          id: actionTitleField
-          focus: false
-          placeholderText: qsTr("Enter action title")
-          Layout.fillWidth: true
-          Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
-          Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
-          Binding {
-            target: sharedAction
-            property: "title"
-            value: actionTitleField.text
-          }
-        }
-
-        ColumnLayout {
-          spacing: 5
-
-          Common.ActionButton {
-            id: postponeBtn
-            buttonText: qsTr("Post-pone")
-            Layout.fillWidth: true
-            Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
-            Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
-            onClicked: {
-              defineNextActionLayout.myState = 'PostponeAction'
-            }
-          }
-
-          Common.SimpleDatePicker {
-            id: postponedActionDatePicker
-            visible: false
-            onDateValidated: {
-              sharedAction.deadline = pickedDate
-              defineNextActionLayout.finalizeAction()
-            }
-          }
-
-          Common.ActionButton {
-            id: delegateBtn
-            buttonText: qsTr("Delegate")
-            Layout.fillWidth: true
-            Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
-            Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
-            onClicked: intrant.state = 'DelegateAction'
-          }
-
-          Common.TextField {
-            id: delegateField
-            visible: false
-            focus: true
-            placeholderText: qsTr("Enter delegate name")
-            Layout.fillWidth: true
-            Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
-            Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
-            Binding {
-              target: sharedAction
-              property: "delegate"
-              value: delegateField.text
-            }
-          }
-
-          Common.SimpleDatePicker {
-            id: delegatedActionDatePicker
-            visible: false
-            onDateValidated: {
-              sharedAction.deadline = pickedDate
-              defineNextActionLayout.finalizeAction()
-            }
-          }
-
-          Common.ActionButton {
-            id: validateActionBtn
-            buttonText: qsTr("Done")
-            Layout.fillWidth: true
-            Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
-            Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
-            onClicked: defineNextActionLayout.finalizeAction()
-          }
-
-        }
-
       }
-
     }
 
     /*

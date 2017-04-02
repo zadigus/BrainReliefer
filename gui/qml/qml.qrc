@@ -63,6 +63,7 @@
         <file alias="SimpleDatePicker.qml">Common/SimpleDatePicker.qml</file>
         <file alias="TextField.qml">Common/TextField.qml</file>
         <file alias="AddButton.qml">Common/AddButton.qml</file>
+        <file alias="DefineNextActionLayout.qml">Common/DefineNextActionLayout.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file>backArrow.png</file>
