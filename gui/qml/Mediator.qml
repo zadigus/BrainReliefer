@@ -12,7 +12,6 @@ Item
         "invalidData.new"       : "/InvalidData/NewData.qml",
         "invalidData.load"      : "/InvalidData/LoadData.qml",
 
-//        "newIntrants"           : "/NewIntrants/NewIntrants.qml",
         "newIntrants.add"       : "/NewIntrants/AddIntrant.qml",
         "newIntrants.manage"    : "/NewIntrants/ManageNewIntrants.qml",
 
@@ -21,6 +20,8 @@ Item
         "references.browse"     : "/References/BrowseReferences.qml",
 
         "projects.browse"       : "/Projects/BrowseProjects.qml",
+        "projects.addAction"    : "/Projects/AddAction.qml",
+
         "nextActions.browse"    : "/NextActions/BrowseNextActions.qml",
 
         "agenda"                : "/Agenda/Agenda.qml"

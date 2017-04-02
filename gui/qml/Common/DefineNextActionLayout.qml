@@ -69,7 +69,7 @@ ColumnLayout {
       Layout.fillWidth: true
       Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
       Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
-      onClicked: intrant.state = 'DelegateAction'
+      onClicked: myLayout.myState = 'DelegateAction'
     }
 
     Common.TextField {

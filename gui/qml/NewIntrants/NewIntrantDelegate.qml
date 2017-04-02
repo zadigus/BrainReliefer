@@ -54,20 +54,19 @@ Component
        */
       ColumnLayout {
         id: dataLayout
-        x: 0; y: 10;
         spacing: 10
 
         Layout.alignment: Qt.AlignTop
         Layout.topMargin: 10
         Layout.leftMargin: 10
+        Layout.rightMargin: 10
 
         Text {
           id: titleData
           text: title
           elide: Text.ElideRight
           wrapMode: intrant.state == 'Details' ? Text.Wrap : Text.NoWrap
-          x: 10
-          width: backgroundRectangle.width - 2 * x
+          Layout.fillWidth: true
           font.pixelSize: mainWindow.scaledValue(settings.value("NewIntrants", "title.pixelSize"))
         }
 
@@ -75,9 +74,8 @@ Component
           id: descriptionData
           text: description
           textFormat: Text.RichText
-          font.pixelSize: 15
-          x: 15
-          width: backgroundRectangle.width - 2 * x
+          font.pixelSize: mainWindow.scaledValue(settings.value("NewIntrants", "description.pixelSize"))
+          Layout.fillWidth: true
           wrapMode: Text.Wrap
           visible: false
         }

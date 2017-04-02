@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick.Layouts 1.1
 
 import "/js/Global.js" as Global
 import ".."
@@ -46,37 +47,38 @@ Component
     // Lay out the page: title, description, ...
     // Note that elements that should not be visible in the list
     // mode have their opacity set to detailsOpacity.
-    Column {
+    ColumnLayout {
       id: topLayout
-      x: 0; y: 10;
-      height: parent.height;
-      width: parent.width
+
+      Layout.alignment: Qt.AlignTop
+      Layout.topMargin: 10
+      Layout.leftMargin: 10
+      Layout.rightMargin: 10
+
+      anchors.fill: parent
       spacing: 10
 
       Text {
         text: title
         elide: Text.ElideRight
         wrapMode: detailsOpacity ? Text.Wrap : Text.NoWrap
-        x: 10
-        width: parent.width - 2 * x
-        font.pixelSize: 24
+        Layout.fillWidth: true
+        font.pixelSize: mainWindow.scaledValue(settings.value("Projects", "title.pixelSize"))
       }
 
       Text {
         text: description
         textFormat: Text.RichText
-        font.pixelSize: 15
-        x: 15
-        width: parent.width - 2 * x
+        font.pixelSize: mainWindow.scaledValue(settings.value("Projects", "description.pixelSize"))
+        Layout.fillWidth: true
         wrapMode: Text.Wrap
         opacity: detailsOpacity
       }
 
       Text {
         text: deadline
-        font.pixelSize: 15
-        x: 15
-        width: parent.width - 2 * x
+        font.pixelSize: mainWindow.scaledValue(settings.value("Projects", "deadline.pixelSize"))
+        Layout.fillWidth: true
         wrapMode: Text.Wrap
         opacity: detailsOpacity
       }
@@ -85,8 +87,8 @@ Component
       {
         id: actionsList
 
-        width: parent.width
-        height: 250
+        Layout.fillWidth: true
+        Layout.fillHeight: true
 
         orientation: ListView.Vertical
 
@@ -94,6 +96,14 @@ Component
         delegate: ActionDelegate {}
 
         opacity: detailsOpacity
+      }
+
+      Common.AddButton {
+        id: addNewActionBtn
+        width: mainWindow.scaledValue(settings.value("Projects", "addBtnSize"))
+        anchors { bottom: actionsList.bottom; horizontalCenter: actionsList.horizontalCenter }
+        opacity: detailsOpacity
+        onClicked: handle("projects.addAction")
       }
 
     }
