@@ -1,15 +1,12 @@
 import QtQuick 2.7
+import QtQuick.Layouts 1.1
 
 import ".."
 
-Column {
+ColumnLayout {
   property var calendar
-  property var background
 
   spacing: 10
-
-  property int buttonWidth: background.width
-  property int buttonHeight: 25
 
   signal dateValidated(date pickedDate)
 
@@ -36,7 +33,7 @@ Column {
   ActionButton {
     id: validateButton
     buttonText: qsTr("Validate")
-    width: 50 // parent.buttonWidth
+    Layout.fillWidth: true
     visible: false
     onClicked: {
       var chosenDate

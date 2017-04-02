@@ -14,7 +14,7 @@ Component
     id: intrant
 
     ListModel {
-      id: actionModel
+      id: actionsModel
     }
 
     property int initialIntrantHeight: mainWindow.scaledValue(settings.value("Intrant", "height"))
@@ -49,11 +49,9 @@ Component
 
       anchors.fill: parent
 
-//      Layout.preferredHeight: backgroundRectangle.height
-
       /*
-     * Lay out the data: title, description,...
-     */
+       * Lay out the data: title, description,...
+       */
       ColumnLayout {
         id: dataLayout
         x: 0; y: 10;
@@ -86,8 +84,8 @@ Component
       }
 
       /*
-     * "Not doable" actions: delete, incubate, set as reference
-     */
+       * "Not doable" actions: delete, incubate, set as reference
+       */
       ColumnLayout {
         id: notDoableLayout
 
@@ -152,8 +150,8 @@ Component
       }
 
       /*
-     * "Doable" actions: define next actions button and list of defined next actions
-     */
+       * "Doable" actions: define next actions button and list of defined next actions
+       */
       ColumnLayout {
         id: doableLayout
 
@@ -162,12 +160,10 @@ Component
         spacing: 10
         visible: false
 
-        property int buttonWidth: backgroundRectangle.width
-
         Common.ActionButton {
           id: addNextActionBtn
           buttonText: qsTr("Define next action")
-          width: parent.buttonWidth
+          Layout.fillWidth: true
           onClicked: {
             intrant.state = 'DefineNextAction'
             sharedAction.reset()
@@ -177,11 +173,11 @@ Component
         Common.ActionButton {
           id: addProjectBtn
           buttonText: qsTr("Done")
-          width: parent.buttonWidth
-          visible: actionModel.count > 0
+          Layout.fillWidth: true
+          visible: actionsModel.count > 0
           onClicked: {
             dataManager.transferIntrant(newIntrantsModel, projectsModel, index)
-            actionModel.clear()
+            actionsModel.clear()
           }
         }
 
@@ -190,11 +186,10 @@ Component
         {
           id: actionsList
 
+          Layout.fillWidth: true
           Layout.fillHeight: true
 
           visible: true
-
-          width: backgroundRectangle.width
 
           orientation: ListView.Vertical
 
@@ -205,7 +200,7 @@ Component
             horizontalAlignment: Text.AlignHCenter
           }
 
-          model: actionModel
+          model: actionsModel
           delegate: ActionDelegate { }
         }
 
@@ -222,6 +217,14 @@ Component
 
         property string myState
 
+        signal finalizeAction
+
+        onFinalizeAction: {
+          dataManager.addAction(newIntrantsModel, sharedAction, index)
+          actionsModel.append({"title": sharedAction.title})
+          intrant.state = 'Doable'
+        }
+
         // TODO: this binding must not be part of the generic component!
         Binding {
           target: intrant
@@ -232,13 +235,13 @@ Component
         spacing: 10
         visible: false
 
-        property int sideMargin: 10
-
         Common.TextField {
           id: actionTitleField
           focus: false
           placeholderText: qsTr("Enter action title")
-          Layout.preferredWidth: parent.width
+          Layout.fillWidth: true
+          Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
+          Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
           Binding {
             target: sharedAction
             property: "title"
@@ -246,41 +249,35 @@ Component
           }
         }
 
-        Column {
+        ColumnLayout {
           spacing: 5
-
-          property int buttonWidth: backgroundRectangle.width
 
           Common.ActionButton {
             id: postponeBtn
             buttonText: qsTr("Post-pone")
-            width: parent.buttonWidth - 2 * defineNextActionLayout.sideMargin
+            Layout.fillWidth: true
+            Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
+            Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
             onClicked: {
               defineNextActionLayout.myState = 'PostponeAction'
             }
           }
 
-          function finalizeAction()
-          {
-            dataManager.addAction(newIntrantsModel, sharedAction, index)
-            actionModel.append({"title": sharedAction.title})
-            intrant.state = 'Doable'
-          }
-
           Common.SimpleDatePicker {
             id: postponedActionDatePicker
-            background: backgroundRectangle
             visible: false
             onDateValidated: {
               sharedAction.deadline = pickedDate
-              parent.finalizeAction()
+              defineNextActionLayout.finalizeAction()
             }
           }
 
           Common.ActionButton {
             id: delegateBtn
             buttonText: qsTr("Delegate")
-            width: parent.buttonWidth - 2 * defineNextActionLayout.sideMargin
+            Layout.fillWidth: true
+            Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
+            Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
             onClicked: intrant.state = 'DelegateAction'
           }
 
@@ -289,7 +286,9 @@ Component
             visible: false
             focus: true
             placeholderText: qsTr("Enter delegate name")
-            width: backgroundRectangle.width - 2 * defineNextActionLayout.sideMargin
+            Layout.fillWidth: true
+            Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
+            Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
             Binding {
               target: sharedAction
               property: "delegate"
@@ -299,19 +298,20 @@ Component
 
           Common.SimpleDatePicker {
             id: delegatedActionDatePicker
-            background: backgroundRectangle
             visible: false
             onDateValidated: {
               sharedAction.deadline = pickedDate
-              parent.finalizeAction()
+              defineNextActionLayout.finalizeAction()
             }
           }
 
           Common.ActionButton {
             id: validateActionBtn
             buttonText: qsTr("Done")
-            width: parent.buttonWidth - 2 * defineNextActionLayout.sideMargin
-            onClicked: parent.finalizeAction()
+            Layout.fillWidth: true
+            Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
+            Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
+            onClicked: defineNextActionLayout.finalizeAction()
           }
 
         }
