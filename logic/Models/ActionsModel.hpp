@@ -42,10 +42,12 @@ namespace N_Models {
 
     public slots:
       void loadDataFromFile(const QString& a_Filename);
-      void onIntrantAdded(int a_Idx);
+      void onIntrantAdded(int a_IntrantIdx);
+      void onActionAdded(int a_IntrantIdx, int a_ActionIdx);
 
     private:
       void addActionsFromIntrant(const N_Data::Intrant& a_Item);
+      void addActionFromIntrant(const N_Data::Intrant& a_Item, int a_ActionIdx);
 
     private:
       QUrl m_IntrantsListXsd;

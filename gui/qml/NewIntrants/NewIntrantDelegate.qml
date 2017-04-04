@@ -87,23 +87,24 @@ Component
       ColumnLayout {
         id: notDoableLayout
 
-        anchors { top: mainColumn.top; topMargin: 50 }
+        Layout.alignment: Qt.AlignTop
+        Layout.topMargin: 10
+        Layout.leftMargin: 10
+        Layout.rightMargin: 10
 
         spacing: 10
         visible: false
 
-        property int buttonWidth: backgroundRectangle.width
-
         Common.ActionButton {
           id: deleteBtn
           buttonText: qsTr("Delete")
-          width: parent.buttonWidth
+          Layout.fillWidth: true
           onClicked: dataManager.removeIntrant(newIntrantsModel, index)
         }
         Common.ActionButton {
           id: incubateBtn
           buttonText: qsTr("Incubate")
-          width: parent.buttonWidth
+          Layout.fillWidth: true
           onClicked: intrant.state = 'Incubate'
         }
 
@@ -126,7 +127,7 @@ Component
         Common.ActionButton {
           id: referenceBtn
           buttonText: qsTr("Keep as reference")
-          width: parent.buttonWidth
+          Layout.fillWidth: true
           onClicked: intrant.state = 'SetAsReference'
         }
 

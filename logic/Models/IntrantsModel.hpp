@@ -55,6 +55,7 @@ namespace N_Models {
 
     signals:
       void intrantAdded(int a_Idx);
+      void actionAdded(int a_IntrantIdx, int a_ActionIdx);
 
     private:
       QUrl m_IntrantsListXsd;

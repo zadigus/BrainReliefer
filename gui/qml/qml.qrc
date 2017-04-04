@@ -44,10 +44,12 @@
     </qresource>
     <qresource prefix="/Projects">
         <file alias="BrowseProjects.qml">Projects/BrowseProjects.qml</file>
-        <file alias="AddAction.qml">Projects/AddAction.qml</file>
         <file alias="ActionDelegate.qml">Projects/ActionDelegate.qml</file>
         <file alias="ProjectDelegate.qml">Projects/ProjectDelegate.qml</file>
         <file alias="states/DetailsState.qml">Projects/states/DetailsState.qml</file>
+        <file alias="states/DelegateActionState.qml">Projects/states/DelegateActionState.qml</file>
+        <file alias="states/PostponeActionState.qml">Projects/states/PostponeActionState.qml</file>
+        <file alias="states/AddActionState.qml">Projects/states/AddActionState.qml</file>
     </qresource>
     <qresource prefix="/NextActions">
         <file alias="BrowseNextActions.qml">NextActions/BrowseNextActions.qml</file>

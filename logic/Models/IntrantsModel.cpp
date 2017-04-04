@@ -65,7 +65,7 @@ namespace N_Models {
 
     QModelIndex currentIdx(index(a_Idx, columnCount() - 1));
     emit dataChanged(currentIdx, currentIdx);
-
+    emit actionAdded(a_Idx, intrant.actions().Action().size() - 1);
     // TODO: only save if you are in the project model; in the newIntrantsModel, this shouldn't be saved
     save();
   }

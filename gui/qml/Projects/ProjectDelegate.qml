@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.1
 import "/js/Global.js" as Global
 import ".."
 import "../Common" as Common
-import "../Projects/states" as States
+import "states/" as States
 
 Component
 {
@@ -12,11 +12,6 @@ Component
   {
     id: intrant
 
-    // Create a property to contain the visibility of the details.
-    // We can bind multiple element's opacity to this one property,
-    // rather than having a "PropertyChanges" line for each element we
-    // want to fade.
-    property bool detailsOpacity : false
     property int initialIntrantHeight: mainWindow.scaledValue(settings.value("Intrant", "height"))
 
     width: parent.width
@@ -40,70 +35,87 @@ Component
     Common.CloseButton {
       id: closeButton
       anchors.right: background.right
-      opacity: detailsOpacity
       onClicked: intrant.state = '';
+      visible: false
     }
 
-    // Lay out the page: title, description, ...
-    // Note that elements that should not be visible in the list
-    // mode have their opacity set to detailsOpacity.
     ColumnLayout {
-      id: topLayout
-
-      Layout.alignment: Qt.AlignTop
-      Layout.topMargin: 10
-      Layout.leftMargin: 10
-      Layout.rightMargin: 10
 
       anchors.fill: parent
-      spacing: 10
 
-      Text {
-        text: title
-        elide: Text.ElideRight
-        wrapMode: detailsOpacity ? Text.Wrap : Text.NoWrap
-        Layout.fillWidth: true
-        font.pixelSize: mainWindow.scaledValue(settings.value("Projects", "title.pixelSize"))
+      // Lay out the page: title, description, ...
+      ColumnLayout {
+
+        Layout.alignment: Qt.AlignTop
+        Layout.topMargin: 10
+        Layout.leftMargin: 10
+        Layout.rightMargin: 10
+
+        spacing: 10
+
+        Text {
+          id: titleField
+          text: title
+          elide: Text.ElideRight
+          wrapMode: intrant.state == 'Details' ? Text.Wrap : Text.NoWrap
+          Layout.fillWidth: true
+          font.pixelSize: mainWindow.scaledValue(settings.value("Projects", "title.pixelSize"))
+        }
+
+        Text {
+          id: descriptionField
+          text: description
+          textFormat: Text.RichText
+          font.pixelSize: mainWindow.scaledValue(settings.value("Projects", "description.pixelSize"))
+          Layout.fillWidth: true
+          wrapMode: Text.Wrap
+          visible: false
+        }
+
+        Text {
+          id: deadlineField
+          text: deadline
+          font.pixelSize: mainWindow.scaledValue(settings.value("Projects", "deadline.pixelSize"))
+          Layout.fillWidth: true
+          wrapMode: Text.Wrap
+          visible: false
+        }
+
+        ListView {
+          id: actionsList
+
+          Layout.fillWidth: true
+          Layout.fillHeight: true
+
+          orientation: ListView.Vertical
+
+          model: actionsModel
+          delegate: ActionDelegate {}
+
+          visible: false
+        }
+
+        Common.AddButton {
+          id: addNewActionBtn
+          width: mainWindow.scaledValue(settings.value("Projects", "addBtnSize"))
+          anchors { bottom: actionsList.bottom; horizontalCenter: actionsList.horizontalCenter }
+          onClicked: intrant.state = 'AddAction'
+          visible: false
+        }
+
       }
 
-      Text {
-        text: description
-        textFormat: Text.RichText
-        font.pixelSize: mainWindow.scaledValue(settings.value("Projects", "description.pixelSize"))
-        Layout.fillWidth: true
-        wrapMode: Text.Wrap
-        opacity: detailsOpacity
-      }
-
-      Text {
-        text: deadline
-        font.pixelSize: mainWindow.scaledValue(settings.value("Projects", "deadline.pixelSize"))
-        Layout.fillWidth: true
-        wrapMode: Text.Wrap
-        opacity: detailsOpacity
-      }
-
-      ListView
-      {
-        id: actionsList
-
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-
-        orientation: ListView.Vertical
-
-        model: actionsModel
-        delegate: ActionDelegate {}
-
-        opacity: detailsOpacity
-      }
-
-      Common.AddButton {
-        id: addNewActionBtn
-        width: mainWindow.scaledValue(settings.value("Projects", "addBtnSize"))
-        anchors { bottom: actionsList.bottom; horizontalCenter: actionsList.horizontalCenter }
-        opacity: detailsOpacity
-        onClicked: handle("projects.addAction")
+      Common.DefineNextActionLayout {
+        id: defineNextActionLayout
+        onFinalizeAction: {
+          dataManager.addAction(projectsModel, sharedAction, index)
+          intrant.state = 'Details'
+        }
+        Binding {
+          target: intrant
+          property: "state"
+          value: defineNextActionLayout.myState
+        }
       }
 
     }
@@ -111,15 +123,22 @@ Component
     states: [
       States.DetailsState {
         name: "Details"
-        mySubject: intrant
-      }]
+      }, States.AddActionState {
+        name: "AddAction"
+      }, States.DelegateActionState {
+        name: "DelegateAction"
+      }, States.PostponeActionState {
+        name: "PostponeAction"
+      }
+    ]
 
     transitions: Transition {
       // Make the state changes smooth
       ParallelAnimation {
         ColorAnimation { property: "color"; duration: 500 }
-        NumberAnimation { duration: 300; properties: "detailsOpacity,x,contentY,height,width" }
+        NumberAnimation { duration: 300; properties: "x,contentY,height,width" }
       }
     }
+
   }
 }

@@ -84,7 +84,6 @@ Component
     states: [
       States.DetailsState {
         name: "Details"
-        mySubject: intrant
       }]
 
     transitions: Transition {

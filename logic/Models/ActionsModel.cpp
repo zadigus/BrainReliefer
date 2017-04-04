@@ -30,11 +30,36 @@ namespace N_Models {
   { }
 
   //-------------------------------------------------------------------------------------------
-  void ActionsModel::onIntrantAdded(int a_Idx)
+  void ActionsModel::onIntrantAdded(int a_IntrantIdx)
   {
     if(auto intrantsModel = qobject_cast<IntrantsModel*>(sender()))
     {
-      addActionsFromIntrant(intrantsModel->getIntrant(a_Idx));
+      addActionsFromIntrant(intrantsModel->getIntrant(a_IntrantIdx));
+    }
+  }
+
+  //-------------------------------------------------------------------------------------------
+  void ActionsModel::onActionAdded(int a_IntrantIdx, int a_ActionIdx)
+  {
+    if(auto intrantsModel = qobject_cast<IntrantsModel*>(sender()))
+    {
+      addActionFromIntrant(intrantsModel->getIntrant(a_IntrantIdx), a_ActionIdx);
+    }
+  }
+
+  //-------------------------------------------------------------------------------------------
+  void ActionsModel::addActionFromIntrant(const N_Data::Intrant& a_Item, int a_ActionIdx)
+  {
+    auto projectTitle(QString::fromStdString(a_Item.title()));
+
+    if(a_Item.actions_present())
+    {
+      auto& actionList(a_Item.actions());
+
+      int idx(static_cast<int>(m_Data.size()));
+      beginInsertRows(QModelIndex(), idx, idx + 1);
+      m_Data.push_back(ProjectAction(actionList.Action()[a_ActionIdx], projectTitle));
+      endInsertRows();
     }
   }
 

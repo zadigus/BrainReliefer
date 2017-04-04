@@ -10,11 +10,10 @@ State {
   PropertyChanges { target: intrant.ListView.view; explicit: true; contentY: intrant.y + intrant.initialIntrantHeight / 2 }
   // Disallow flicking while we're in detailed view
   PropertyChanges { target: intrant.ListView.view; interactive: false }
-  StateChangeScript { script: actionsModel.setFilterFixedString(title) }
-  PropertyChanges { target: closeButton; visible: true }
-  PropertyChanges { target: titleField; visible: true }
-  PropertyChanges { target: descriptionField; visible: true }
-  PropertyChanges { target: deadlineField; visible: true }
-  PropertyChanges { target: actionsList; visible: true }
-  PropertyChanges { target: addNewActionBtn; visible: true }
+
+  PropertyChanges { target: defineNextActionLayout; visible: true }
+  PropertyChanges { target: defineNextActionLayout.postponedActionDatePicker; visible: true }
+  PropertyChanges { target: defineNextActionLayout.delegateBtn; visible: false}
+  PropertyChanges { target: defineNextActionLayout.validateActionBtn; visible: false}
+  StateChangeScript { script: defineNextActionLayout.postponedActionDatePicker.displayCalendar() }
 }

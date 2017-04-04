@@ -4,9 +4,9 @@ import "/js/Global.js" as Global
 
 Item
 {
-    property var pages:
-    {
-        "mainMenu"              : "/MainMenu/MainMenu.qml",
+  property var pages:
+  {
+    "mainMenu"              : "/MainMenu/MainMenu.qml",
 
         "invalidData"           : "/InvalidData/MainMenu.qml",
         "invalidData.new"       : "/InvalidData/NewData.qml",
@@ -25,61 +25,61 @@ Item
         "nextActions.browse"    : "/NextActions/BrowseNextActions.qml",
 
         "agenda"                : "/Agenda/Agenda.qml"
-    }
+  }
 
-    Loader
+  Loader
+  {
+    id: mainLoader
+  }
+
+  Component.onCompleted:
+  {
+    setLoaderSource("mainMenu")
+  }
+
+  Connections
+  {
+    target: windowFooter
+    onGoHome:
     {
-        id: mainLoader
+      setLoaderSource("mainMenu")
     }
-
-    Component.onCompleted:
+    onGoBack:
     {
-        setLoaderSource("mainMenu")
-    }
+      Global.history.pop()
+      var prev = Global.history.pop()
 
-    Connections
+      if(prev)
+      {
+        setLoaderSource(prev)
+      }
+    }
+  }
+
+  Connections
+  {
+    target: dataManager
+    onInvalidDataFile:
     {
-        target: windowFooter
-        onGoHome:
-        {
-            setLoaderSource("mainMenu")
-        }
-        onGoBack:
-        {
-            Global.history.pop()
-            var prev = Global.history.pop()
-
-            if(prev)
-            {
-                setLoaderSource(prev)
-            }
-        }
+      console.log("invalid data file!")
+      setLoaderSource("invalidData")
     }
+  }
 
-    Connections
+  Connections
+  {
+    target: mainLoader.item
+    onHandle:
     {
-        target: dataManager
-        onInvalidDataFile:
-        {
-            console.log("invalid data file!")
-            setLoaderSource("invalidData")
-        }
+      Global.history.push(name)
+      mainLoader.source = mediator.pages[name];
     }
+  }
 
-    Connections
-    {
-        target: mainLoader.item
-        onHandle:
-        {
-            Global.history.push(name)
-            mainLoader.source = mediator.pages[name];
-        }
-    }
-
-    function setLoaderSource(source)
-    {
-        Global.history.push(source)
-        mainLoader.source = pages[source]
-    }
+  function setLoaderSource(source)
+  {
+    Global.history.push(source)
+    mainLoader.source = pages[source]
+  }
 
 }
