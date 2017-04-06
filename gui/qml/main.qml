@@ -9,7 +9,7 @@ Window
     height: 800
 
     property real headerParts:    2
-    property real footerParts:    1
+    property real footerParts:    1 // TODO: the idea is to get rid of the footer
     property real mediatorParts: 15
 
 //    visibility: "FullScreen"

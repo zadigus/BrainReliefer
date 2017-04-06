@@ -2,7 +2,7 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.1
 
 import "/js/Global.js" as Global
-import "../BaseMenu"
+import "../Common" as Common
 
 
 ColumnLayout {
@@ -10,7 +10,7 @@ ColumnLayout {
 
   signal handle(string name)
 
-  MenuItem {
+  Common.MenuItem {
     Layout.alignment: Qt.AlignCenter
     Layout.preferredWidth: mediator.width
     Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
@@ -19,7 +19,7 @@ ColumnLayout {
     menuLink: "newIntrants.manage"
   }
 
-  MenuItem {
+  Common.MenuItem {
     Layout.alignment: Qt.AlignCenter
     Layout.preferredWidth: mediator.width
     Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
@@ -28,7 +28,7 @@ ColumnLayout {
     menuLink: "incubation.browse"
   }
 
-  MenuItem {
+  Common.MenuItem {
     Layout.alignment: Qt.AlignCenter
     Layout.preferredWidth: mediator.width
     Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
@@ -37,7 +37,7 @@ ColumnLayout {
     menuLink: "references.browse"
   }
 
-  MenuItem {
+  Common.MenuItem {
     Layout.alignment: Qt.AlignCenter
     Layout.preferredWidth: mediator.width
     Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
@@ -46,7 +46,7 @@ ColumnLayout {
     menuLink: "projects.browse"
   }
 
-  MenuItem {
+  Common.MenuItem {
     Layout.alignment: Qt.AlignCenter
     Layout.preferredWidth: mediator.width
     Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
@@ -55,7 +55,7 @@ ColumnLayout {
     menuLink: "nextActions.browse"
   }
 
-  MenuItem {
+  Common.MenuItem {
     Layout.alignment: Qt.AlignCenter
     Layout.preferredWidth: mediator.width
     Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))

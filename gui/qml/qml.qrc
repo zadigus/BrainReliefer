@@ -5,9 +5,6 @@
         <file>Footer.qml</file>
         <file>Header.qml</file>
     </qresource>
-    <qresource prefix="/BaseMenu">
-        <file alias="MenuItem.qml">BaseMenu/MenuItem.qml</file>
-    </qresource>
     <qresource prefix="/MainMenu">
         <file alias="MainMenu.qml">MainMenu/MainMenu.qml</file>
     </qresource>
@@ -17,7 +14,6 @@
         <file alias="LoadData.qml">InvalidData/LoadData.qml</file>
     </qresource>
     <qresource prefix="/NewIntrants">
-        <file alias="NewIntrants.qml">NewIntrants/NewIntrants.qml</file>
         <file alias="AddIntrant.qml">NewIntrants/AddIntrant.qml</file>
         <file alias="ManageNewIntrants.qml">NewIntrants/ManageNewIntrants.qml</file>
         <file alias="NewIntrantDelegate.qml">NewIntrants/NewIntrantDelegate.qml</file>
@@ -67,6 +63,7 @@
         <file alias="TextField.qml">Common/TextField.qml</file>
         <file alias="AddButton.qml">Common/AddButton.qml</file>
         <file alias="DefineNextActionLayout.qml">Common/DefineNextActionLayout.qml</file>
+        <file alias="MenuItem.qml">Common/MenuItem.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file>backArrow.png</file>

@@ -2,14 +2,14 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.1
 
 import "/js/Global.js" as Global
-import "../BaseMenu"
+import "../Common" as Common
 
 ColumnLayout {
   spacing: settings.value("Menu", "spacing")
 
   signal handle(string name)
 
-  MenuItem {
+  Common.MenuItem {
     Layout.alignment: Qt.AlignCenter
     Layout.preferredWidth: mediator.width
     Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
@@ -18,7 +18,7 @@ ColumnLayout {
     menuLink: "invalidData.new"
   }
 
-  MenuItem {
+  Common.MenuItem {
     Layout.alignment: Qt.AlignCenter
     Layout.preferredWidth: mediator.width
     Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
