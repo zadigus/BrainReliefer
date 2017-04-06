@@ -39,7 +39,7 @@ Component
     // A button to close the detailed view, i.e. set the state back to default ('').
     Common.CloseButton {
       id: closeButton
-      anchors.right: backgroundRectangle.right
+      anchors { right: backgroundRectangle.right; top: backgroundRectangle.top; topMargin: 5; rightMargin: 2 }
       visible: false
       onClicked: intrant.state = '';
     }
@@ -101,6 +101,7 @@ Component
           Layout.fillWidth: true
           onClicked: dataManager.removeIntrant(newIntrantsModel, index)
         }
+
         Common.ActionButton {
           id: incubateBtn
           buttonText: qsTr("Incubate")
@@ -110,17 +111,18 @@ Component
 
         Common.DatePicker {
           id: incubationDatePicker
-          background: backgroundRectangle
           defaultText: qsTr("Maybe one day")
           visible: false
           onDateValidated: {
             console.log("incubating index " + index + " with date " + pickedDate)
             newIntrantsModel.setDate(index, pickedDate)
             dataManager.transferIntrant(newIntrantsModel, incubatedModel, index)
+            newIntrantsList.intrantClosed()
           }
           onDefaultClicked: {
             console.log("incubating index " + index + " without date")
             dataManager.transferIntrant(newIntrantsModel, incubatedModel, index)
+            newIntrantsList.intrantClosed()
           }
         }
 
@@ -133,17 +135,19 @@ Component
 
         Common.DatePicker {
           id: referenceDatePicker
-          background: backgroundRectangle
           defaultText: qsTr("No deadline")
           visible: false
           onDateValidated: {
             console.log("setting index " + index + " as a reference with date " + pickedDate)
             newIntrantsModel.setDate(index, pickedDate)
             dataManager.transferIntrant(newIntrantsModel, referencesModel, index)
+            newIntrantsList.intrantClosed()
+
           }
           onDefaultClicked: {
             console.log("setting index " + index + " as a reference without date")
             dataManager.transferIntrant(newIntrantsModel, referencesModel, index)
+            newIntrantsList.intrantClosed()
           }
         }
       }

@@ -1,10 +1,12 @@
 import QtQuick 2.7
+import QtQuick.Layouts 1.1
 
 import ".."
 
-Column {
+ColumnLayout {
+  id: datePickerLayout
+
   property string defaultText
-  property var background
 
   spacing: 10
 
@@ -19,25 +21,24 @@ Column {
     }
   }
 
-  property int buttonWidth: background.width / 2
   property int buttonHeight: mainWindow.scaledValue(settings.value("ActionButton", "height"))
 
   signal dateValidated(date pickedDate)
   signal defaultClicked
 
-  Row {
-    spacing: 0
+  RowLayout {
+    spacing: 2
     ActionButton {
       id: defaultDateButton
       buttonText: defaultText
-      width: buttonWidth
+      Layout.fillWidth: true
       visible: true
-      onClicked: parent.parent.defaultClicked()
+      onClicked: datePickerLayout.defaultClicked()
     }
     ActionButton {
       id: changeDateButton
       buttonText: qsTr("Change consultation deadline")
-      width: buttonWidth
+      Layout.fillWidth: true
       visible: true
       onClicked: {
         if(!calendarComponent)
@@ -56,7 +57,7 @@ Column {
   ActionButton {
     id: validateButton
     buttonText: qsTr("Validate")
-    width: background.width
+    Layout.fillWidth: true
     visible: false
     onClicked: {
       var chosenDate
@@ -65,7 +66,7 @@ Column {
         chosenDate = calendarComponent.selectedDate
       }
 
-      parent.dateValidated(chosenDate)
+      datePickerLayout.dateValidated(chosenDate)
     }
   }
 }

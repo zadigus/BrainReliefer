@@ -16,15 +16,17 @@ Rectangle
   width: mediator.width
   height: mediator.height
 
-  // TODO: make the whole rectangle flickable
+  // TODO: make the whole rectangle flickable (except the row layout for the cancel / save buttons)
 
-  Column {
+  ColumnLayout {
+
+    anchors.fill: parent
 
     Common.TextField {
       id: titleField
       focus: true
       placeholderText: qsTr("Enter title")
-      width: addIntrantItem.width
+      Layout.fillWidth: true
       Binding {
         target: sharedIntrant
         property: "title"
@@ -34,7 +36,7 @@ Rectangle
 
     Common.FocusableTextEdit {
       id: descriptionField
-      width: addIntrantItem.width
+      Layout.fillWidth: true
       placeHolderText: qsTr("Enter (optional) description here")
       Binding {
         target: sharedIntrant
@@ -44,12 +46,14 @@ Rectangle
     }
   }
 
-  Row {
+  RowLayout {
 
-    anchors.bottom: addIntrantItem.bottom
+    spacing: 5
+
+    anchors { bottom: addIntrantItem.bottom; left: addIntrantItem.left; right: addIntrantItem.right }
 
     Common.ActionButton {
-      width: addIntrantItem.width / 2
+      Layout.fillWidth: true
       buttonText: qsTr("Cancel")
 
       onClicked: {
@@ -59,7 +63,7 @@ Rectangle
     }
 
     Common.ActionButton {
-      width: addIntrantItem.width / 2
+      Layout.fillWidth: true
       buttonText: qsTr("Save")
 
       onClicked: {
