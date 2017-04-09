@@ -52,6 +52,7 @@
         <file alias="NextActionDelegate.qml">NextActions/NextActionDelegate.qml</file>
     </qresource>
     <qresource prefix="/Common">
+        <file alias="BackgroundRectangle.qml">Common/BackgroundRectangle.qml</file>
         <file alias="FocusRectangle.qml">Common/FocusRectangle.qml</file>
         <file alias="PlaceHolderText.qml">Common/PlaceHolderText.qml</file>
         <file alias="FocusableTextEdit.qml">Common/FocusableTextEdit.qml</file>

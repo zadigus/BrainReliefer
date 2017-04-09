@@ -22,13 +22,8 @@ Component
     width: newIntrantsList.width
     height: initialIntrantHeight
 
-    // A simple rounded rectangle for the background
-    Rectangle {
-      id: backgroundRectangle
-      x: 2; y: 2; width: parent.width - 2 * x; height: parent.height - 2 * y
-      color: "ivory"
-      border.color: "orange"
-      radius: 5
+    Common.BackgroundRectangle {
+      id: background
     }
 
     MouseArea {
@@ -43,7 +38,8 @@ Component
         right: backgroundRectangle.right;
         top: backgroundRectangle.top;
         topMargin: mainWindow.scaledValue(settings.value("CloseButton", "topMargin"));
-        rightMargin: mainWindow.scaledValue(settings.value("CloseButton", "rightMargin"));  }
+        rightMargin: mainWindow.scaledValue(settings.value("CloseButton", "rightMargin"));
+      }
       visible: false
       onClicked: intrant.state = '';
     }

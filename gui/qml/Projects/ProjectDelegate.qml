@@ -17,13 +17,8 @@ Component
     width: parent.width
     height: initialIntrantHeight
 
-    // A simple rounded rectangle for the background
-    Rectangle { // TODO: use the same style everywhere: references, new intrants, ...
+    Common.BackgroundRectangle {
       id: background
-      x: 2; y: 2; width: parent.width - 2*x; height: parent.height - 2*y
-      color: "ivory"
-      border.color: "orange"
-      radius: 5
     }
 
     MouseArea {

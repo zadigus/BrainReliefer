@@ -6,7 +6,7 @@ ColumnLayout {
 
   property string defaultText
 
-  spacing: 5
+  spacing: mainWindow.scaledValue(settings.value("DatePicker", "spacing"))
 
   signal dateValidated(date pickedDate)
   signal defaultClicked

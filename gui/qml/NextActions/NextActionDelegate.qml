@@ -2,7 +2,7 @@ import QtQuick 2.7
 
 import "/js/Global.js" as Global
 import ".."
-import "../Common"
+import "../Common" as Common
 
 Component
 {
@@ -15,13 +15,8 @@ Component
     width: parent.width
     height: initialActionHeight
 
-    // A simple rounded rectangle for the background
-    Rectangle {
+    Common.BackgroundRectangle {
       id: background
-      x: 2; y: 2; width: parent.width - 2*x; height: parent.height - 2*y
-      color: "ivory"
-      border.color: "orange"
-      radius: 5
     }
 
     Column {

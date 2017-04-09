@@ -22,7 +22,7 @@ ColumnLayout {
 
   signal finalizeAction
 
-  spacing: 10
+  spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
   visible: false
 
   Common.TextField {
