@@ -1,30 +1,22 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.1
 
-import ".."
-
 ColumnLayout {
   id: datePickerLayout
 
   property string defaultText
 
-  spacing: 10
-
-  property var calendarComponent
-  onVisibleChanged: {
-    if(calendarComponent)
-    {
-      validateButton.visible = false
-      changeDateButton.visible = true
-      defaultDateButton.visible = true
-      calendarComponent.destroy()
-    }
-  }
-
-  property int buttonHeight: mainWindow.scaledValue(settings.value("ActionButton", "height"))
+  spacing: 5
 
   signal dateValidated(date pickedDate)
   signal defaultClicked
+
+  onVisibleChanged: {
+    validateButton.visible = false
+    changeDateButton.visible = true
+    defaultDateButton.visible = true
+    myCalendar.visible = false
+  }
 
   RowLayout {
     spacing: 2
@@ -41,17 +33,18 @@ ColumnLayout {
       Layout.fillWidth: true
       visible: true
       onClicked: {
-        if(!calendarComponent)
-        {
-          var component = Qt.createComponent("/Common/Calendar.qml")
-          var calendar = component.createObject(parent.parent)
-          parent.parent.calendarComponent = calendar
-          validateButton.visible = true
-          changeDateButton.visible = false
-          defaultDateButton.visible = false
-        }
+        myCalendar.visible = true
+        validateButton.visible = true
+        changeDateButton.visible = false
+        defaultDateButton.visible = false
       }
     }
+  }
+
+  Calendar {
+    id: myCalendar
+    visible: false
+    Layout.alignment: Qt.AlignHCenter
   }
 
   ActionButton {
@@ -59,14 +52,6 @@ ColumnLayout {
     buttonText: qsTr("Validate")
     Layout.fillWidth: true
     visible: false
-    onClicked: {
-      var chosenDate
-      if(calendarComponent)
-      {
-        chosenDate = calendarComponent.selectedDate
-      }
-
-      datePickerLayout.dateValidated(chosenDate)
-    }
+    onClicked: datePickerLayout.dateValidated(myCalendar.selectedDate)
   }
 }

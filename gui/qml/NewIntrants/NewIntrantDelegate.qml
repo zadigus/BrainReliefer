@@ -39,7 +39,11 @@ Component
     // A button to close the detailed view, i.e. set the state back to default ('').
     Common.CloseButton {
       id: closeButton
-      anchors { right: backgroundRectangle.right; top: backgroundRectangle.top; topMargin: 5; rightMargin: 2 }
+      anchors {
+        right: backgroundRectangle.right;
+        top: backgroundRectangle.top;
+        topMargin: mainWindow.scaledValue(settings.value("CloseButton", "topMargin"));
+        rightMargin: mainWindow.scaledValue(settings.value("CloseButton", "rightMargin"));  }
       visible: false
       onClicked: intrant.state = '';
     }
@@ -58,8 +62,8 @@ Component
 
         Layout.alignment: Qt.AlignTop
         Layout.topMargin: 10
-        Layout.leftMargin: 10
-        Layout.rightMargin: 10
+        Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
+        Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
 
         Text {
           id: titleData
@@ -88,11 +92,10 @@ Component
         id: notDoableLayout
 
         Layout.alignment: Qt.AlignTop
-        Layout.topMargin: 10
-        Layout.leftMargin: 10
-        Layout.rightMargin: 10
+        Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
+        Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
 
-        spacing: 10
+        spacing: 5
         visible: false
 
         Common.ActionButton {
@@ -150,6 +153,12 @@ Component
             newIntrantsList.intrantClosed()
           }
         }
+
+        Item { // only way found to push the layout upwards, i.e.
+          // to move all the above buttons to the top
+          id: dummy
+          Layout.fillHeight: true
+        }
       }
 
       /*
@@ -158,7 +167,8 @@ Component
       ColumnLayout {
         id: doableLayout
 
-        Layout.topMargin: 15
+        Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
+        Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
 
         spacing: 10
         visible: false
@@ -228,36 +238,35 @@ Component
           value: defineNextActionLayout.myState
         }
       }
-    }
 
-    /*
-     * Doable / not doable buttons
-     * if inside of the column layout, then these buttons never come at the bottom of the rectangle
-     */
-    Row {
-      id: doableBtnsLayout
-      property int leftMargin: 2;
+      /*
+       * Doable / not doable buttons
+       * if inside of the column layout, then these buttons never come at the bottom of the rectangle
+       */
+      RowLayout {
+        id: doableBtnsLayout
 
-      anchors {
-        bottom: backgroundRectangle.bottom; bottomMargin: 1
-        left: backgroundRectangle.left; leftMargin: leftMargin // TODO: use horizontalCenter
-      }
+        anchors {
+          bottom: mainColumn.bottom; bottomMargin: 1
+        }
 
-      visible: false
-      spacing: 0
+        visible: false
+        spacing: 5
+        Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
+        Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
+        Layout.fillWidth: true
 
-      property int buttonWidth: (backgroundRectangle.width - 2 * leftMargin) / 2
+        Common.ActionButton {
+          buttonText: qsTr("Doable")
+          Layout.fillWidth: true
+          onClicked: intrant.state = 'Doable' // TODO: clear listview model
+        }
 
-      Common.ActionButton {
-        buttonText: qsTr("Doable")
-        width: parent.buttonWidth
-        onClicked: intrant.state = 'Doable' // TODO: clear listview model
-      }
-
-      Common.ActionButton {
-        buttonText: qsTr("Not doable")
-        width: parent.buttonWidth
-        onClicked: intrant.state = 'NotDoable'
+        Common.ActionButton {
+          buttonText: qsTr("Not doable")
+          Layout.fillWidth: true
+          onClicked: intrant.state = 'NotDoable'
+        }
       }
     }
 

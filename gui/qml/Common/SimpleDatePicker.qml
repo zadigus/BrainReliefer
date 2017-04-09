@@ -1,33 +1,26 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.1
 
-import ".."
-
 ColumnLayout {
-  property var calendar
-
   spacing: 10
 
   signal dateValidated(date pickedDate)
 
   onVisibleChanged: {
-    if(calendar)
-    {
-      validateButton.visible = false
-      calendar.destroy()
-    }
+    validateButton.visible = false
+    myCalendar.visible = false
   }
 
   function displayCalendar()
   {
-    if(calendar)
-    {
-      calendar.destroy()
-    }
-
-    var component = Qt.createComponent("/Common/Calendar.qml")
-    calendar = component.createObject(parent)
+    myCalendar.visible = true
     validateButton.visible = true
+  }
+
+  Calendar {
+    id: myCalendar
+    visible: false
+    Layout.alignment: Qt.AlignHCenter
   }
 
   ActionButton {
@@ -35,14 +28,6 @@ ColumnLayout {
     buttonText: qsTr("Validate")
     Layout.fillWidth: true
     visible: false
-    onClicked: {
-      var chosenDate
-      if(parent.calendar)
-      {
-        chosenDate = parent.calendar.selectedDate
-      }
-
-      parent.dateValidated(chosenDate);
-    }
+    onClicked: parent.dateValidated(myCalendar.selectedDate)
   }
 }

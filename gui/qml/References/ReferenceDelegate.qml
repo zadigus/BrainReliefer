@@ -37,7 +37,11 @@ Component
     // A button to close the detailed view, i.e. set the state back to default ('').    
     Common.CloseButton {
       id: closeButton
-      anchors { right: backgroundRectangle.right; top: backgroundRectangle.top; topMargin: 5; rightMargin: 2 }
+      anchors {
+        right: background.right;
+        top: background.top;
+        topMargin: mainWindow.scaledValue(settings.value("CloseButton", "topMargin"));
+        rightMargin: mainWindow.scaledValue(settings.value("CloseButton", "rightMargin"));  }
       opacity: detailsOpacity
       onClicked: intrant.state = '';
     }

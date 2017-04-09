@@ -16,7 +16,6 @@ ColumnLayout {
   property alias validateActionBtn: validateActionBtn
 
 
-  Layout.topMargin: 5
   Layout.alignment: Qt.AlignTop | Qt.AlignCenter
 
   property string myState
