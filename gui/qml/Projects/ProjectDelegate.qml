@@ -58,14 +58,14 @@ Component
           elide: Text.ElideRight
           wrapMode: intrant.state == 'Details' ? Text.Wrap : Text.NoWrap
           Layout.fillWidth: true
-          font.pixelSize: mainWindow.scaledValue(settings.value("Projects", "title.pixelSize"))
+          font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "title.pixelSize"))
         }
 
         Text {
           id: descriptionField
           text: description
           textFormat: Text.RichText
-          font.pixelSize: mainWindow.scaledValue(settings.value("Projects", "description.pixelSize"))
+          font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "description.pixelSize"))
           Layout.fillWidth: true
           wrapMode: Text.Wrap
           visible: false
@@ -74,7 +74,7 @@ Component
         Text {
           id: deadlineField
           text: deadline
-          font.pixelSize: mainWindow.scaledValue(settings.value("Projects", "deadline.pixelSize"))
+          font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "deadline.pixelSize"))
           Layout.fillWidth: true
           wrapMode: Text.Wrap
           visible: false

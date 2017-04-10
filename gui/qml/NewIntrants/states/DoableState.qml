@@ -1,7 +1,7 @@
 import QtQuick 2.7
 
 State {
-  PropertyChanges { target: backgroundRectangle; color: "white" }
+  PropertyChanges { target: background; color: "white" }
   PropertyChanges { target: intrant; x: 0; }
   // Fill the entire list area with the "doable" view
   PropertyChanges { target: intrant; height: newIntrantsList.height + intrant.initialIntrantHeight / 2 }

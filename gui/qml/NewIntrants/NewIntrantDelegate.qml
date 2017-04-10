@@ -35,8 +35,8 @@ Component
     Common.CloseButton {
       id: closeButton
       anchors {
-        right: backgroundRectangle.right;
-        top: backgroundRectangle.top;
+        right: background.right;
+        top: background.top;
         topMargin: mainWindow.scaledValue(settings.value("CloseButton", "topMargin"));
         rightMargin: mainWindow.scaledValue(settings.value("CloseButton", "rightMargin"));
       }
@@ -54,10 +54,10 @@ Component
        */
       ColumnLayout {
         id: dataLayout
-        spacing: 10
+        spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
 
         Layout.alignment: Qt.AlignTop
-        Layout.topMargin: 10
+        Layout.topMargin: dataLayout.spacing
         Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
         Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
 
@@ -67,14 +67,14 @@ Component
           elide: Text.ElideRight
           wrapMode: intrant.state == 'Details' ? Text.Wrap : Text.NoWrap
           Layout.fillWidth: true
-          font.pixelSize: mainWindow.scaledValue(settings.value("NewIntrants", "title.pixelSize"))
+          font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "title.pixelSize"))
         }
 
         Text {
           id: descriptionData
           text: description
           textFormat: Text.RichText
-          font.pixelSize: mainWindow.scaledValue(settings.value("NewIntrants", "description.pixelSize"))
+          font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "description.pixelSize"))
           Layout.fillWidth: true
           wrapMode: Text.Wrap
           visible: false

@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick.Layouts 1.1
 
 import "/js/Global.js" as Global
 import "../Common" as Common
@@ -44,39 +45,45 @@ Component
     // Lay out the page: title, description, ...
     // Note that elements that should not be visible in the list
     // mode have their opacity set to detailsOpacity.
-    Column {
+    ColumnLayout {
       id: topLayout
-      x: 0; y: 10;
-      height: parent.height;
-      width: parent.width
-      spacing: 10
 
-      Text {
-        text: title
-        elide: Text.ElideRight
-        wrapMode: detailsOpacity ? Text.Wrap : Text.NoWrap
-        x: 10
-        width: parent.width - 2 * x
-        font.pixelSize: 24
-      }
+      anchors.fill: parent
 
-      Text {
-        text: description
-        textFormat: Text.RichText
-        font.pixelSize: 15
-        x: 15
-        width: parent.width - 2 * x
-        wrapMode: Text.Wrap
-        opacity: detailsOpacity
-      }
+      ColumnLayout {
+        id: dataLayout
 
-      Text {
-        text: deadline
-        font.pixelSize: 15
-        x: 15
-        width: parent.width - 2 * x
-        wrapMode: Text.Wrap
-        opacity: detailsOpacity
+        spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
+
+        Layout.alignment: Qt.AlignTop
+        Layout.topMargin: dataLayout.spacing
+        Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
+        Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
+
+        Text {
+          text: title
+          elide: Text.ElideRight
+          wrapMode: detailsOpacity ? Text.Wrap : Text.NoWrap
+          Layout.fillWidth: true
+          font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "title.pixelSize"))
+        }
+
+        Text {
+          text: description
+          textFormat: Text.RichText
+          font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "description.pixelSize"))
+          Layout.fillWidth: true
+          wrapMode: Text.Wrap
+          opacity: detailsOpacity
+        }
+
+        Text {
+          text: deadline
+          font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "deadline.pixelSize"))
+          Layout.fillWidth: true
+          wrapMode: Text.Wrap
+          opacity: detailsOpacity
+        }
       }
     }
 

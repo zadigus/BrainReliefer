@@ -1,7 +1,7 @@
 import QtQuick 2.7
 
 State {
-  PropertyChanges { target: backgroundRectangle; color: "red" }
+  PropertyChanges { target: background; color: "red" }
   // Make details visible
   PropertyChanges { target: intrant; x: 0 }
   // Fill the entire list area with the detailed view
