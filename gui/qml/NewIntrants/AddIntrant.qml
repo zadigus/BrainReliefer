@@ -48,9 +48,15 @@ Rectangle
 
   RowLayout {
 
-    spacing: 5
+    spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
 
-    anchors { bottom: addIntrantItem.bottom; left: addIntrantItem.left; right: addIntrantItem.right }
+    anchors {
+      bottom: addIntrantItem.bottom;
+      left: addIntrantItem.left;
+      leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"));
+      right: addIntrantItem.right;
+      rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
+    }
 
     Common.ActionButton {
       Layout.fillWidth: true

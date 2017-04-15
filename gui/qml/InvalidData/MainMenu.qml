@@ -15,7 +15,7 @@ ColumnLayout {
     Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
     Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
     menuText: qsTr("New Data")
-    menuLink: "invalidData.new"
+    onClicked: handle("invalidData.new")
   }
 
   Common.MenuItem {
@@ -24,7 +24,7 @@ ColumnLayout {
     Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
     Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
     menuText: qsTr("Load Data")
-    menuLink: "invalidData.load"
+    onClicked: handle("invalidData.load")
   }
 
   Component.onCompleted:

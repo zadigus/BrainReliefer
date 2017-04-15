@@ -13,7 +13,7 @@ Rectangle {
   Text {
     text: qsTr("Close")
     anchors.centerIn: parent
-    font.pixelSize: parent.width * settings.value("CloseButton", "fontRatio")
+    font.pixelSize: mainWindow.scaledValue(settings.value("CloseButton", "pixelSize"))
   }
   MouseArea {
     anchors.fill: parent

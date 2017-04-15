@@ -17,10 +17,8 @@ Component
       id: actionsModel
     }
 
-    property int initialIntrantHeight: mainWindow.scaledValue(settings.value("Intrant", "height"))
-
     width: newIntrantsList.width
-    height: initialIntrantHeight
+    height: mainWindow.scaledValue(settings.value("Intrant", "height"))
 
     Common.BackgroundRectangle {
       id: background
@@ -53,11 +51,10 @@ Component
        * Lay out the data: title, description,...
        */
       ColumnLayout {
-        id: dataLayout
         spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
 
         Layout.alignment: Qt.AlignTop
-        Layout.topMargin: dataLayout.spacing
+        Layout.topMargin: spacing
         Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
         Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
 
@@ -91,7 +88,7 @@ Component
         Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
         Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
 
-        spacing: 5
+        spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
         visible: false
 
         Common.ActionButton {
@@ -166,7 +163,7 @@ Component
         Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
         Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
 
-        spacing: 10
+        spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
         visible: false
 
         Common.ActionButton {
@@ -205,7 +202,7 @@ Component
 
           header: Text {
             text: "Actions list"
-            font { pointSize: 18; bold: true }
+            font { pixelSize: mainWindow.scaledValue(settings.value("NewIntrants", "actionsView.title.pixelSize")); bold: true }
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
           }
@@ -243,11 +240,11 @@ Component
         id: doableBtnsLayout
 
         anchors {
-          bottom: mainColumn.bottom; bottomMargin: 1
+          bottom: mainColumn.bottom
         }
 
         visible: false
-        spacing: 5
+        spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
         Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
         Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
         Layout.fillWidth: true

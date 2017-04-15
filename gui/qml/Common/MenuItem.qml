@@ -9,7 +9,8 @@ Rectangle
     color: "black"
 
     property alias menuText: textItem.text
-    property string menuLink
+
+    signal clicked
 
     Text
     {
@@ -22,6 +23,6 @@ Rectangle
     MouseArea
     {
         anchors.fill: parent
-        onClicked: menuItem.parent.handle(menuLink)
+        onClicked: parent.clicked()
     }
 }

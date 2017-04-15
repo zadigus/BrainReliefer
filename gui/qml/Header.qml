@@ -9,7 +9,10 @@ Rectangle {
     Text
     {
         id: headerTxt
-        font { family: settings.value("Header", "fontFamily"); pixelSize: parent.width * mainWindow.scaledValue(settings.value("Header", "fontRatio")) }
+        font {
+          family: settings.value("Header", "fontFamily");
+          pixelSize: mainWindow.scaledValue(settings.value("Header", "title.pixelSize"))
+        }
         anchors.centerIn: parent
     }
 

@@ -12,10 +12,8 @@ Component
   {
     id: intrant
 
-    property int initialIntrantHeight: mainWindow.scaledValue(settings.value("Intrant", "height"))
-
     width: parent.width
-    height: initialIntrantHeight
+    height: mainWindow.scaledValue(settings.value("Intrant", "height"))
 
     Common.BackgroundRectangle {
       id: background
@@ -44,13 +42,12 @@ Component
 
       // Lay out the page: title, description, ...
       ColumnLayout {
+        spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
 
         Layout.alignment: Qt.AlignTop
-        Layout.topMargin: 10
-        Layout.leftMargin: 10
-        Layout.rightMargin: 10
-
-        spacing: 10
+        Layout.topMargin: spacing
+        Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
+        Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
 
         Text {
           id: titleField

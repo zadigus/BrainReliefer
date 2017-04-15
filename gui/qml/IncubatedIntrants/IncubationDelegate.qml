@@ -16,10 +16,9 @@ Component
     // rather than having a "PropertyChanges" line for each element we
     // want to fade.
     property bool detailsOpacity : false
-    property int initialIntrantHeight: mainWindow.scaledValue(settings.value("Intrant", "height"))
 
     width: parent.width
-    height: initialIntrantHeight
+    height: mainWindow.scaledValue(settings.value("Intrant", "height"))
 
     Common.BackgroundRectangle {
       id: background
@@ -51,12 +50,10 @@ Component
       anchors.fill: parent
 
       ColumnLayout {
-        id: dataLayout
-
         spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
 
         Layout.alignment: Qt.AlignTop
-        Layout.topMargin: dataLayout.spacing
+        Layout.topMargin: spacing
         Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
         Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
 

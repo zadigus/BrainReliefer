@@ -14,7 +14,7 @@ Rectangle {
   Text {
     text: buttonText
     anchors.centerIn: parent
-    font.pixelSize: parent.width * settings.value("ActionButton", "fontRatio")
+    font.pixelSize: mainWindow.scaledValue(settings.value("ActionButton", "pixelSize"))
   }
   MouseArea {
     anchors.fill: parent

@@ -1,7 +1,8 @@
 import QtQuick 2.7
+import QtQuick.Layouts 1.1
 
 import "/js/Global.js" as Global
-import ".."
+import "."
 import "../Common" as Common
 
 Component
@@ -10,31 +11,32 @@ Component
   {
     id: action
 
-    property int initialActionHeight: mainWindow.scaledValue(settings.value("Intrant", "height"))
-
     width: parent.width
-    height: initialActionHeight
+    height: mainWindow.scaledValue(settings.value("Intrant", "height"))
 
     Common.BackgroundRectangle {
       id: background
     }
 
-    Column {
-      id: topLayout
-      x: 0; y: 10;
-      height: parent.height;
-      width: parent.width
-      spacing: 10
+    ColumnLayout {
+      anchors.fill: parent
 
-      Text {
-        text: title
-        elide: Text.ElideRight
-        wrapMode: Text.NoWrap
-        x: 10
-        width: parent.width - 2 * x
-        font.pixelSize: 24
+      ColumnLayout {
+        spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
+
+        Layout.alignment: Qt.AlignTop
+        Layout.topMargin: spacing
+        Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
+        Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
+
+        Text {
+          text: title
+          elide: Text.ElideRight
+          wrapMode: Text.NoWrap
+          Layout.fillWidth: true
+          font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "title.pixelSize"))
+        }
       }
-
     }
   }
 }
