@@ -24,11 +24,6 @@ Component
       id: background
     }
 
-    MouseArea {
-      anchors.fill: parent
-      onClicked: if(intrant.state == '') intrant.state = 'Details'
-    }
-
     // A button to close the detailed view, i.e. set the state back to default ('').
     Common.CloseButton {
       id: closeButton
@@ -40,35 +35,30 @@ Component
       }
       opacity: detailsOpacity
       onClicked: intrant.state = '';
+      z: 10
     }
 
     ColumnLayout {
 
       anchors.fill: parent
 
-      /*Flickable {
-        //      anchors.fill: parent
-        //          width: 500; height: 500;
-        Layout.fillHeight: true
-        Layout.fillWidth: true
-        contentWidth: contentItem.childrenRect.width
+      Flickable {
+        id: flickableArea
+
+        Layout.alignment: Qt.AlignTop
+        Layout.topMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
+        Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
+        Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
+
+        width: intrant.width
+        height: intrant.height
+        contentWidth: width
         contentHeight: contentItem.childrenRect.width
         clip: true
         flickableDirection: Flickable.VerticalFlick
 
-        Rectangle {
-          anchors.fill: parent
-          border.color: "red"
-          border.width: 5
-        }*/
-
         ColumnLayout {
           spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
-
-          Layout.alignment: Qt.AlignTop
-          Layout.topMargin: spacing
-          Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
-          Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
 
           Text {
             text: title
@@ -76,10 +66,19 @@ Component
             wrapMode: detailsOpacity ? Text.Wrap : Text.NoWrap
             Layout.fillWidth: true
             font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "title.pixelSize"))
+
+            MouseArea {
+              anchors.fill: parent
+              onClicked: {
+                console.log("wouaaaaaaaaaaaaaaaaaaaaaaaaaah")
+                if(intrant.state == '') intrant.state = 'Details'
+              }
+            }
           }
 
           Text {
             text: description
+            elide: Text.ElideRight
             textFormat: Text.RichText
             Layout.fillWidth: true
             font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "description.pixelSize"))
@@ -95,11 +94,14 @@ Component
             opacity: detailsOpacity
           }
         }
-//      }
+      }
     }
 
     states: [
-      States.DetailsState {
+      State {
+        name: ''
+        PropertyChanges { target: flickableArea; contentY: 0 }
+      }, States.DetailsState {
         name: "Details"
       }]
 
