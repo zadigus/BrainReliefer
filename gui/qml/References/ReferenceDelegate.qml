@@ -24,6 +24,13 @@ Component
       id: background
     }
 
+    MouseArea {
+      anchors.fill: parent
+      onClicked: {
+        if(intrant.state == '') intrant.state = 'Details'
+      }
+    }
+
     // A button to close the detailed view, i.e. set the state back to default ('').
     Common.CloseButton {
       id: closeButton
@@ -35,23 +42,37 @@ Component
       }
       opacity: detailsOpacity
       onClicked: intrant.state = '';
-      z: 10
     }
 
     ColumnLayout {
 
       anchors.fill: parent
 
-      Flickable {
-        id: flickableArea
-
+      Text {
+        id: titleText
+        text: title
+        elide: Text.ElideRight
+        wrapMode: detailsOpacity ? Text.Wrap : Text.NoWrap
+        Layout.fillWidth: true
         Layout.alignment: Qt.AlignTop
         Layout.topMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
         Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
         Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
+        font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "title.pixelSize"))
+      }
+
+      Flickable {
+        id: flickableArea
+
+        Layout.topMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
+        Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
+        Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
+
+        Layout.fillHeight: true
 
         width: intrant.width
-        height: intrant.height
+        height: intrant.height - titleText.height
+
         contentWidth: width
         contentHeight: contentItem.childrenRect.width
         clip: true
@@ -59,22 +80,6 @@ Component
 
         ColumnLayout {
           spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
-
-          Text {
-            text: title
-            elide: Text.ElideRight
-            wrapMode: detailsOpacity ? Text.Wrap : Text.NoWrap
-            Layout.fillWidth: true
-            font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "title.pixelSize"))
-
-            MouseArea {
-              anchors.fill: parent
-              onClicked: {
-                console.log("wouaaaaaaaaaaaaaaaaaaaaaaaaaah")
-                if(intrant.state == '') intrant.state = 'Details'
-              }
-            }
-          }
 
           Text {
             text: description
