@@ -67,27 +67,36 @@ Component
         Layout.topMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
         Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
         Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
-
         Layout.fillHeight: true
 
         width: intrant.width
-        height: intrant.height - titleText.height
+        // we subtract the bottom margin from the height
+        height: intrant.height - titleText.height - mainWindow.scaledValue(settings.value("GeneralLayout", "margin.bottom"))
 
         contentWidth: width
-        contentHeight: contentItem.childrenRect.width
+        contentHeight: contentItem.childrenRect.height
         clip: true
         flickableDirection: Flickable.VerticalFlick
 
         ColumnLayout {
           spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
 
+          anchors.margins: {
+            left: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"));
+            right: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"));
+          }
+
+          // do not say anything about the height or this Flickable area will not allow
+          // to scroll down without getting back up
+          anchors.right: parent.right
+          anchors.left: parent.left
+
           Text {
             text: description
-            elide: Text.ElideRight
             textFormat: Text.RichText
             Layout.fillWidth: true
             font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "description.pixelSize"))
-            wrapMode: Text.Wrap
+            wrapMode: Text.WordWrap
             opacity: detailsOpacity
           }
 
