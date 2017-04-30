@@ -45,41 +45,72 @@ Component
     // Note that elements that should not be visible in the list
     // mode have their opacity set to detailsOpacity.
     ColumnLayout {
-      id: topLayout
 
       anchors.fill: parent
 
-      ColumnLayout {
-        spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
-
+      Text {
+        text: title
+        elide: Text.ElideRight
+        wrapMode: detailsOpacity ? Text.Wrap : Text.NoWrap
+        font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "title.pixelSize"))
+        Layout.fillWidth: true
         Layout.alignment: Qt.AlignTop
-        Layout.topMargin: spacing
+        Layout.topMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
         Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
         Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
+      }
 
-        Text {
-          text: title
-          elide: Text.ElideRight
-          wrapMode: detailsOpacity ? Text.Wrap : Text.NoWrap
-          Layout.fillWidth: true
-          font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "title.pixelSize"))
-        }
+      Flickable {
+        id: flickableArea
 
-        Text {
-          text: description
-          textFormat: Text.RichText
-          font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "description.pixelSize"))
-          Layout.fillWidth: true
-          wrapMode: Text.Wrap
-          opacity: detailsOpacity
-        }
+        Layout.topMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
+        Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
+        Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
+        Layout.fillHeight: true
 
-        Text {
-          text: deadline
-          font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "deadline.pixelSize"))
-          Layout.fillWidth: true
-          wrapMode: Text.Wrap
-          opacity: detailsOpacity
+        width: intrant.width
+        // we subtract the bottom margin from the height
+        height: intrant.height - title.height - mainWindow.scaledValue(settings.value("GeneralLayout", "margin.bottom"))
+
+        contentWidth: width
+        contentHeight: contentItem.childrenRect.height
+        clip: true
+        flickableDirection: Flickable.VerticalFlick
+
+        ColumnLayout {
+          spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
+
+          anchors.margins: {
+            left: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"));
+            right: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"));
+          }
+
+          // do not say anything about the height or this Flickable area will not allow
+          // to scroll down without getting back up
+          anchors.right: parent.right
+          anchors.left: parent.left
+
+//          Layout.alignment: Qt.AlignTop
+//          Layout.topMargin: spacing
+//          Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
+//          Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
+
+          Text {
+            text: description
+            textFormat: Text.RichText
+            font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "description.pixelSize"))
+            Layout.fillWidth: true
+            wrapMode: Text.Wrap
+            opacity: detailsOpacity
+          }
+
+          Text {
+            text: deadline
+            font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "deadline.pixelSize"))
+            Layout.fillWidth: true
+            wrapMode: Text.Wrap
+            opacity: detailsOpacity
+          }
         }
       }
     }
