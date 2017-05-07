@@ -30,8 +30,6 @@ ColumnLayout {
     focus: false
     placeholderText: qsTr("Enter action title")
     Layout.fillWidth: true
-    Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
-    Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
     Binding {
       target: sharedAction
       property: "title"
@@ -46,8 +44,7 @@ ColumnLayout {
       id: postponeBtn
       buttonText: qsTr("Post-pone")
       Layout.fillWidth: true
-      Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
-      Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
+
       onClicked: {
         myLayout.myState = 'PostponeAction'
       }
@@ -66,8 +63,6 @@ ColumnLayout {
       id: delegateBtn
       buttonText: qsTr("Delegate")
       Layout.fillWidth: true
-      Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
-      Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
       onClicked: myLayout.myState = 'DelegateAction'
     }
 
@@ -77,8 +72,6 @@ ColumnLayout {
       focus: true
       placeholderText: qsTr("Enter delegate name")
       Layout.fillWidth: true
-      Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
-      Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
       Binding {
         target: sharedAction
         property: "delegate"
@@ -99,8 +92,6 @@ ColumnLayout {
       id: validateActionBtn
       buttonText: qsTr("Done")
       Layout.fillWidth: true
-      Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
-      Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
       onClicked: myLayout.finalizeAction()
     }
 

@@ -47,195 +47,244 @@ Component
 
       anchors.fill: parent
 
-      /*
+      Text {
+        id: titleData
+        text: title
+        elide: Text.ElideRight
+        wrapMode: intrant.state == 'Details' ? Text.Wrap : Text.NoWrap
+        font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "title.pixelSize"))
+        Layout.alignment: Qt.AlignTop
+        Layout.fillWidth: true
+        Layout.topMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
+        Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
+        Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
+      }
+
+      Flickable {
+        id: flickableArea
+
+        Layout.topMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
+        Layout.fillHeight: true
+
+        width: intrant.width
+        // we subtract the bottom margin from the height
+        height: intrant.height - titleData.height - mainWindow.scaledValue(settings.value("GeneralLayout", "margin.bottom"))
+
+        contentWidth: width
+        contentHeight: contentItem.childrenRect.height
+        clip: true
+        flickableDirection: Flickable.VerticalFlick
+
+        /*
        * Lay out the data: title, description,...
        */
-      ColumnLayout {
-        spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
+        ColumnLayout {
+          spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
 
-        Layout.alignment: Qt.AlignTop
-        Layout.topMargin: spacing
-        Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
-        Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
+          anchors.margins: {
+            left: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"));
+            right: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"));
+          }
 
-        Text {
-          id: titleData
-          text: title
-          elide: Text.ElideRight
-          wrapMode: intrant.state == 'Details' ? Text.Wrap : Text.NoWrap
-          Layout.fillWidth: true
-          font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "title.pixelSize"))
+          // do not say anything about the height or this Flickable area will not allow
+          // to scroll down without getting back up
+          anchors.right: parent.right
+          anchors.left: parent.left
+
+          Text {
+            id: descriptionData
+            text: description
+            textFormat: Text.RichText
+            font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "description.pixelSize"))
+            Layout.fillWidth: true
+            wrapMode: Text.Wrap
+            visible: false
+          }
         }
 
-        Text {
-          id: descriptionData
-          text: description
-          textFormat: Text.RichText
-          font.pixelSize: mainWindow.scaledValue(settings.value("Intrant", "description.pixelSize"))
-          Layout.fillWidth: true
-          wrapMode: Text.Wrap
-          visible: false
-        }
-      }
-
-      /*
+        /*
        * "Not doable" actions: delete, incubate, set as reference
        */
-      ColumnLayout {
-        id: notDoableLayout
+        ColumnLayout {
+          id: notDoableLayout
 
-        Layout.alignment: Qt.AlignTop
-        Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
-        Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
+          anchors.margins: {
+            left: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"));
+            right: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"));
+          }
 
-        spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
-        visible: false
+          // do not say anything about the height or this Flickable area will not allow
+          // to scroll down without getting back up
+          anchors.right: parent.right
+          anchors.left: parent.left
 
-        Common.ActionButton {
-          id: deleteBtn
-          buttonText: qsTr("Delete")
-          Layout.fillWidth: true
-          onClicked: dataManager.removeIntrant(newIntrantsModel, index)
-        }
-
-        Common.ActionButton {
-          id: incubateBtn
-          buttonText: qsTr("Incubate")
-          Layout.fillWidth: true
-          onClicked: intrant.state = 'Incubate'
-        }
-
-        Common.DatePicker {
-          id: incubationDatePicker
-          defaultText: qsTr("Maybe one day")
+          spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
           visible: false
-          onDateValidated: {
-            console.log("incubating index " + index + " with date " + pickedDate)
-            newIntrantsModel.setDate(index, pickedDate)
-            dataManager.transferIntrant(newIntrantsModel, incubatedModel, index)
-            newIntrantsList.intrantClosed()
+
+          Common.ActionButton {
+            id: deleteBtn
+            buttonText: qsTr("Delete")
+            Layout.fillWidth: true
+            onClicked: dataManager.removeIntrant(newIntrantsModel, index)
           }
-          onDefaultClicked: {
-            console.log("incubating index " + index + " without date")
-            dataManager.transferIntrant(newIntrantsModel, incubatedModel, index)
-            newIntrantsList.intrantClosed()
+
+          Common.ActionButton {
+            id: incubateBtn
+            buttonText: qsTr("Incubate")
+            Layout.fillWidth: true
+            onClicked: intrant.state = 'Incubate'
+          }
+
+          Common.DatePicker {
+            id: incubationDatePicker
+            defaultText: qsTr("Maybe one day")
+            visible: false
+            onDateValidated: {
+              console.log("incubating index " + index + " with date " + pickedDate)
+              newIntrantsModel.setDate(index, pickedDate)
+              dataManager.transferIntrant(newIntrantsModel, incubatedModel, index)
+              newIntrantsList.intrantClosed()
+            }
+            onDefaultClicked: {
+              console.log("incubating index " + index + " without date")
+              dataManager.transferIntrant(newIntrantsModel, incubatedModel, index)
+              newIntrantsList.intrantClosed()
+            }
+          }
+
+          Common.ActionButton {
+            id: referenceBtn
+            buttonText: qsTr("Keep as reference")
+            Layout.fillWidth: true
+            onClicked: intrant.state = 'SetAsReference'
+          }
+
+          Common.DatePicker {
+            id: referenceDatePicker
+            defaultText: qsTr("No deadline")
+            visible: false
+            onDateValidated: {
+              console.log("setting index " + index + " as a reference with date " + pickedDate)
+              newIntrantsModel.setDate(index, pickedDate)
+              dataManager.transferIntrant(newIntrantsModel, referencesModel, index)
+              newIntrantsList.intrantClosed()
+
+            }
+            onDefaultClicked: {
+              console.log("setting index " + index + " as a reference without date")
+              dataManager.transferIntrant(newIntrantsModel, referencesModel, index)
+              newIntrantsList.intrantClosed()
+            }
+          }
+
+          Item { // only way found to push the layout upwards, i.e.
+            // to move all the above buttons to the top
+            id: dummy
+            Layout.fillHeight: true
           }
         }
 
-        Common.ActionButton {
-          id: referenceBtn
-          buttonText: qsTr("Keep as reference")
-          Layout.fillWidth: true
-          onClicked: intrant.state = 'SetAsReference'
-        }
-
-        Common.DatePicker {
-          id: referenceDatePicker
-          defaultText: qsTr("No deadline")
-          visible: false
-          onDateValidated: {
-            console.log("setting index " + index + " as a reference with date " + pickedDate)
-            newIntrantsModel.setDate(index, pickedDate)
-            dataManager.transferIntrant(newIntrantsModel, referencesModel, index)
-            newIntrantsList.intrantClosed()
-
-          }
-          onDefaultClicked: {
-            console.log("setting index " + index + " as a reference without date")
-            dataManager.transferIntrant(newIntrantsModel, referencesModel, index)
-            newIntrantsList.intrantClosed()
-          }
-        }
-
-        Item { // only way found to push the layout upwards, i.e.
-          // to move all the above buttons to the top
-          id: dummy
-          Layout.fillHeight: true
-        }
-      }
-
-      /*
+        /*
        * "Doable" actions: define next actions button and list of defined next actions
        */
-      ColumnLayout {
-        id: doableLayout
+        ColumnLayout {
+          id: doableLayout
 
-        Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
-        Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
-
-        spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
-        visible: false
-
-        Common.ActionButton {
-          id: addNextActionBtn
-          buttonText: qsTr("Define next action")
-          Layout.fillWidth: true
-          onClicked: {
-            intrant.state = 'DefineNextAction'
-            sharedAction.reset()
-          }
-        }
-
-        Common.ActionButton {
-          id: addProjectBtn
-          buttonText: qsTr("Done")
-          Layout.fillWidth: true
-          visible: actionsModel.count > 0
-          onClicked: {
-            dataManager.transferIntrant(newIntrantsModel, projectsModel, index)
-            actionsModel.clear()
-            newIntrantsList.intrantClosed()
-          }
-        }
-
-        // List of defined actions
-        ListView
-        {
-          id: actionsList
-
-          Layout.fillWidth: true
-          Layout.fillHeight: true
-
-          visible: true
-
-          orientation: ListView.Vertical
-
-          header: Text {
-            text: "Actions list"
-            font { pixelSize: mainWindow.scaledValue(settings.value("NewIntrants", "actionsView.title.pixelSize")); bold: true }
-            width: parent.width
-            horizontalAlignment: Text.AlignHCenter
+          anchors.margins: {
+            left: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"));
+            right: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"));
           }
 
-          model: actionsModel
-          delegate: ActionDelegate { }
+          // do not say anything about the height or this Flickable area will not allow
+          // to scroll down without getting back up
+          anchors.right: parent.right
+          anchors.left: parent.left
+
+          spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
+          visible: false
+
+          Common.ActionButton {
+            id: addNextActionBtn
+            buttonText: qsTr("Define next action")
+            Layout.fillWidth: true
+            onClicked: {
+              intrant.state = 'DefineNextAction'
+              sharedAction.reset()
+            }
+          }
+
+          Common.ActionButton {
+            id: addProjectBtn
+            buttonText: qsTr("Done")
+            Layout.fillWidth: true
+            visible: actionsModel.count > 0
+            onClicked: {
+              dataManager.transferIntrant(newIntrantsModel, projectsModel, index)
+              actionsModel.clear()
+              newIntrantsList.intrantClosed()
+            }
+          }
+
+          // List of defined actions
+          ListView
+          {
+            id: actionsList
+
+            Layout.fillWidth: true
+
+            height: mainWindow.scaledValue(settings.value("Projects", "actionsListHeight"))
+
+            visible: true
+
+            orientation: ListView.Vertical
+
+            header: Text {
+              text: "Actions list"
+              font { pixelSize: mainWindow.scaledValue(settings.value("NewIntrants", "actionsView.title.pixelSize")); bold: true }
+              width: parent.width
+              horizontalAlignment: Text.AlignHCenter
+            }
+
+            model: actionsModel
+            delegate: ActionDelegate { }
+          }
+
         }
 
-      }
-
-      /*
+        /*
      * Define next action
      */
-      Common.DefineNextActionLayout {
-        id: defineNextActionLayout
+        Common.DefineNextActionLayout {
+          id: defineNextActionLayout
 
-        onFinalizeAction: {
-          dataManager.addAction(newIntrantsModel, sharedAction, index) // index is the intrant's index in the intrants list
-          actionsModel.append({"title": sharedAction.title})
-          intrant.state = 'Doable'
-        }
+          anchors.margins: {
+            left: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"));
+            right: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"));
+          }
 
-        Binding {
-          target: intrant
-          property: "state"
-          value: defineNextActionLayout.myState
+          // do not say anything about the height or this Flickable area will not allow
+          // to scroll down without getting back up
+          anchors.right: parent.right
+          anchors.left: parent.left
+
+          onFinalizeAction: {
+            dataManager.addAction(newIntrantsModel, sharedAction, index) // index is the intrant's index in the intrants list
+            actionsModel.append({"title": sharedAction.title})
+            intrant.state = 'Doable'
+          }
+
+          Binding {
+            target: intrant
+            property: "state"
+            value: defineNextActionLayout.myState
+          }
         }
       }
 
       /*
-       * Doable / not doable buttons
-       * if inside of the column layout, then these buttons never come at the bottom of the rectangle
-       */
+     * Doable / not doable buttons
+     * if inside of the column layout, then these buttons never come at the bottom of the rectangle
+     */
       RowLayout {
         id: doableBtnsLayout
 
@@ -261,6 +310,7 @@ Component
           onClicked: intrant.state = 'NotDoable'
         }
       }
+
     }
 
     /*
@@ -271,11 +321,11 @@ Component
       }, States.NotDoableState {
         name: "NotDoable"
       }, States.IncubateState {
-       name: "Incubate"
+        name: "Incubate"
       }, States.SetAsReferenceState {
         name: "SetAsReference"
       }, States.DoableState {
-          name: "Doable"
+        name: "Doable"
       }, States.DefineNextActionState {
         name: "DefineNextAction"
       }, States.PostponeActionState {

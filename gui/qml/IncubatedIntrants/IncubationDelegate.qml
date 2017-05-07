@@ -90,11 +90,6 @@ Component
           anchors.right: parent.right
           anchors.left: parent.left
 
-//          Layout.alignment: Qt.AlignTop
-//          Layout.topMargin: spacing
-//          Layout.leftMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.left"))
-//          Layout.rightMargin: mainWindow.scaledValue(settings.value("GeneralLayout", "margin.right"))
-
           Text {
             text: description
             textFormat: Text.RichText
