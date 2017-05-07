@@ -8,7 +8,7 @@ Flickable {
   id: mainMenu
   width: mediator.width; height: mediator.height;
   contentWidth: width
-  contentHeight: height
+  contentHeight: contentItem.childrenRect.height
   clip: true
   flickableDirection: Flickable.VerticalFlick
 
@@ -21,7 +21,7 @@ Flickable {
       Layout.alignment: Qt.AlignCenter
       Layout.preferredWidth: mediator.width
       Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
-      Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+//      Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
       menuText: qsTr("New Intrants")
       onClicked: handle("newIntrants.manage")
     }
@@ -30,7 +30,7 @@ Flickable {
       Layout.alignment: Qt.AlignCenter
       Layout.preferredWidth: mediator.width
       Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
-      Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+//      Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
       menuText: qsTr("Incubated Intrants")
       onClicked: handle("incubation.browse")
     }
@@ -39,7 +39,7 @@ Flickable {
       Layout.alignment: Qt.AlignCenter
       Layout.preferredWidth: mediator.width
       Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
-      Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+//      Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
       menuText: qsTr("References")
       onClicked: handle("references.browse")
     }
@@ -48,7 +48,7 @@ Flickable {
       Layout.alignment: Qt.AlignCenter
       Layout.preferredWidth: mediator.width
       Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
-      Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+//      Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
       menuText: qsTr("Projects")
       onClicked: handle("projects.browse")
     }
@@ -57,7 +57,7 @@ Flickable {
       Layout.alignment: Qt.AlignCenter
       Layout.preferredWidth: mediator.width
       Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
-      Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+//      Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
       menuText: qsTr("Next Actions")
       onClicked: handle("nextActions.browse")
     }
@@ -66,7 +66,7 @@ Flickable {
       Layout.alignment: Qt.AlignCenter
       Layout.preferredWidth: mediator.width
       Layout.preferredHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
-      Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
+//      Layout.maximumHeight: mainWindow.scaledValue(settings.value("Menu", "height"))
       menuText: qsTr("Agenda")
       onClicked: handle("agenda")
     }

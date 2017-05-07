@@ -46,6 +46,7 @@ FocusRectangle {
           font: myTextEdit.font
           textField: myTextEdit
         }
+
       }
     }
   }

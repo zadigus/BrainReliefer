@@ -25,6 +25,11 @@ ColumnLayout {
   spacing: mainWindow.scaledValue(settings.value("GeneralLayout", "spacing"))
   visible: false
 
+  function clear()
+  {
+    actionTitleField.text = ""
+  }
+
   Common.TextField {
     id: actionTitleField
     focus: false
