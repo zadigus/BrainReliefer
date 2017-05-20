@@ -19,13 +19,13 @@ namespace N_CommonData {
       N_Data::Action getData() const;
 
       QString title() const;
-      void setTitle(const QString& a_Value);
+      virtual void setTitle(const QString& a_Value);
 
       QDate deadline() const;
-      void setDeadline(const QDate& a_Value);
+      virtual void setDeadline(const QDate& a_Value);
 
       QString delegate() const;
-      void setDelegate(const QString& a_Value);
+      virtual void setDelegate(const QString& a_Value);
 
     protected:
       std::unique_ptr<N_Data::Action> m_Action;

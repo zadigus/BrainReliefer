@@ -125,7 +125,10 @@ Component
             id: deleteBtn
             buttonText: qsTr("Delete")
             Layout.fillWidth: true
-            onClicked: dataManager.removeIntrant(newIntrantsModel, index)
+            onClicked: {
+              dataManager.removeIntrant(newIntrantsModel, index)
+              newIntrantsList.intrantClosed()
+            }
           }
 
           Common.ActionButton {

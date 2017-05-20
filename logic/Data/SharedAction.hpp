@@ -23,6 +23,10 @@ namespace N_Data {
 
       Q_INVOKABLE void reset();
 
+      virtual void setTitle(const QString& a_Value) override;
+      virtual void setDeadline(const QDate& a_Value) override;
+      virtual void setDelegate(const QString& a_Value) override;
+
     signals:
       void titleChanged();
       void deadlineChanged();

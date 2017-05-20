@@ -39,6 +39,7 @@ namespace N_Data {
   void SharedIntrant::setTitle(const QString& a_Value)
   {
     m_Data->title(a_Value.toStdString());
+    emit titleChanged();
   }
 
   //---------------------------------------------------------------------------------------------------
@@ -51,6 +52,7 @@ namespace N_Data {
   void SharedIntrant::setDescription(const QString& a_Value)
   {
     m_Data->description(a_Value.toStdString());
+    emit descriptionChanged();
   }
 
 }

@@ -32,7 +32,6 @@ ColumnLayout {
 
   Common.TextField {
     id: actionTitleField
-    focus: false
     placeholderText: qsTr("Enter action title")
     Layout.fillWidth: true
     Binding {
