@@ -37,7 +37,7 @@ ColumnLayout {
     Binding {
       target: sharedAction
       property: "title"
-      value: actionTitleField.text
+      value: actionTitleField.displayText
     }
   }
 
