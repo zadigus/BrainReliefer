@@ -7,3 +7,5 @@ logic/Data/Data-*.*pp
 logic/Data/IntrantsList.*pp
 logic/Data/IntrantsList-*.*pp
 android/
+Makefile*
+
