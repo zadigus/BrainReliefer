@@ -140,7 +140,7 @@ Component
           anchors.left: parent.left
 
           onFinalizeAction: {
-            dataManager.addAction(projectsModel, sharedAction, index)
+            dataManager.addAction(projectsList.model, sharedAction, index)
             intrant.state = 'Details'
           }
           Binding {

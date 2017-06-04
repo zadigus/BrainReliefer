@@ -49,9 +49,11 @@ namespace N_Models {
 
     public slots:
       void loadDataFromFile(const QString& a_FileName);
+      void onActionDeleted(const QString& a_ActionTitle, const QString& a_ProjectTitle);
 
     private:
       void save();
+      void removeActionFromProject(N_Data::Intrant& a_Project, const QString& a_ActionTitle);
 
     signals:
       void intrantAdded(int a_Idx);

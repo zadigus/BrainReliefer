@@ -5,7 +5,7 @@
 
 #include "common/Data/Action.hpp"
 
-#include <QDate>
+#include <QObject>
 
 namespace N_Data {
   class Action;
@@ -14,13 +14,19 @@ namespace N_Data {
 namespace N_Models {
 
 
-  class ProjectAction : public N_CommonData::Action
+  class ProjectAction : public QObject, public N_CommonData::Action
   {
+    Q_OBJECT
+
     public:
       ProjectAction(const N_Data::Action& a_Action, const QString& a_ProjectTitle);
+       virtual ~ProjectAction();
 
       QString projectTitle() const;
       void setProjectTitle(const QString& a_Value);
+
+    signals:
+      void deleted(const QString& a_Title, const QString& a_ProjectTitle);
 
     private:
       QString m_ProjectTitle;

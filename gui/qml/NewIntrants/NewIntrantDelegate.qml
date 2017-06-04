@@ -126,7 +126,7 @@ Component
             buttonText: qsTr("Delete")
             Layout.fillWidth: true
             onClicked: {
-              dataManager.removeIntrant(newIntrantsModel, index)
+              dataManager.removeIntrant(newIntrantsList.model, index)
               newIntrantsList.intrantClosed()
             }
           }
@@ -144,13 +144,13 @@ Component
             visible: false
             onDateValidated: {
               console.log("incubating index " + index + " with date " + pickedDate)
-              newIntrantsModel.setDate(index, pickedDate)
-              dataManager.transferIntrant(newIntrantsModel, incubatedModel, index)
+              newIntrantsList.model.setDate(index, pickedDate)
+              dataManager.transferIntrant(newIntrantsList.model, incubatedModel, index)
               newIntrantsList.intrantClosed()
             }
             onDefaultClicked: {
               console.log("incubating index " + index + " without date")
-              dataManager.transferIntrant(newIntrantsModel, incubatedModel, index)
+              dataManager.transferIntrant(newIntrantsList.model, incubatedModel, index)
               newIntrantsList.intrantClosed()
             }
           }
@@ -168,14 +168,14 @@ Component
             visible: false
             onDateValidated: {
               console.log("setting index " + index + " as a reference with date " + pickedDate)
-              newIntrantsModel.setDate(index, pickedDate)
-              dataManager.transferIntrant(newIntrantsModel, referencesModel, index)
+              newIntrantsList.model.setDate(index, pickedDate)
+              dataManager.transferIntrant(newIntrantsList.model, referencesModel, index)
               newIntrantsList.intrantClosed()
 
             }
             onDefaultClicked: {
               console.log("setting index " + index + " as a reference without date")
-              dataManager.transferIntrant(newIntrantsModel, referencesModel, index)
+              dataManager.transferIntrant(newIntrantsList.model, referencesModel, index)
               newIntrantsList.intrantClosed()
             }
           }
@@ -222,7 +222,7 @@ Component
             Layout.fillWidth: true
             visible: actionsModel.count > 0
             onClicked: {
-              dataManager.transferIntrant(newIntrantsModel, projectsModel, index)
+              dataManager.transferIntrant(newIntrantsList.model, projectsModel, index)
               actionsModel.clear()
               newIntrantsList.intrantClosed()
             }
@@ -271,7 +271,7 @@ Component
           anchors.left: parent.left
 
           onFinalizeAction: {
-            dataManager.addAction(newIntrantsModel, sharedAction, index) // index is the intrant's index in the intrants list
+            dataManager.addAction(newIntrantsList.model, sharedAction, index) // index is the intrant's index in the intrants list
             actionsModel.append({"title": sharedAction.title})
             intrant.state = 'Doable'
           }

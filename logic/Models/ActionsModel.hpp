@@ -3,13 +3,16 @@
 
 #include "core/Global.hpp"
 
-#include "ProjectAction.hpp"
-
 #include <QAbstractListModel>
 #include <QUrl>
 
 namespace N_Data {
   class Intrant;
+  class Action;
+}
+
+namespace N_Models {
+  class ProjectAction;
 }
 
 namespace N_Models {
@@ -40,6 +43,8 @@ namespace N_Models {
 
       virtual bool removeRows(int a_Row, int a_Count, const QModelIndex& a_Parent = QModelIndex()) override;
 
+      Q_INVOKABLE void remove(int a_Row);
+
     public slots:
       void loadDataFromFile(const QString& a_Filename);
       void onIntrantAdded(int a_IntrantIdx);
@@ -49,10 +54,15 @@ namespace N_Models {
       void addActionsFromIntrant(const N_Data::Intrant& a_Item);
       void addActionFromIntrant(const N_Data::Intrant& a_Item, int a_ActionIdx);
 
+      std::shared_ptr<ProjectAction> createProjectAction(const N_Data::Action& a_Action, const QString& a_ProjectTitle);
+
+    signals:
+      void deleted(const QString& a_ActionTitle, const QString& a_ProjectTitle);
+
     private:
       QUrl m_IntrantsListXsd;
 
-      std::vector<ProjectAction> m_Data;
+      std::vector<std::shared_ptr<ProjectAction> > m_Data;
   };
 
   //----------------------------------------------------------------------------------

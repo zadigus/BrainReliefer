@@ -18,6 +18,27 @@ Component
       id: background
     }
 
+    MouseArea {
+      id: dragArea
+      anchors.fill: parent
+      drag.target: action
+      drag.axis: Drag.XAxis
+      drag.minimumX: -action.width
+      drag.maximumX: 0
+      drag.onActiveChanged: {
+        console.log("drag active changed: " + action.x)
+        if(action.x <= drag.minimumX / 2)
+        {
+          console.log("remove item <" + index + ">")
+          nextActionsList.model.sourceModel.remove(index)
+        }
+        else
+        {
+          action.x = 0
+        }
+      }
+    }
+
     ColumnLayout {
       anchors.fill: parent
 

@@ -62,6 +62,8 @@ function compileXSDE()
     CPPFLAGS="--sysroot $SYSROOT -I$LIBRARIES/boost/$ANDROID_PLATFORM/$MY_ARCH_DIR/include -I$LIBRARIES/xerces-c/$ANDROID_PLATFORM/$MY_ARCH_DIR/include -I$LIBRARIES/icu/$ANDROID_PLATFORM/$MY_ARCH_DIR/include -I$NDK_ROOT/sources/cxx-stl/gnu-libstdc++/4.9/include -I$NDK_ROOT/sources/cxx-stl/gnu-libstdc++/4.9/libs/"$(getSTLPortLibDir $MY_ARCH_DIR)"/include"
 
     sed -i '7s/^/xsde_parser_validation:=n\n/' $ROOT_DIR/xsde/libxsde/xsde/makefile
+    sed -i '8s/^/xsde_stl:=y\n/' $ROOT_DIR/xsde/libxsde/xsde/makefile
+    sed -i '9s/^/xsde_stl_iterator:=y\n/' $ROOT_DIR/xsde/libxsde/xsde/makefile
 
     cd $ROOT_DIR/xsde/libxsde
     make CXXFLAGS="$CXXFLAGS" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS" CC="$CC" CXX="$CXX" AR="$AR" RANLIB="$RANLIB"

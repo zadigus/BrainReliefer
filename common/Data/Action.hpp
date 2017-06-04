@@ -15,6 +15,7 @@ namespace N_CommonData {
     public:
       Action();
       Action(const N_Data::Action& a_Action);
+      virtual ~Action();
 
       N_Data::Action getData() const;
 
@@ -37,6 +38,10 @@ namespace N_CommonData {
   //----------------------------------------------------------------------------------
   // inline / template method(s) implementation
   //----------------------------------------------------------------------------------
+
+  //----------------------------------------------------------------------------------
+  inline Action::~Action()
+  { }
 
   //----------------------------------------------------------------------------------
   inline N_Data::Action Action::getData() const

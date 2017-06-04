@@ -10,7 +10,7 @@ Item {
 
   ListView
   {
-    id: nextActionslist
+    id: nextActionsList
     width: mediator.width
     height: mediator.height
 

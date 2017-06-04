@@ -2,6 +2,7 @@
 
 #include "Models/ModelsHelper.hpp"
 #include "Models/IntrantsModel.hpp"
+#include "Models/ProjectAction.hpp"
 
 #include "Data/XsdeHelpers.hpp"
 #include "Data/DataManager.hpp"
@@ -48,6 +49,14 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
+  std::shared_ptr<ProjectAction> ActionsModel::createProjectAction(const N_Data::Action& a_Action, const QString& a_ProjectTitle)
+  {
+    std::shared_ptr<ProjectAction> result(new ProjectAction(a_Action, a_ProjectTitle));
+    connect(result.get(), SIGNAL(deleted(const QString&, const QString&)), this, SIGNAL(deleted(const QString&, const QString&)));
+    return result;
+  }
+
+  //-------------------------------------------------------------------------------------------
   void ActionsModel::addActionFromIntrant(const N_Data::Intrant& a_Item, int a_ActionIdx)
   {
     auto projectTitle(QString::fromStdString(a_Item.title()));
@@ -58,7 +67,7 @@ namespace N_Models {
 
       int idx(static_cast<int>(m_Data.size()));
       beginInsertRows(QModelIndex(), idx, idx + 1);
-      m_Data.push_back(ProjectAction(actionList.Action()[a_ActionIdx], projectTitle));
+      m_Data.push_back(createProjectAction(actionList.Action()[a_ActionIdx], projectTitle));
       endInsertRows();
     }
   }
@@ -76,7 +85,7 @@ namespace N_Models {
       beginInsertRows(QModelIndex(), idx, idx + actionList.Action().size()-1);
 
       std::transform(actionList.Action().begin(), actionList.Action().end(), std::back_inserter(m_Data),
-                     [&projectTitle](const N_Data::Action& a_Action) -> ProjectAction { return ProjectAction(a_Action, projectTitle); });
+                     std::bind(&ActionsModel::createProjectAction, this, _1, projectTitle));
 
       endInsertRows();
     }
@@ -97,12 +106,19 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
+  void ActionsModel::remove(int a_Row)
+  {
+    removeRow(a_Row);
+  }
+
+  //-------------------------------------------------------------------------------------------
   bool ActionsModel::removeRows(int a_Row, int a_Count, const QModelIndex& /*a_Parent*/)
   {
     int lowerIdx(a_Row);
     int upperIdx(a_Row + a_Count - 1);
 
     beginRemoveRows(QModelIndex(), lowerIdx, upperIdx);
+    // whenever an action is removed, its deleted signal is emitted and transmitted to the ProjectsModel
     m_Data.erase(m_Data.begin() + lowerIdx, m_Data.begin() + upperIdx + 1);
     endRemoveRows();
 
@@ -127,9 +143,9 @@ namespace N_Models {
     switch(a_Role)
     {
       case TitleRole:
-        return m_Data.at(a_Index.row()).title();
+        return m_Data.at(a_Index.row())->title();
       case ProjectRole:
-        return m_Data.at(a_Index.row()).projectTitle();
+        return m_Data.at(a_Index.row())->projectTitle();
         //      case DescriptionRole:
         //      {
         //        Intrant::description_optional descr(m_Data->Intrant().at(a_Index.row()).description());
