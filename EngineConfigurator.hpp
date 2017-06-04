@@ -13,6 +13,7 @@ namespace N_Settings {
 
 namespace N_Models {
   class IntrantsModel;
+  class ProjectsModel;
 }
 
 namespace N_Data {
@@ -45,7 +46,7 @@ class EngineConfigurator
     N_Models::IntrantsModel* m_NewIntrantsModel;
     N_Models::IntrantsModel* m_ReferencesModel;
     N_Models::IntrantsModel* m_IncubatedModel;
-    N_Models::IntrantsModel* m_ProjectsModel;
+    N_Models::ProjectsModel* m_ProjectsModel;
     QSortFilterProxyModel* m_ActionsModel;
     N_Data::DataManager* m_DataManager;
     N_Data::SharedIntrant* m_SharedIntrant;

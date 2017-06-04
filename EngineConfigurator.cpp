@@ -7,6 +7,7 @@
 #include "Data/SharedAction.hpp"
 
 #include "Models/IntrantsModel.hpp"
+#include "Models/ProjectsModel.hpp"
 #include "Models/ActionsModel.hpp"
 
 #include "Settings/Settings.hpp"
@@ -22,7 +23,7 @@ EngineConfigurator::EngineConfigurator(QQmlApplicationEngine& a_Engine)
   , m_NewIntrantsModel(new N_Models::IntrantsModel)
   , m_ReferencesModel(new N_Models::IntrantsModel)
   , m_IncubatedModel(new N_Models::IntrantsModel)
-  , m_ProjectsModel(new N_Models::IntrantsModel)
+  , m_ProjectsModel(new N_Models::ProjectsModel)
   , m_ActionsModel(new QSortFilterProxyModel)
   , m_DataManager(new N_Data::DataManager)
   , m_SharedIntrant(new N_Data::SharedIntrant)

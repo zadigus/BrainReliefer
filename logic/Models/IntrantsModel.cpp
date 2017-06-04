@@ -43,36 +43,36 @@ namespace N_Models {
   }
 
   //-------------------------------------------------------------------------------------------
-  void IntrantsModel::removeActionFromProject(N_Data::Intrant& a_Project, const QString& a_ActionTitle)
-  {
-    if(a_Project.actions_present())
-    {
-      auto actionTitle(a_ActionTitle.toStdString());
-      auto& actionsList(a_Project.actions().Action());
-      actionsList.erase(std::remove_if(actionsList.begin(), actionsList.end(),
-        [&actionTitle](const N_Data::Action& a_Item){ return a_Item.title() == actionTitle; }));
-      save();
-    }
-  }
+//  void IntrantsModel::removeActionFromProject(N_Data::Intrant& a_Project, const QString& a_ActionTitle)
+//  {
+//    if(a_Project.actions_present())
+//    {
+//      auto actionTitle(a_ActionTitle.toStdString());
+//      auto& actionsList(a_Project.actions().Action());
+//      actionsList.erase(std::remove_if(actionsList.begin(), actionsList.end(),
+//        [&actionTitle](const N_Data::Action& a_Item){ return a_Item.title() == actionTitle; }));
+//      save();
+//    }
+//  }
 
-  //-------------------------------------------------------------------------------------------
-  void IntrantsModel::onActionDeleted(const QString& a_ActionTitle, const QString& a_ProjectTitle)
-  {
-    qInfo() << "Deleting action <" << a_ActionTitle << "> from project <" << a_ProjectTitle << ">";
+//  //-------------------------------------------------------------------------------------------
+//  void IntrantsModel::onActionDeleted(const QString& a_ActionTitle, const QString& a_ProjectTitle)
+//  {
+//    qInfo() << "Deleting action <" << a_ActionTitle << "> from project <" << a_ProjectTitle << ">";
 
-    auto projectTitle(a_ProjectTitle.toStdString());
-    auto it(std::find_if(m_Data->Intrant().begin(), m_Data->Intrant().end(),
-                 [&projectTitle](const N_Data::Intrant& a_Item) { return a_Item.title() == projectTitle; }));
+//    auto projectTitle(a_ProjectTitle.toStdString());
+//    auto it(std::find_if(m_Data->Intrant().begin(), m_Data->Intrant().end(),
+//                 [&projectTitle](const N_Data::Intrant& a_Item) { return a_Item.title() == projectTitle; }));
 
-    if(it != m_Data->Intrant().end())
-    {
-      removeActionFromProject(*it, a_ActionTitle);
-    }
-    else
-    {
-      qWarning() << "Found no project <" << a_ProjectTitle << ">";
-    }
-  }
+//    if(it != m_Data->Intrant().end())
+//    {
+//      removeActionFromProject(*it, a_ActionTitle);
+//    }
+//    else
+//    {
+//      qWarning() << "Found no project <" << a_ProjectTitle << ">";
+//    }
+//  }
 
   //-------------------------------------------------------------------------------------------
   void IntrantsModel::addAction(const N_Data::Action& a_Action, int a_Idx)
@@ -97,9 +97,9 @@ namespace N_Models {
 
     QModelIndex currentIdx(index(a_Idx, columnCount() - 1));
     emit dataChanged(currentIdx, currentIdx);
-    emit actionAdded(a_Idx, intrant.actions().Action().size() - 1);
-    // TODO: only save if you are in the project model; in the newIntrantsModel, this shouldn't be saved
-    save();
+//    emit actionAdded(a_Idx, intrant.actions().Action().size() - 1);
+//    // TODO: only save if you are in the project model; in the newIntrantsModel, this shouldn't be saved
+//    save();
   }
 
   //-------------------------------------------------------------------------------------------

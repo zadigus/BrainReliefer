@@ -21,6 +21,7 @@ SOURCES += main.cpp \
     $${DATA_FOLDER}/IntrantsList-sskel.cpp \
     $${DATA_FOLDER}/DataValidator.cpp \
     $${MODELS_FOLDER}/IntrantsModel.cpp \
+    $${MODELS_FOLDER}/ProjectsModel.cpp \
     $${MODELS_FOLDER}/ActionsModel.cpp \
     $${MODELS_FOLDER}/ModelsHelper.cpp \
     $${DATA_FOLDER}/DataManager.cpp \
@@ -43,6 +44,7 @@ HEADERS += $${CORE_FOLDER}/Global.hpp \
     $${DATA_FOLDER}/IntrantsList-sskel.hpp \
     $${DATA_FOLDER}/DataValidator.hpp \
     $${MODELS_FOLDER}/IntrantsModel.hpp \
+    $${MODELS_FOLDER}/ProjectsModel.hpp \
     $${MODELS_FOLDER}/ActionsModel.hpp \
     $${MODELS_FOLDER}/ModelsHelper.hpp \
     $${DATA_FOLDER}/DataManager.hpp \

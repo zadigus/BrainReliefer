@@ -30,7 +30,7 @@ namespace N_Models {
 
       Q_INVOKABLE void setDate(int a_Idx, const QDate& a_Date);
 
-      void addAction(const N_Data::Action& a_Action, int a_Idx);
+      virtual void addAction(const N_Data::Action& a_Action, int a_Idx);
 
       std::unique_ptr<N_Data::Intrant> popIntrant(int a_Idx);
       N_Data::Intrant& getIntrant(int a_Idx) const;
@@ -49,21 +49,20 @@ namespace N_Models {
 
     public slots:
       void loadDataFromFile(const QString& a_FileName);
-      void onActionDeleted(const QString& a_ActionTitle, const QString& a_ProjectTitle);
 
-    private:
+    protected:
       void save();
-      void removeActionFromProject(N_Data::Intrant& a_Project, const QString& a_ActionTitle);
 
     signals:
       void intrantAdded(int a_Idx);
-      void actionAdded(int a_IntrantIdx, int a_ActionIdx);
+
+    protected:
+      std::unique_ptr<N_Data::IntrantsList> m_Data;
 
     private:
       QUrl m_IntrantsListXsd;
       QString m_LoadedFilename;
 
-      std::unique_ptr<N_Data::IntrantsList> m_Data;
   };
 
   //----------------------------------------------------------------------------------
